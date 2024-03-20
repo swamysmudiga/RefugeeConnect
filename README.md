@@ -1,42 +1,24 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/j48a217e)
-Project Title: Refugee Connect
-Project Description: RefugeeConnect is a comprehensive platform aimed at bridging the gap between refugees and 
-essential services, fostering community support, and empowering refugees to integrate successfully into their new environments. 
-This platform will provide a range of services accessible via web applications, catering to the needs of refugees,
-service providers, donors, and the wider community.
+# Project Title : Refugee Connect
 
-• Refugee Management (Refugee):
-    • CRUD operations for managing refugee profiles.
-    • Capture and store refugee details including biometric scans.
-    • Categorization of refugees for efficient management.
-• Resource Management (Services):
-    • CRUD operations for managing essential resources.
-    • Filtering resources based on refugee needs.
-• Instructor Module (Instructor):
-    • Ability to add refugees details including biometric scans to the platform.
-• User Engagement (User):
-    • Facilitate donation processes.
-    • Add Resource Management
-    • Access to refugee stories.
-    • Browse refugees categorized by needs and location.
+## Project Description
+RefugeeConnect is a comprehensive platform aimed at bridging the gap between refugees and essential services, fostering community support, and empowering refugees to integrate successfully into their new environments. This platform will provide a range of services accessible via web applications, catering to the needs of refugees, service providers, donors, and the wider community.
 
-Team Member details
+## Team Members
+- Akshay Datir (NUID: 002822621) - AKA “AD”
+- Pranav Kapse (NUID: 002871241) - AKA “PK”
+- Kishor Kashid (NUID: 002833393) - AKA “KK”
+- Swamy Mudiga (NUID: 002826360) - AKA “SM”
 
-Akshay Datir (NUID: 002822621) Aka “AD”
-Pranav Kapse (NUID: 002871241) AKA “PK”
-Kishor Kashid (NUID: 002833393) AKA “KK”
-Swamy Mudiga (NUID: 002826360) AKA “SM”
-
-Milestone 1: Project Selection, Creating Object Model, Identifying REST API resources, and Creating OpenAPI Specification Yaml
-
-Selected Project Topic as per the Professor given link(https://www.un.org/en/global-issues) (Assignee: Everyone)
-Create an Object Model for the project using Domain Driven Design (Assignee: Everyone)
-REST API creation and Mermaid Code - Refugee (Assignee: AD)
-REST API creation and Mermaid Code - Resources (Assignee: KK)
-REST API creation and Mermaid Code - Donation (Assignee: SM)
-REST API creation and Mermaid Code - User (Assignee: PK)
-REST API creation and Mermaid Code - Camp (Assignee: AD)
-Created a schema for yaml file for all the above endpoints(Assignee: Everyone)
+### Milestone 1: Project Selection, Creating Object Model, Identifying REST API resources, and Creating OpenAPI Specification Yam
+1. Selected Project Topic as per the Professor given link ([UN Global Issues](https://www.un.org/en/global-issues)) (Assignee: Everyone)
+2. Created an Object Model for the project using Domain Driven Design (Assignee: Everyone)
+3. Identified REST API resources and created OpenAPI Specification YAML (Assignee: Everyone)
+4. REST API creation - Refugee (Assignee: AD)
+5. REST API creation - Resources (Assignee: KK)
+6. REST API creation - Donation (Assignee: SM)
+7. REST API creation - User (Assignee: PK)
+8. REST API creation - Camp (Assignee: AD)
 
 Mermaid code
 ---
