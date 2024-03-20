@@ -4,6 +4,133 @@ info:
   summary: CRUD operations for Refugee, Stories, Resources, and Donations
   version: 'v1.0'
 paths:
+  /refugee:
+    get:
+      tags:
+        - Refugee
+      summary: Get all refugee data
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Refugee'
+        '500':
+          description: Internal server error
+  /refugee/login:
+   post:
+    tags:
+      - Refugee
+    summary: Login as a refugee
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/LoginUser'
+    responses:
+      '200':
+        description: Successfully logged in
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Refugee'
+      '401':
+        description: Unauthorized - invalid credentials
+      '500':
+        description: Internal server error              
+          
+  /refugee/register:
+    post:
+      tags:
+        - Refugee
+      summary: Create a new refugee
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Refugee'
+      responses:
+        '200':
+          description: Refugee created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Refugee'
+        '404':
+          description: refugee already registered!
+        '500':
+          description: Internal server error
+  /refugee/{Id}:
+    get:
+      tags:
+        - Refugee
+      summary: Get all refugee data
+      parameters:
+        - name: Id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Refugee'
+        '404':
+          description: refugee not found!
+        '500':
+          description: Internal server error
+    patch:
+      tags:
+        - Refugee
+      summary: Update a refugee by ID
+      parameters:
+        - name: Id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Refugee'
+      responses:
+        '200':
+          description: Refugee updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Refugee'
+        '404':
+          description: refugee not found!
+        '500':
+          description: Internal server error
+    delete:
+      tags:
+        - Refugee
+      summary: Delete a refugee by ID
+      parameters:
+        - name: Id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Refugee deleted successfully
+        '404':
+          description: refugee not found!
+        '500':
+          description: Internal server error
   /user/login:
    post:
     tags:
