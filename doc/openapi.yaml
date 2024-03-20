@@ -348,6 +348,73 @@ paths:
           description: Resource allready Exists!!
         '500':
           description: Internal server error
+  /donations:
+    get:
+      tags:
+        - Donation
+      summary: Get all donations
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Donation'
+        '404':
+          description: Donations not found!
+        '500':
+          description: Internal server error
+ 
+  /donation/{Id}/{userId}:
+    get:
+      tags:
+        - Donation
+      summary: Get a donation by ID and user ID
+      parameters:
+        - name: Id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Donation'
+        '404':
+          description: Donation not found!
+        '500':
+          description: Internal server error
+ 
+  /donation:
+    post:
+      tags:
+        - Donation
+      summary: Create a new donation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Donation'
+      responses:
+        '200':
+          description: Donation created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Donation'
+        '500':
+          description: Internal server error
+          
   /camp/{Id}:
     get:
       tags:
