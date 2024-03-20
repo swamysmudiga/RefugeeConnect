@@ -348,3 +348,70 @@ paths:
           description: Resource allready Exists!!
         '500':
           description: Internal server error
+  /camp/{Id}:
+    get:
+      tags:
+        - Camp
+      summary: Get camp data by ID
+      parameters:
+        - name: Id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Camp'
+        '404':
+          description: camp not found!
+        '500':
+          description: Internal server error
+ 
+    put:
+      tags:
+        - Camp
+      summary: Update a camp by ID
+      parameters:
+        - name: Id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Camp'
+      responses:
+        '200':
+          description: Camp updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Camp'
+        '404':
+          description: camp not found!
+        '500':
+          description: Internal server error
+ 
+    delete:
+      tags:
+        - Camp
+      summary: Delete a camp by ID
+      parameters:
+        - name: Id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Camp deleted successfully
+        '404':
+          description: camp not found!
+        '500':
+          description: Internal server error
