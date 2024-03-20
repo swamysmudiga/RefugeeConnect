@@ -115,4 +115,109 @@ paths:
         '500':
           description: Internal server error
         
+/resources:
+    get:
+      tags:
+        - Resource
+      summary: Get all resources
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Resource'
+        '500':
+          description: Internal server error
  
+  /resources/{Id}:
+    get:
+      tags:
+        - Resource
+      summary: Get a resource by ID
+      parameters:
+        - name: Id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Resource'
+        '404':
+          description: resource not found!
+        '500':
+          description: Internal server error
+ 
+  /resource/register:
+    post:
+      tags:
+        - Resource
+      summary: Create a new resource
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Resource'
+      responses:
+        '200':
+          description: Resource created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Resource'
+        '404':
+          description: resource all ready Exists!
+        '500':
+          description: Internal server error
+ 
+  /resource/{Id}:
+    delete:
+      tags:
+        - Resource
+      summary: Delete a resource by ID
+      parameters:
+        - name: Id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Resource deleted successfully
+        '404':
+          description: refugee not found!
+        '500':
+          description: Internal server error
+    put:
+      tags:
+        - Resource
+      summary: Update a resource by ID
+      parameters:
+        - name: Id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Resource'
+      responses:
+        '200':
+          description: Resource updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Resource'
+        '404':
+          description: Resource allready Exists!!
+        '500':
+          description: Internal server error
