@@ -20,7 +20,25 @@ service providers, donors, and the wider community.
     • Access to refugee stories.
     • Browse refugees categorized by needs and location.
 
-    Mermaid code
+Team Member details
+
+Akshay Datir (NUID: 002822621) Aka “AD”
+Pranav Kapse (NUID: 002871241) AKA “PK”
+Kishor Kashid (NUID: 002833393) AKA “KK”
+Swamy Mudiga (NUID: 002826360) AKA “SM”
+
+Milestone 1: Project Selection, Creating Object Model, Identifying REST API resources, and Creating OpenAPI Specification Yaml
+
+Selected Project Topic as per the Professor given link(https://www.un.org/en/global-issues) (Assignee: Everyone)
+Create an Object Model for the project using Domain Driven Design (Assignee: Everyone)
+REST API creation and Mermaid Code - Refugee (Assignee: AD)
+REST API creation and Mermaid Code - Resources (Assignee: KK)
+REST API creation and Mermaid Code - Donation (Assignee: SM)
+REST API creation and Mermaid Code - User (Assignee: PK)
+REST API creation and Mermaid Code - Camp (Assignee: AD)
+Created a schema for yaml file for all the above endpoints(Assignee: Everyone)
+
+Mermaid code
 ---
 title: RefugeeConnect
 ---
