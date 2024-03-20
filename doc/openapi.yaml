@@ -131,6 +131,7 @@ paths:
           description: refugee not found!
         '500':
           description: Internal server error
+  
   /user/login:
    post:
     tags:
@@ -242,7 +243,8 @@ paths:
         '500':
           description: Internal server error
         
-/resources:
+ 
+  /resources:
     get:
       tags:
         - Resource
@@ -348,6 +350,7 @@ paths:
           description: Resource allready Exists!!
         '500':
           description: Internal server error
+ 
   /donations:
     get:
       tags:
@@ -414,7 +417,29 @@ paths:
                 $ref: '#/components/schemas/Donation'
         '500':
           description: Internal server error
-          
+ 
+  /camp:
+    post:
+      tags:
+        - Camp
+      summary: Create a new camp
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Camp'
+      responses:
+        '200':
+          description: Camp created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Camp'
+        '404':
+          description: camp all ready Exists!!
+        '500':
+          description: Internal server error
+ 
   /camp/{Id}:
     get:
       tags:
@@ -482,3 +507,211 @@ paths:
           description: camp not found!
         '500':
           description: Internal server error
+ 
+components:
+  schemas:
+    LoginUser:
+      type: object
+      properties: 
+        username:
+          type: string
+          examples:
+            - refugee1
+        password:
+          type: string
+          examples:
+            - refugee@123
+    Refugee:
+      type: object
+      properties:
+        personid:
+          type: integer
+          format: int64
+          examples:
+            - 10
+        ethnicity:
+          type: string
+          examples:
+            - Asian
+        religion:
+          type: string
+          examples:
+            - Hindu
+        language:
+          type: string
+          examples:
+            - Spanish
+        health:
+          type: string
+          examples:
+            - BORKEN leg
+        education:
+          type: string
+          examples:
+            - Bachelor
+        occupation:
+          type: string
+          examples:
+            - Mechanic
+        family_status:
+          type: string
+          examples:
+            - Single
+        has_dependents:
+          type: string
+          examples:
+            - false
+        previous_location:
+          type: string
+          examples:
+            - Syria
+        current_location:
+          type: string
+          examples:
+            - America
+        legal_status:
+          type: string
+          examples:
+            - Asylum seeker
+        assistance_needed:
+          type: string
+          examples:
+            - housing
+        name:
+          type: string
+          examples:
+            - John Anthony
+        age:
+          type: integer
+          examples:
+            - 25
+        nationality:
+          type: string
+          examples:
+            - India
+        gender:
+          type: string
+          examples:
+            - Male
+        dob:
+          type: string
+          format: date
+          examples:
+            - "1997-06-11"
+        address:
+          type: string
+          examples:
+            - Nashik
+        phone_no:
+          type: string
+          examples:
+            - "87654298761"
+        email:
+          type: string
+          examples:
+            - johnanthony@gmail.com
+        blood_type:
+          type: string
+          examples:
+            - A-
+        height:
+          type: number
+          format: double
+          examples:
+            - 165.50
+        weight:
+          type: number
+          format: double
+          examples:
+            - 80
+        
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          examples:
+            - 1
+        name:
+          type: string
+          examples:
+            - Akshay
+        age:
+          type: integer
+          examples:
+            - 20
+        username:
+          type: string
+          examples:
+            - akshay18
+        password:
+          type: string
+          examples:
+            - Password@123
+        email:
+          type: string
+          examples:
+            - akshay18@gmail.com
+        contact_no:
+          type: integer
+          examples:
+            - 9976542456
+    
+    Resource:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          examples:
+            - 1
+        name:
+          type: string
+          examples:
+            - Food Distribution
+        description:
+          type: string
+          examples:
+            - Food Description 1
+        location:
+          type: string
+          examples:
+            - Boston
+        isavailable:
+          type: boolean
+          examples:
+            - true
+ 
+    Donation:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          examples:
+            - 1
+        amount:
+          type: number
+          format: double
+          examples:
+            - 50.0
+ 
+    Camp:
+      type: object
+      properties:
+        donationid:
+          type: integer
+          format: int64
+          examples:
+            - 20
+        personid:
+          type: integer
+          format: int64
+          examples:
+            - 40
+        donationAmount:
+          type: number  
+          format: double   
+          examples:
+            - 2000.0
