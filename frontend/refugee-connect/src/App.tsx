@@ -1,12 +1,12 @@
 import React from 'react';
-import RegistrationForm from './components/RegistrationForm';
+import NavBar from './components/NavBar';
 
 function App() {
   console.log('App is rendering with RegistrationForm');
   return (
     <div>
+      <NavBar/>
       <h1>Welcome to Refugee Connect</h1>
-      <RegistrationForm />
     </div>
   );
 }
