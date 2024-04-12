@@ -1,164 +1,226 @@
 import React, { useState } from 'react';
-import { Formik, Form, Field } from 'formik';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Typography, Grid, TextField, Button, RadioGroup, Radio, FormControlLabel, FormControl, FormLabel, Checkbox, Box } from '@mui/material';
 
-// Define Yup validation schemas for both User and Refugee registration forms
+// Validation schemas
 const userValidationSchema = Yup.object({
   username: Yup.string()
     .min(8, "Username should be of at least 8 characters.")
     .max(15, "Username cannot be more than 15 characters.")
-    .required('Required'),
-  password: Yup.string().required('Required'),
-  name: Yup.string().required('Required'),
-  age: Yup.number().required('Required').positive().integer(),
-  email: Yup.string().email('Invalid email').required('Required'),
-  contact_no: Yup.number().required('Required').positive().integer(),
+    .required('Username is required'),
+  password: Yup.string()
+    .min(8, "Password must be at least 8 characters")
+    .required('Password is required'),
+  email: Yup.string()
+    .email('Invalid email')
+    .required('Email is required'),
+  contact_no: Yup.number()
+    .typeError('Contact must be a number')
+    .required('Contact number is required'),
 });
 
 const refugeeValidationSchema = Yup.object({
   username: Yup.string()
     .min(8, "Username should be of at least 8 characters.")
     .max(15, "Username cannot be more than 15 characters.")
-    .required('Required'),
-  password: Yup.string().required('Required'),
-  name: Yup.string().required('Required'),
-  ethnicity: Yup.string().required('Required'),
-  religion: Yup.string().required('Required'),
-  language: Yup.string().required('Required'),
-  health: Yup.string().required('Required'),
-  education: Yup.string().required('Required'),
-  occupation: Yup.string().required('Required'),
-  family_status: Yup.string().required('Required'),
-  has_dependents: Yup.boolean().required('Required'),
-  previous_location: Yup.string().required('Required'),
-  current_location: Yup.string().required('Required'),
-  legal_status: Yup.string().required('Required'),
-  assistance_needed: Yup.string().required('Required'),
-  age: Yup.number().required('Required').positive().integer(),
-  nationality: Yup.string().required('Required'),
-  gender: Yup.string().required('Required'),
-  dob: Yup.date().required('Required'),
-  address: Yup.string().required('Required'),
-  phone_no: Yup.string().required('Required'),
-  email: Yup.string().email('Invalid email').required('Required'),
-  blood_type: Yup.string().required('Required'),
-  height: Yup.number().required('Required').positive(),
-  weight: Yup.number().required('Required').positive(),
+    .required('Username is required'),
+  password: Yup.string()
+    .min(8, "Password must be at least 8 characters")
+    .required('Password is required'),
+  name: Yup.string().required('Name is required'),
+  ethnicity: Yup.string().required('Ethnicity is required'),
+  religion: Yup.string().required('Religion is required'),
+  language: Yup.string().required('Language is required'),
+  health: Yup.string().required('Health is required'),
+  education: Yup.string().required('Education is required'),
+  occupation: Yup.string().required('Occupation is required'),
+  family_status: Yup.string().required('Family status is required'),
+  has_dependents: Yup.boolean().required('Dependents status is required'),
+  previous_location: Yup.string().required('Previous location is required'),
+  current_location: Yup.string().required('Current location is required'),
+  legal_status: Yup.string().required('Legal status is required'),
+  assistance_needed: Yup.string().required('Assistance needed is required'),
+  age: Yup.number().positive().integer().required('Age is required'),
+  nationality: Yup.string().required('Nationality is required'),
+  gender: Yup.string().required('Gender is required'),
+  dob: Yup.date().required('Date of Birth is required'),
+  address: Yup.string().required('Address is required'),
+  phone_no: Yup.string().required('Phone number is required'),
+  email: Yup.string().email('Invalid email').required('Email is required'),
+  blood_type: Yup.string().required('Blood type is required'),
+  height: Yup.number().positive().required('Height is required'),
+  weight: Yup.number().positive().required('Weight is required'),
 });
 
+// Initial values for user form
+const initialUserValues = {
+  username: '',
+  password: '',
+  email: '',
+  contact_no: '',
+};
+
+// Initial values for refugee form
+const initialRefugeeValues = {
+  username: '',
+  password: '',
+  name: '',
+  ethnicity: '',
+  religion: '',
+  language: '',
+  health: '',
+  education: '',
+  occupation: '',
+  family_status: '',
+  has_dependents: false,
+  previous_location: '',
+  current_location: '',
+  legal_status: '',
+  assistance_needed: '',
+  age: '',
+  nationality: '',
+  gender: '',
+  dob: '',
+  address: '',
+  phone_no: '',
+  email: '',
+  blood_type: '',
+  height: '',
+  weight: '',
+};
+
 const RegistrationForm = () => {
-  const [accountType, setAccountType] = useState('user'); // Default to 'user'
+  const [accountType, setAccountType] = useState('user');
+
+  const handleSubmit = (values: any, actions: { setSubmitting: (arg0: boolean) => void; }) => {
+    toast.success("Registration Successful!");
+    console.log(values);
+    actions.setSubmitting(false);
+  };
 
   return (
-    <div>
-      <h2>Registration Form</h2>
-      <ToastContainer />
-      <Formik
-        initialValues={{
-          username: '',
-          password: '',
-          name: '',
-          age: '',
-          email: '',
-          contact_no: '',
-          // Refugee specific fields
-          ethnicity: '',
-          religion: '',
-          language: '',
-          health: '',
-          education: '',
-          occupation: '',
-          family_status: '',
-          has_dependents: false,
-          previous_location: '',
-          current_location: '',
-          legal_status: '',
-          assistance_needed: '',
-          nationality: '',
-          gender: '',
-          dob: '',
-          address: '',
-          phone_no: '',
-          blood_type: '',
-          height: '',
-          weight: '',
-        }}
-        validationSchema={accountType === 'user' ? userValidationSchema : refugeeValidationSchema}
-        onSubmit={(values, actions) => {
-          toast.success("Registration Successful!");
-          console.log(values);
-          actions.setSubmitting(false);
-          // Integrate with your backend API to submit the form
-        }}
-      >
-        {({ errors, touched }) => (
-          <Form>
-            <div>
-              <label>
-                <Field type="radio" name="accountType" value="user" onChange={() => setAccountType('user')} checked={accountType === 'user'} />
-                User
-              </label>
-              <label>
-                <Field type="radio" name="accountType" value="refugee" onChange={() => setAccountType('refugee')} checked={accountType === 'refugee'} />
-                Refugee
-              </label>
-            </div>
+    <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
+      <Box p={4} bgcolor="background.paper" boxShadow={3} borderRadius={8}>
+        <Typography variant="h4" align="center" gutterBottom color="primary">
+          Welcome to Refugee Connect
+        </Typography>
+        <Typography variant="h5" align="center" gutterBottom color="primary">
+          Registration Form
+        </Typography>
+        <Formik
+          initialValues={accountType === 'user' ? initialUserValues : initialRefugeeValues}
+          validationSchema={accountType === 'user' ? userValidationSchema : refugeeValidationSchema}
+          onSubmit={handleSubmit}
+        >
+          {({ isValid, dirty }) => (
+            <Form>
+              <FormControl component="fieldset" fullWidth>
+                <FormLabel component="legend">User</FormLabel>
+                <RadioGroup row aria-label="user-refugee" name="accountType" value={accountType} onChange={(e) => setAccountType(e.target.value)}>
+                  <FormControlLabel value="user" control={<Radio />} label="User" />
+                  <FormControlLabel value="refugee" control={<Radio />} label="Refugee" />
+                </RadioGroup>
+              </FormControl>
 
-            {/* Common fields */}
-            <Field name="username" placeholder="Username" />
-            {errors.username && touched.username && <div>{errors.username}</div>}
-            <Field name="password" type="password" placeholder="Password" />
-            {errors.password && touched.password && <div>{errors.password}</div>}
+              {/* Shared Fields */}
+              <Box mt={4}>
+                <Field as={TextField} name="username" label="Username" fullWidth margin="normal" />
+                <ErrorMessage name="username" />
+                <Field as={TextField} type="password" name="password" label="Password" fullWidth margin="normal" />
+                <ErrorMessage name="password" />
+                <Field as={TextField} name="email" label="Email" fullWidth margin="normal" />
+                <ErrorMessage name="email" />
+              </Box>
 
-            {/* User and Refugee common fields */}
-            <Field name="name" placeholder="Name" />
-            {errors.name && touched.name && <div>{errors.name}</div>}
-            <Field name="age" placeholder="Age" />
-            {errors.age && touched.age && <div>{errors.age}</div>}
-            <Field name="email" placeholder="Email" />
-            {errors.email && touched.email && <div>{errors.email}</div>}
+              {/* User Specific Fields */}
+              {accountType === 'user' && (
+                <Box mt={4}>
+                  <Field as={TextField} name="contact_no" label="Contact Number" fullWidth margin="normal" />
+                  <ErrorMessage name="contact_no" />
+                </Box>
+              )}
 
-            {/* User specific field */}
-            {accountType === 'user' && (
-              <>
-                <Field name="contact_no" placeholder="Contact Number" />
-                {errors.contact_no && touched.contact_no && <div>{errors.contact_no}</div>}
-              </>
-            )}
+              {/* Refugee Specific Fields */}
+              {accountType === 'refugee' && (
+                <>
+                  <Box mt={4}>
+                    <Field as={TextField} name="name" label="Full Name" fullWidth margin="normal" />
+                    <ErrorMessage name="name" />
+                    <Field as={TextField} name="ethnicity" label="Ethnicity" fullWidth margin="normal" />
+                    <ErrorMessage name="ethnicity" />
+                    <Field as={TextField} name="religion" label="Religion" fullWidth margin="normal" />
+                    <ErrorMessage name="religion" />
+                    <Field as={TextField} name="language" label="Language" fullWidth margin="normal" />
+                    <ErrorMessage name="language" />
+                  </Box>
+                  <Box mt={4}>
+                    <Field as={TextField} name="health" label="Health Condition" fullWidth margin="normal" />
+                    <ErrorMessage name="health" />
+                    <Field as={TextField} name="education" label="Education" fullWidth margin="normal" />
+                    <ErrorMessage name="education" />
+                    <Field as={TextField} name="occupation" label="Occupation" fullWidth margin="normal" />
+                    <ErrorMessage name="occupation" />
+                    <FormControlLabel
+                      control={<Field as={Checkbox} name="has_dependents" />}
+                      label="Has Dependents"
+                    />
+                    <ErrorMessage name="has_dependents" />
+                  </Box>
+                  <Box mt={4}>
+                    <Field as={TextField} name="previous_location" label="Previous Location" fullWidth margin="normal" />
+                    <ErrorMessage name="previous_location" />
+                    <Field as={TextField} name="current_location" label="Current Location" fullWidth margin="normal" />
+                    <ErrorMessage name="current_location" />
+                    <Field as={TextField} name="legal_status" label="Legal Status" fullWidth margin="normal" />
+                    <ErrorMessage name="legal_status" />
+                  </Box>
+                  <Box mt={4}>
+                    <Field as={TextField} name="assistance_needed" label="Assistance Needed" fullWidth margin="normal" />
+                    <ErrorMessage name="assistance_needed" />
+                    <Field as={TextField} name="age" label="Age" fullWidth margin="normal" />
+                    <ErrorMessage name="age" />
+                    <Field as={TextField} name="nationality" label="Nationality" fullWidth margin="normal" />
+                    <ErrorMessage name="nationality" />
+                    <Field as={TextField} name="gender" label="Gender" fullWidth margin="normal" />
+                    <ErrorMessage name="gender" />
+                    <Field as={TextField} name="dob" type="date" label="Date of Birth" fullWidth margin="normal" />
+                    <ErrorMessage name="dob" />
+                  </Box>
+                  <Box mt={4}>
+                    <Field as={TextField} name="address" label="Address" fullWidth margin="normal" />
+                    <ErrorMessage name="address" />
+                    <Field as={TextField} name="phone_no" label="Phone Number" fullWidth margin="normal" />
+                    <ErrorMessage name="phone_no" />
+                    <Field as={TextField} name="blood_type" label="Blood Type" fullWidth margin="normal" />
+                    <ErrorMessage name="blood_type" />
+                    <Field as={TextField} name="height" label="Height" fullWidth margin="normal" />
+                    <ErrorMessage name="height" />
+                    <Field as={TextField} name="weight" label="Weight" fullWidth margin="normal" />
+                    <ErrorMessage name="weight" />
+                  </Box>
+                </>
+              )}
 
-            {/* Refugee specific fields */}
-            {accountType === 'refugee' && (
-              <>
-                <Field name="ethnicity" placeholder="Ethnicity" />
-                <Field name="religion" placeholder="Religion" />
-                <Field name="language" placeholder="Language" />
-                <Field name="health" placeholder="Health" />
-                <Field name="education" placeholder="Education" />
-                <Field name="occupation" placeholder="Occupation" />
-                <Field name="family_status" placeholder="Family Status" />
-                <Field name="has_dependents" type="checkbox" />
-                <Field name="previous_location" placeholder="Previous Location" />
-                <Field name="current_location" placeholder="Current Location" />
-                <Field name="legal_status" placeholder="Legal Status" />
-                <Field name="assistance_needed" placeholder="Assistance Needed" />
-                <Field name="nationality" placeholder="Nationality" />
-                <Field name="gender" placeholder="Gender" />
-                <Field name="dob" placeholder="Date of Birth" />
-                <Field name="address" placeholder="Address" />
-                <Field name="phone_no" placeholder="Phone Number" />
-                <Field name="blood_type" placeholder="Blood Type" />
-                <Field name="height" placeholder="Height" />
-                <Field name="weight" placeholder="Weight" />
-              </>
-            )}
-
-            <button type="submit">Submit</button>
-          </Form>
-        )}
-      </Formik>
-    </div>
+              <Box mt={4}>
+                <Button
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                  fullWidth
+                  disabled={!isValid || !dirty}
+                >
+                  Submit
+                </Button>
+              </Box>
+            </Form>
+          )}
+        </Formik>
+        <ToastContainer />
+      </Box>
+    </Box>
   );
 };
 
