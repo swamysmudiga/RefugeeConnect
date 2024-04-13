@@ -18,8 +18,8 @@ const userValidationSchema = Yup.object({
   email: Yup.string()
     .email('Invalid email')
     .required('Email is required'),
-  contact_no: Yup.string()
-    .matches(/^[0-9]+$/, "Contact number must contain only digits")
+    contact_no: Yup.string()
+    .matches(/^[0-9]{10}$/, "Contact number must be number and 10 digits")
     .required('Contact number is required'),
 });
 
@@ -50,7 +50,7 @@ const refugeeValidationSchema = Yup.object({
   dob: Yup.date().required('Date of Birth is required'),
   address: Yup.string().required('Address is required'),
   phone_no: Yup.string()
-    .matches(/^[0-9]+$/, "Phone number must contain only digits")
+    .matches(/^[0-9]{10}$/, "Contact number must be number and 10 digits")
     .required('Phone number is required'),
   email: Yup.string().email('Invalid email').required('Email is required'),
   blood_type: Yup.string().required('Blood type is required'),
@@ -108,80 +108,71 @@ const RegistrationForm = () => {
 
   return (
     <Container maxWidth="md" style={{ padding: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh', backgroundImage: `url(${refugeeImage})`, backgroundSize: 'cover' }}>
-    <Paper elevation={3} className="paper" style={{ backgroundColor: 'rgba(255, 255, 255, 0.85)', borderRadius: '10px', width: '100%', maxWidth: '600px' }}>
-      <Typography variant="h4" align="center" color="primary" gutterBottom>
-        Welcome to Registration Form
-      </Typography>
-      <Formik
-        initialValues={accountType === 'user' ? initialUserValues : initialRefugeeValues}
-        validationSchema={accountType === 'user' ? userValidationSchema : refugeeValidationSchema}
-        onSubmit={handleSubmit}
-      >
-        {({ isValid, dirty }) => (
-          <Form>
-            <Grid container spacing={2} justifyContent="center">
-                  <Grid item xs={12}>
-                    <FormControl component="fieldset" fullWidth>
-                      <RadioGroup
-                        row
-                        aria-label="accountType"
-                        name="accountType"
-                        value={accountType}
-                        onChange={(e) => setAccountType(e.target.value)}
-                      >
-                        <FormControlLabel value="user" control={<Radio />} label="User" />
-                        <FormControlLabel value="refugee" control={<Radio />} label="Refugee" />
-                      </RadioGroup>
-                    </FormControl>
-                  </Grid>
-                  <Grid item xs={12} md={6}>
-                    <Field as={TextField} name="username" label="Username" fullWidth margin="normal" />
-                    <ErrorMessage name="username">{(msg) => <div style={{ color: 'red', marginTop: '5px' }}>{msg}</div>}</ErrorMessage>
-                  </Grid>
-                  <Grid item xs={12} md={6}>
-                    <Field as={TextField} type="password" name="password" label="Password" fullWidth margin="normal" />
-                 <ErrorMessage name="password">{(msg) => <div style={{ color: 'red', marginTop: '5px' }}>{msg}</div>}
-                </ErrorMessage>
-                    </Grid>
-<               Grid item xs={12}>
-                    <Field as={TextField} name="email" label="Email" fullWidth margin="normal" />
-                <ErrorMessage name="email">{(msg) => <div style={{ color: 'red', marginTop: '5px' }}>{msg}</div>}
-                </ErrorMessage>
-                </Grid>
-
-                    {accountType === 'user' && (
-                        <Grid item xs={12}>
-                          <Field as={TextField} name="contact_no" label="Contact Number" fullWidth margin="normal" />
-                          <ErrorMessage name="contact_no">
-                            {(msg) => <div style={{ color: 'red', marginTop: '5px' }}>{msg}</div>}
-                          </ErrorMessage>
+        <Paper elevation={3} className="paper" style={{ backgroundColor: 'rgba(255, 255, 255, 0.85)', borderRadius: '10px', width: '100%', maxWidth: '600px' }}>
+            <Typography variant="h4" align="center" color="primary" gutterBottom>
+                Welcome to Registration Form
+            </Typography>
+            <Formik
+                initialValues={accountType === 'user' ? initialUserValues : initialRefugeeValues}
+                validationSchema={accountType === 'user' ? userValidationSchema : refugeeValidationSchema}
+                onSubmit={handleSubmit}
+            >
+                {({ isValid, dirty }) => (
+                    <Form>
+                        <Grid container spacing={2} justifyContent="center">
+                            <Grid item xs={12}>
+                                <FormControl component="fieldset" fullWidth>
+                                    <RadioGroup
+                                        row
+                                        aria-label="accountType"
+                                        name="accountType"
+                                        value={accountType}
+                                        onChange={(e) => setAccountType(e.target.value)}
+                                    >
+                                        <FormControlLabel value="user" control={<Radio />} label="User" />
+                                        <FormControlLabel value="refugee" control={<Radio />} label="Refugee" />
+                                    </RadioGroup>
+                                </FormControl>
+                            </Grid>
+                            <Grid item xs={12} md={6}>
+                                <Field as={TextField} name="username" label="Username" fullWidth margin="normal" />
+                                <ErrorMessage name="username">{(msg) => <div style={{ color: 'red', marginTop: '5px' }}>{msg}</div>}</ErrorMessage>
+                            </Grid>
+                            <Grid item xs={12} md={6}>
+                                <Field as={TextField} type="password" name="password" label="Password" fullWidth margin="normal" />
+                                <ErrorMessage name="password">{(msg) => <div style={{ color: 'red', marginTop: '5px' }}>{msg}</div>}</ErrorMessage>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <Field as={TextField} name="email" label="Email" fullWidth margin="normal" />
+                                <ErrorMessage name="email">{(msg) => <div style={{ color: 'red', marginTop: '5px' }}>{msg}</div>}</ErrorMessage>
+                            </Grid>
+                            {accountType === 'user' && (
+                                <Grid item xs={12}>
+                                    <Field as={TextField} name="contact_no" label="Contact Number" fullWidth margin="normal" />
+                                    <ErrorMessage name="contact_no">{(msg) => <div style={{ color: 'red', marginTop: '5px' }}>{msg}</div>}</ErrorMessage>
+                                </Grid>
+                            )}
+                            {accountType === 'refugee' && renderRefugeeFields()}
+                            <Grid item xs={12}>
+                                <Button
+                                    type="submit"
+                                    variant="contained"
+                                    color="primary"
+                                    fullWidth
+                                    disabled={!isValid || !dirty}
+                                    style={{ marginTop: '2rem' }}
+                                >
+                                    Submit
+                                </Button>
+                            </Grid>
                         </Grid>
-                      )}
-                    <>
-                      {renderRefugeeFields()}
-                    </>
-                  )&rbrace;
-
-                  <Grid item xs={12}>
-                    <Button
-                      type="submit"
-                      variant="contained"
-                      color="primary"
-                      fullWidth
-                      disabled={!isValid || !dirty}
-                      style={{ marginTop: '2rem' }}
-                    >
-                      Submit
-                    </Button>
-                  </Grid>
-                </Grid>
-              </Form>
-            )}
-          </Formik>
-          <ToastContainer />
+                    </Form>
+                )}
+            </Formik>
+            <ToastContainer />
         </Paper>
-      </Container>
-    );
+    </Container>
+);
 }
 
 function renderRefugeeFields() {
@@ -281,11 +272,21 @@ function renderRefugeeFields() {
             </ErrorMessage>
           </Grid>
           <Grid item xs={12} md={6}>
-            <Field as={TextField} name="dob" type="date" label="Date of Birth" fullWidth margin="normal" />
-            <ErrorMessage name="dob">
-              {(msg) => <div style={{ color: 'red', marginTop: '5px' }}>{msg}</div>}
-            </ErrorMessage>
-          </Grid>
+        <Field
+            as={TextField}
+            name="dob"
+            type="date"
+            label="Date of Birth"
+            fullWidth
+            margin="normal"
+            InputLabelProps={{
+            shrink: true, 
+            }}
+        />
+        <ErrorMessage name="dob">
+            {(msg) => <div style={{ color: 'red', marginTop: '5px' }}>{msg}</div>}
+        </ErrorMessage>
+        </Grid>
           <Grid item xs={12} md={6}>
             <Field as={TextField} name="address" label="Address" fullWidth margin="normal" />
             <ErrorMessage name="address">
