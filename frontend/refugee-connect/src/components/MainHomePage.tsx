@@ -3,7 +3,7 @@ import ContentSection from './ContentSection';
 // import NavBar from './NavBar';
 // import SideBar from './SideBar';
 
-const MainPage = () => {
+const MainHomePage = () => {
   return (
     <div>
       {/* <NavBar />
@@ -13,4 +13,4 @@ const MainPage = () => {
   );
 };
 
-export default MainPage;
+export default MainHomePage;

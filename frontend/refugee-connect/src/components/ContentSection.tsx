@@ -90,8 +90,9 @@ const ContentSection = () => {
           </Slider>
         </Container>
       </section>
+
       <section className="container mx-auto px-4 py-16" style={{ backgroundColor: '#808080', padding: '40px 0', marginTop: '40px' }}>
-      <div >
+      <div>
       <Grid container spacing={4}>
         {countries.map((country) => (
           <Grid item key={country.name} xs={12} sm={6} md={4}>
