@@ -3,7 +3,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Typography, Grid, TextField, Button, RadioGroup, Radio, FormControlLabel, FormControl, FormLabel, Checkbox, Box } from '@mui/material';
+import { Typography, Box, TextField, Button, RadioGroup, Radio, FormControlLabel, FormControl, FormLabel, Checkbox } from '@mui/material';
 
 // Validation schemas
 const userValidationSchema = Yup.object({
@@ -17,8 +17,8 @@ const userValidationSchema = Yup.object({
   email: Yup.string()
     .email('Invalid email')
     .required('Email is required'),
-  contact_no: Yup.number()
-    .typeError('Contact must be a number')
+  contact_no: Yup.string()
+    .matches(/^[0-9]+$/, "Contact number must contain only digits")
     .required('Contact number is required'),
 });
 
@@ -38,21 +38,23 @@ const refugeeValidationSchema = Yup.object({
   education: Yup.string().required('Education is required'),
   occupation: Yup.string().required('Occupation is required'),
   family_status: Yup.string().required('Family status is required'),
-  has_dependents: Yup.boolean().required('Dependents status is required'),
+  has_dependents: Yup.boolean(),
   previous_location: Yup.string().required('Previous location is required'),
   current_location: Yup.string().required('Current location is required'),
   legal_status: Yup.string().required('Legal status is required'),
   assistance_needed: Yup.string().required('Assistance needed is required'),
-  age: Yup.number().positive().integer().required('Age is required'),
+  age: Yup.number().typeError('Age must be a number').positive().integer().required('Age is required'),
   nationality: Yup.string().required('Nationality is required'),
   gender: Yup.string().required('Gender is required'),
   dob: Yup.date().required('Date of Birth is required'),
   address: Yup.string().required('Address is required'),
-  phone_no: Yup.string().required('Phone number is required'),
+  phone_no: Yup.string()
+    .matches(/^[0-9]+$/, "Phone number must contain only digits")
+    .required('Phone number is required'),
   email: Yup.string().email('Invalid email').required('Email is required'),
   blood_type: Yup.string().required('Blood type is required'),
-  height: Yup.number().positive().required('Height is required'),
-  weight: Yup.number().positive().required('Weight is required'),
+  height: Yup.number().positive().required('Height must be a number'),
+  weight: Yup.number().positive().required('Weight must be a number'),
 });
 
 // Initial values for user form
@@ -101,45 +103,52 @@ const RegistrationForm = () => {
     actions.setSubmitting(false);
   };
 
+  const errorStyle = { color: 'red', marginTop: '5px' };
+
   return (
     <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
-      <Box p={4} bgcolor="background.paper" boxShadow={3} borderRadius={8}>
+      <Box width={{ xs: '90%', sm: '80%', md: '70%', lg: '50%', xl: '40%' }} p={4} bgcolor="background.paper" boxShadow={3} borderRadius={8}>
         <Typography variant="h4" align="center" gutterBottom color="primary">
           Welcome to Refugee Connect
         </Typography>
         <Typography variant="h5" align="center" gutterBottom color="primary">
           Registration Form
         </Typography>
-        <Formik
-          initialValues={accountType === 'user' ? initialUserValues : initialRefugeeValues}
-          validationSchema={accountType === 'user' ? userValidationSchema : refugeeValidationSchema}
-          onSubmit={handleSubmit}
-        >
-          {({ isValid, dirty }) => (
-            <Form>
-              <FormControl component="fieldset" fullWidth>
-                <FormLabel component="legend">User</FormLabel>
-                <RadioGroup row aria-label="user-refugee" name="accountType" value={accountType} onChange={(e) => setAccountType(e.target.value)}>
-                  <FormControlLabel value="user" control={<Radio />} label="User" />
-                  <FormControlLabel value="refugee" control={<Radio />} label="Refugee" />
-                </RadioGroup>
-              </FormControl>
+      <Formik
+        initialValues={accountType === 'user' ? initialUserValues : initialRefugeeValues}
+        validationSchema={accountType === 'user' ? userValidationSchema : refugeeValidationSchema}
+        onSubmit={handleSubmit}
+      >
+        {({ isValid, dirty }) => (
+          <Form>
+            <FormControl component="fieldset" fullWidth>
+              <RadioGroup
+                row
+                aria-label="user-refugee"
+                name="accountType"
+                value={accountType}
+                onChange={(e) => setAccountType(e.target.value)}
+              >
+                <FormControlLabel value="user" control={<Radio />} label="User" />
+                <FormControlLabel value="refugee" control={<Radio />} label="Refugee" />
+              </RadioGroup>
+            </FormControl>
 
               {/* Shared Fields */}
               <Box mt={4}>
                 <Field as={TextField} name="username" label="Username" fullWidth margin="normal" />
-                <ErrorMessage name="username" />
+                <div style={errorStyle}><ErrorMessage name="username" /></div>
                 <Field as={TextField} type="password" name="password" label="Password" fullWidth margin="normal" />
-                <ErrorMessage name="password" />
+                <div style={errorStyle}><ErrorMessage name="password" /></div>
                 <Field as={TextField} name="email" label="Email" fullWidth margin="normal" />
-                <ErrorMessage name="email" />
+                <div style={errorStyle}><ErrorMessage name="email" /></div>
               </Box>
 
               {/* User Specific Fields */}
               {accountType === 'user' && (
                 <Box mt={4}>
                   <Field as={TextField} name="contact_no" label="Contact Number" fullWidth margin="normal" />
-                  <ErrorMessage name="contact_no" />
+                  <div style={errorStyle}><ErrorMessage name="contact_no" /></div>
                 </Box>
               )}
 
@@ -148,58 +157,58 @@ const RegistrationForm = () => {
                 <>
                   <Box mt={4}>
                     <Field as={TextField} name="name" label="Full Name" fullWidth margin="normal" />
-                    <ErrorMessage name="name" />
+                    <div style={errorStyle}><ErrorMessage name="name" /></div>
                     <Field as={TextField} name="ethnicity" label="Ethnicity" fullWidth margin="normal" />
-                    <ErrorMessage name="ethnicity" />
+                    <div style={errorStyle}><ErrorMessage name="ethnicity" /></div>
                     <Field as={TextField} name="religion" label="Religion" fullWidth margin="normal" />
-                    <ErrorMessage name="religion" />
+                    <div style={errorStyle}><ErrorMessage name="religion" /></div>
                     <Field as={TextField} name="language" label="Language" fullWidth margin="normal" />
-                    <ErrorMessage name="language" />
+                    <div style={errorStyle}><ErrorMessage name="language" /></div>
                   </Box>
                   <Box mt={4}>
                     <Field as={TextField} name="health" label="Health Condition" fullWidth margin="normal" />
-                    <ErrorMessage name="health" />
+                    <div style={errorStyle}><ErrorMessage name="health" /></div>
                     <Field as={TextField} name="education" label="Education" fullWidth margin="normal" />
-                    <ErrorMessage name="education" />
+                    <div style={errorStyle}><ErrorMessage name="education" /></div>
                     <Field as={TextField} name="occupation" label="Occupation" fullWidth margin="normal" />
-                    <ErrorMessage name="occupation" />
+                    <div style={errorStyle}><ErrorMessage name="occupation" /></div>
                     <FormControlLabel
                       control={<Field as={Checkbox} name="has_dependents" />}
                       label="Has Dependents"
                     />
-                    <ErrorMessage name="has_dependents" />
+                    <div style={errorStyle}><ErrorMessage name="has_dependents" /></div>
                   </Box>
                   <Box mt={4}>
                     <Field as={TextField} name="previous_location" label="Previous Location" fullWidth margin="normal" />
-                    <ErrorMessage name="previous_location" />
+                    <div style={errorStyle}><ErrorMessage name="previous_location" /></div>
                     <Field as={TextField} name="current_location" label="Current Location" fullWidth margin="normal" />
-                    <ErrorMessage name="current_location" />
+                    <div style={errorStyle}><ErrorMessage name="current_location" /></div>
                     <Field as={TextField} name="legal_status" label="Legal Status" fullWidth margin="normal" />
-                    <ErrorMessage name="legal_status" />
+                    <div style={errorStyle}><ErrorMessage name="legal_status" /></div>
                   </Box>
                   <Box mt={4}>
                     <Field as={TextField} name="assistance_needed" label="Assistance Needed" fullWidth margin="normal" />
-                    <ErrorMessage name="assistance_needed" />
+                    <div style={errorStyle}><ErrorMessage name="assistance_needed" /></div>
                     <Field as={TextField} name="age" label="Age" fullWidth margin="normal" />
-                    <ErrorMessage name="age" />
+                    <div style={errorStyle}><ErrorMessage name="age" /></div>
                     <Field as={TextField} name="nationality" label="Nationality" fullWidth margin="normal" />
-                    <ErrorMessage name="nationality" />
+                    <div style={errorStyle}><ErrorMessage name="nationality" /></div>
                     <Field as={TextField} name="gender" label="Gender" fullWidth margin="normal" />
-                    <ErrorMessage name="gender" />
+                    <div style={errorStyle}><ErrorMessage name="gender" /></div>
                     <Field as={TextField} name="dob" type="date" label="Date of Birth" fullWidth margin="normal" />
-                    <ErrorMessage name="dob" />
+                    <div style={errorStyle}><ErrorMessage name="dob" /></div>
                   </Box>
                   <Box mt={4}>
                     <Field as={TextField} name="address" label="Address" fullWidth margin="normal" />
-                    <ErrorMessage name="address" />
+                    <div style={errorStyle}><ErrorMessage name="address" /></div>
                     <Field as={TextField} name="phone_no" label="Phone Number" fullWidth margin="normal" />
-                    <ErrorMessage name="phone_no" />
+                    <div style={errorStyle}><ErrorMessage name="phone_no" /></div>
                     <Field as={TextField} name="blood_type" label="Blood Type" fullWidth margin="normal" />
-                    <ErrorMessage name="blood_type" />
+                    <div style={errorStyle}><ErrorMessage name="blood_type" /></div>
                     <Field as={TextField} name="height" label="Height" fullWidth margin="normal" />
-                    <ErrorMessage name="height" />
+                    <div style={errorStyle}><ErrorMessage name="height" /></div>
                     <Field as={TextField} name="weight" label="Weight" fullWidth margin="normal" />
-                    <ErrorMessage name="weight" />
+                    <div style={errorStyle}><ErrorMessage name="weight" /></div>
                   </Box>
                 </>
               )}
