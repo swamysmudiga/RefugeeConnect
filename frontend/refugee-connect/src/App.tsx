@@ -1,13 +1,25 @@
-import React from 'react';
-import NavBar from './components/NavBar';
-import LoginPage from './components/LoginPage'
+import { useEffect } from 'react';
+import { login } from './util/login';
 
 function App() {
   console.log('App is rendering with RegistrationForm');
+
+
+  useEffect(()=>{
+
+    async function  getTokn(){
+
+      const data = await login("Swami Mudiga");
+      console.log(data);
+    }
+
+    getTokn();
+  },[]);
+
+
   return (
     <div>
-      <NavBar/>
-      <LoginPage/>
+      <h1>Welcome to Refugee Connect</h1>
     </div>
   );
 }
