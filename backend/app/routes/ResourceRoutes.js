@@ -1,7 +1,7 @@
 import express from 'express';
 import * as resourceController from '../controllers/resource-controller.js';
 
-const router = express.Router();
+const ResourceRouter = express.Router();
 
 router.route('/')
     .get(resourceController.search)
@@ -14,4 +14,4 @@ router.route('/:id')
     .delete(resourceController.deleteResource)
     .put(resourceController.updateResource);
 
-export default router;
+export default ResourceRouter;
