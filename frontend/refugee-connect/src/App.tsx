@@ -1,6 +1,7 @@
 
 import { useEffect } from 'react';
 import { login } from './util/login';
+import MainHomePage from './components/MainHomePage'
 
 function App() {
   console.log('App is rendering with RegistrationForm');
@@ -20,7 +21,8 @@ function App() {
 
   return (
     <div>
-      <h1>Welcome to Refugee Connect</h1>
+      {/* <h1>Welcome to Refugee Connect</h1> */}
+      <MainHomePage />
     </div>
   );
 }
