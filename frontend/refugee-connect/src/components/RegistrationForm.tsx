@@ -6,6 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Typography, TextField, Button, RadioGroup, Radio, FormControlLabel, FormControl, Checkbox, Paper, Grid, Container } from '@mui/material';
 import '../App.css';
 import refugeeImage from '../images/refugee.jpg';
+import { Outlet } from "react-router-dom";
 
 const userValidationSchema = Yup.object({
   username: Yup.string()
@@ -104,6 +105,7 @@ const RegistrationForm = () => {
       actions.setSubmitting(false);
     };
 
+
   const errorStyle = { color: 'red', marginTop: '5px' };
 
   return (
@@ -161,6 +163,7 @@ const RegistrationForm = () => {
                                     fullWidth
                                     disabled={!isValid || !dirty}
                                     style={{ marginTop: '2rem' }}
+                                    
                                 >
                                     Submit
                                 </Button>

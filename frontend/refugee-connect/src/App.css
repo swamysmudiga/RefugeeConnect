@@ -6,14 +6,6 @@ html, body, #root {
   overflow: hidden; 
 }
 
-
-body {
-  background-image: url('../src/images/refugee.jpg'); 
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-}
-
 /* Center the content of the root div */
 #root {
   display: flex;

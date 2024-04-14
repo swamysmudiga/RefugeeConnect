@@ -4,20 +4,26 @@ import { login } from './util/login';
 import RegistrationForm from './components/RegistrationForm';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Error from './pages/Error';
+import LoginPage from './components/LoginPage';
+import MainHomePage from './components/MainHomePage';
+import RootLayout from './pages/NavBar';
 
 
 const route = createBrowserRouter([
   { 
     path:'/refugee',
-    element:<RegistrationForm/>,
+    element:<RootLayout/>,
     errorElement:<Error></Error>,
     children:[
-        {  path:'/login', element:<HomePage/> },
-        {  path:'/signup', element:<RegistrationForm/>},
-        {  path:'products/:productId', element:<ProductDetails/> }
-      ],
-  }
+      { path:'', element:<MainHomePage/>,},
+      {  path:'login', element:<LoginPage/> },
+      { path:'signup', element:<RegistrationForm/> },
+  
+    ]
+  },
+    
 ]);
+
 
 function App() {
   console.log('App is rendering with RegistrationForm');
