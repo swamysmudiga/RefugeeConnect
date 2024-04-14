@@ -1,7 +1,7 @@
 import express from 'express';
 import * as refugeeController from './../controllers/refugee-controller.js';
 
-const router = express.Router();
+const ResfugeeRouter = express.Router();
 
 router.route('/register')
     .post(refugeeController.refugeeRegister)
@@ -17,4 +17,4 @@ router.route('/:id')
     .patch(refugeeController.updateRefugeeById)
     .delete(refugeeController.removeRefugeeById);
 
-export default router;
+export default ResfugeeRouter;
