@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Box, Button, TextField, Typography, Paper } from '@mui/material';
+import loginPageImage from '../images/LoginPage.jpg';
 
 const LoginPage = () => {
   // Define state variables for username and password
@@ -18,20 +19,24 @@ const LoginPage = () => {
     <Box
       sx={{
         display: 'flex',
-        justifyContent: 'center', 
-        alignItems: 'center', 
-        height: '100vh', 
-        width: '100%',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100vh',
+        width: '100vw',
+        backgroundImage: `url(${loginPageImage})`, 
+        backgroundSize: 'cover', 
+        backgroundPosition: 'center',
       }}
     >
       {/* Paper component for the login form with shadow */}
       <Paper
         sx={{
-          padding: 4, 
+          padding: 4,
           boxShadow: 3,
           borderRadius: 2,
-          width: '400px', 
+          width: '400px',
           textAlign: 'center',
+          opacity: 0.8,
         }}
       >
         {/* Title */}
@@ -67,15 +72,16 @@ const LoginPage = () => {
           />
 
           {/* Submit button */}
-          <Button
-            type="submit"
-            variant="contained"
-            color="primary"
-            fullWidth
-            sx={{ mt: 2, width: '25%' }}
-          >
-            Login
-          </Button>
+          <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              sx={{ width: '25%' }}
+            >
+              Login
+            </Button>
+          </Box>
         </form>
       </Paper>
     </Box>

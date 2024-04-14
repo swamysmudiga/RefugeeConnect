@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "refugee_connect",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}
