@@ -4,13 +4,15 @@ const { Schema } = mongoose;
 const refugeeSchema = new Schema({
         personid: { 
             type: Number, 
-            required: true, 
-            unique: true 
+            required: true  
         },
         username: { 
             type: String, 
-            required: true, 
-            unique: true 
+            required: true
+        },
+        role: {
+            type : String,
+            required : true
         },
         password: { 
             type: String, 
@@ -110,6 +112,6 @@ const refugeeSchema = new Schema({
         }
 });
 
-const Refugee = mongoose.model('Refugee', refugeeSchema);
+const Refugee = mongoose.model('refugee', refugeeSchema);
 
 export default Refugee;

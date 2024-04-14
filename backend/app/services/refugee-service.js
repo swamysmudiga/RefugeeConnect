@@ -1,6 +1,8 @@
 import refugeeDetails from './../models/refugee.js';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
+import { addLogIn } from './../services/login-service.js';
+
 
 const KEY = 'supersecret';
 
@@ -9,34 +11,36 @@ export const getAllRefugee = async (params) => {
     return refugee;
 }
 
-export const getOneRefugeeById = async (id) => {
-    const refugee = await refugeeDetails.findById(id).exec();
+export const find = async (id) => {
+    const refugee = await refugeeDetails.find({personid: id}).exec();
     return refugee;
 }
 
-export const updateRefugeeById = async (id, updateRefugee) => {
-    const updatedRefugeeDetails = await refugeeDetails.findOneAndUpdate({ id: id }, updateRefugee, { new: true });
+export const update = async (id, updateRefugee) => {
+    const updatedRefugeeDetails = await refugeeDetails.findOneAndUpdate({ personid: id }, updateRefugee, { new: true });
     return updatedRefugeeDetails;
 }
 
-export const removeRefugeeById = async (id) => {
-    await refugeeDetails.findByIdAndDelete(id);
-    return { id };
+export const remove = async (id) => {
+    const removeRefugee = refugeeDetails.deleteOne({personid: id}).exec();
+    return removeRefugee;
 }
 
-export const refugeeLogin = async (loginData) => {
-    const refugee = await refugeeDetails.findOne({ email: loginData.email }).exec();
-    if (!refugee || !(await bcrypt.compare(loginData.password, refugee.password))) {
-        throw new Error('Invalid login credentials'); 
-    }
-    const token = jwt.sign({ email: refugee.email, id: refugee._id }, KEY, { expiresIn: '1h' });
-    return { token, refugeeId: refugee._id };
-}
 
-export const refugeeRegister = async (registrationData) => {
+export const save = async (registrationData) => {
+    console.log("This is register", registrationData);
+    const newObject = {username: registrationData.username, password: registrationData.password, role: registrationData.role};
+    const success = await addLogIn(newObject);
+    console.log(success);
     const hashedPassword = await bcrypt.hash(registrationData.password, 8);
     const newRefugee = new refugeeDetails({ ...registrationData, password: hashedPassword });
     await newRefugee.save();
     const { password, ...refugeeDataWithoutPassword } = newRefugee.toObject();
     return refugeeDataWithoutPassword;
+}
+
+//Registering new refugee
+export const save1 = async (refugees) => {
+    const refugee = new refugeeDetails(refugees);
+    return await refugee.save();
 }

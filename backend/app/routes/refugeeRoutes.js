@@ -3,18 +3,18 @@ import * as refugeeController from './../controllers/refugee-controller.js';
 
 const router = express.Router();
 
+router.route('/register')
+    .post(refugeeController.refugeeRegister)
 
-router.get('/refugee', refugeeController.getAllRefugee);
+router.route('/')
+    .get(refugeeController.getAllRefugee)
 
-router.post('/refugee/login', refugeeController.refugeeLogin);
+router.route('/login')
+    .post(refugeeController.refugeeLogin)
 
-router.post('/refugee/register', refugeeController.refugeeRegister);
-
-router.get('/refugee/:id', refugeeController.getOneRefugeeById);
-
-router.patch('/refugee/:id', refugeeController.updateRefugeeById);
-
-router.delete('/refugee/:id', refugeeController.removeRefugeeById);
-
+router.route('/:id')
+    .get(refugeeController.getOneRefugee)
+    .patch(refugeeController.updateRefugeeById)
+    .delete(refugeeController.removeRefugeeById);
 
 export default router;
