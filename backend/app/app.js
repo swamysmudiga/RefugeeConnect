@@ -9,6 +9,7 @@ export const initialise = (app) =>{
     app.use(cors());
     app.use(express.json());
     app.use(express.urlencoded());
+   
 
     //connection with mongoose
     mongoose.connect(process.env.MONGO_CONNECTION);
