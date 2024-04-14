@@ -1,8 +1,7 @@
 import routes from "./LogInRoutes.js";
-import router from './ResourceRoutes.js';
+import router from "./refugeeRoutes.js";
 
 //Initilize the routes
 export const initializeRouter = (app)=>{
-    app.use('/refugee',routes);
-    app.use('/resources', router);
+    app.use('/refugee',router);
 }
