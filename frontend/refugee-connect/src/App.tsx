@@ -1,10 +1,26 @@
 
 import { useEffect } from 'react';
 import { login } from './util/login';
+import RegistrationForm from './components/RegistrationForm';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import Error from './pages/Error';
+
+
+const route = createBrowserRouter([
+  { 
+    path:'/refugee',
+    element:<RegistrationForm/>,
+    errorElement:<Error></Error>,
+    children:[
+        {  path:'/login', element:<HomePage/> },
+        {  path:'/signup', element:<RegistrationForm/>},
+        {  path:'products/:productId', element:<ProductDetails/> }
+      ],
+  }
+]);
 
 function App() {
   console.log('App is rendering with RegistrationForm');
-
 
   useEffect(()=>{
 
@@ -17,12 +33,7 @@ function App() {
     getTokn();
   },[]);
 
-
-  return (
-    <div>
-      <h1>Welcome to Refugee Connect</h1>
-    </div>
-  );
+  return (<RouterProvider router={route} />);
 }
 
 export default App;

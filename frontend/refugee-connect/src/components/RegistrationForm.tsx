@@ -127,7 +127,7 @@ const RegistrationForm = () => {
                                         aria-label="accountType"
                                         name="accountType"
                                         value={accountType}
-                                        onChange={(e) => setAccountType(e.target.value)}
+                                        onChange={(e : any ) => setAccountType(e.target.value)}
                                     >
                                         <FormControlLabel value="user" control={<Radio />} label="User" />
                                         <FormControlLabel value="refugee" control={<Radio />} label="Refugee" />
