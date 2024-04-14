@@ -1,5 +1,6 @@
 import React from 'react';
 import ContentSection from './ContentSection';
+import ButtonAppBar from './NavBar';
 // import NavBar from './NavBar';
 // import SideBar from './SideBar';
 
