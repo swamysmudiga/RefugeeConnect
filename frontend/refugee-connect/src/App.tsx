@@ -27,18 +27,6 @@ const route = createBrowserRouter([
 
 function App() {
   console.log('App is rendering with RegistrationForm');
-
-  useEffect(()=>{
-
-    async function  getTokn(){
-
-      const data = await login("Swami Mudiga");
-      console.log(data);
-    }
-
-    getTokn();
-  },[]);
-
   return (<RouterProvider router={route} />);
 }
 
