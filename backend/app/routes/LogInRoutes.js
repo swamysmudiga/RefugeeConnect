@@ -3,10 +3,10 @@ import { logIn , getUserLogIn } from '../controllers/login-controller.js'
 
 
 
-const routes = express.Router();
+const LogInroutes = express.Router();
 
-routes.route('/login/:id').get(getUserLogIn);
-routes.route('/login').post(logIn);
+LogInroutes.route('/:id').get(getUserLogIn);
+LogInroutes.route('').post(logIn);
 
 
-export default routes;
+export default LogInroutes;

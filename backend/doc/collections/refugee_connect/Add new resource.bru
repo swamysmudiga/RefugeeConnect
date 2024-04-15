@@ -1,0 +1,21 @@
+meta {
+  name: Add new resource
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:4000/resources/register
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "id" : 3,
+    "name" : "Reource-3",
+    "description" : "Added third resource",
+    "location" : "Boston",
+    "isAvailable" : true
+  }
+}
