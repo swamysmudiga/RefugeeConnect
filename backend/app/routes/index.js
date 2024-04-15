@@ -3,6 +3,8 @@ import RefugeeRouter  from "./refugeeRoutes.js";
 import ResourceRouter  from "./ResourceRoutes.js";
 import LogInroutes from "./LogInRoutes.js"
 import instructorRoutes from "./instructorRoutes.js";
+import donationRoutes from "./donation-routes.js";
+import campRoutes from "./camp-routes.js";
 
 //Initilize the routes
 export const initializeRouter = (app)=>{
@@ -10,4 +12,6 @@ export const initializeRouter = (app)=>{
     app.use('/refugee',RefugeeRouter);
     app.use('/resource',ResourceRouter);
     app.use('/instructor',instructorRoutes);
+    app.use('/donation',donationRoutes);
+    app.use('/camp',campRoutes)
 }
