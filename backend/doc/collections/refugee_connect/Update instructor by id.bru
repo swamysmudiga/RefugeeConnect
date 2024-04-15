@@ -1,0 +1,23 @@
+meta {
+  name: Update instructor by id
+  type: http
+  seq: 10
+}
+
+put {
+  url: http://localhost:4000/instructor/1
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "id" : 1,
+    "name" : "Instructor-1",
+    "username" : "instructor1",
+    "password" : "instructor1",
+    "role" : "Instructor",
+    "email" : "instructor1@gmail.com",
+    "phone_no" : "0987654321"
+  }
+}
