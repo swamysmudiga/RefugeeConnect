@@ -18,6 +18,15 @@ export default function ButtonAppBar() {
     // Add any additional actions you want to take when the language changes
   };
 
+  function handleLogInLogOut(action : String){
+
+    
+
+  }
+
+  const token = localStorage.getItem('token');
+  const role = localStorage.getItem('role');
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="fixed" color="primary" enableColorOnDark>
@@ -45,8 +54,8 @@ export default function ButtonAppBar() {
             <MenuItem value="Marathi">Marathi</MenuItem>
           </Select>
           {/* Add Login and Sign Up buttons to the right side */}
-          <Link to="login"><Button color="secondary">Log In</Button></Link>
-          <Link to="signup"><Button color="secondary">Sign Up</Button></Link>
+          <Link to="login"><Button color="secondary" onClick={ () => handleLogInLogOut(token && role ? 'Log Out' : 'Log In') }>{ (token && role) ?'Log Out':'Log In'}</Button></Link>
+          { (token && role)?'':<Link to="signup"><Button color="secondary">Sign Up</Button></Link> }
         </Toolbar>
       </AppBar>
     </Box>
