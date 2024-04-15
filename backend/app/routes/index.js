@@ -10,4 +10,6 @@ export const initializeRouter = (app)=>{
     app.use('/refugee',RefugeeRouter);
     app.use('/resource',ResourceRouter);
     app.use('/instructor',instructorRoutes);
+
+    
 }
