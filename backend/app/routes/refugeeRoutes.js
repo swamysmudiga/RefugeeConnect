@@ -9,9 +9,6 @@ ResfugeeRouter.route('/register')
 ResfugeeRouter.route('/')
     .get(refugeeController.getAllRefugee)
 
-ResfugeeRouter.route('/login')
-    .post(refugeeController.refugeeLogin)
-
 ResfugeeRouter.route('/:id')
     .get(refugeeController.getOneRefugee)
     .patch(refugeeController.updateRefugeeById)
