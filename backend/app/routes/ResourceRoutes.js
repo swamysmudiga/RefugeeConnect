@@ -3,13 +3,13 @@ import * as resourceController from '../controllers/resource-controller.js';
 
 const ResourceRouter = express.Router();
 
-router.route('/')
+ResourceRouter.route('/')
     .get(resourceController.search)
 
-router.route('/register')
+ResourceRouter.route('/register')
     .post(resourceController.post)
 
-router.route('/:id')
+ResourceRouter.route('/:id')
     .get(resourceController.get)
     .delete(resourceController.deleteResource)
     .put(resourceController.updateResource);

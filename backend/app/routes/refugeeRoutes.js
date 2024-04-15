@@ -3,16 +3,13 @@ import * as refugeeController from './../controllers/refugee-controller.js';
 
 const ResfugeeRouter = express.Router();
 
-router.route('/register')
+ResfugeeRouter.route('/register')
     .post(refugeeController.refugeeRegister)
 
-router.route('/')
+ResfugeeRouter.route('/')
     .get(refugeeController.getAllRefugee)
 
-router.route('/login')
-    .post(refugeeController.refugeeLogin)
-
-router.route('/:id')
+ResfugeeRouter.route('/:id')
     .get(refugeeController.getOneRefugee)
     .patch(refugeeController.updateRefugeeById)
     .delete(refugeeController.removeRefugeeById);
