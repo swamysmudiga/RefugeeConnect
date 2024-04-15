@@ -13,6 +13,8 @@ export default function ButtonAppBar() {
   // Define state to keep track of the selected language
   const [language, setLanguage] = React.useState('English');
   const navigate = useNavigate();
+  const token = localStorage.getItem('token');
+  const role = localStorage.getItem('role');
   // Define a function to handle language changes
   const handleLanguageChange = (event: SelectChangeEvent) => {
     setLanguage(event.target.value);
@@ -29,10 +31,7 @@ export default function ButtonAppBar() {
     }
    
   }
-
-  const token = localStorage.getItem('token');
-  const role = localStorage.getItem('role');
-
+  
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="fixed" color="primary" enableColorOnDark>
