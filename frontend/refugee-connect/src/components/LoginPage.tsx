@@ -1,37 +1,50 @@
 import React, { useState } from 'react';
 import { Box, Button, TextField, Typography, Paper } from '@mui/material';
+import loginPageImage from '../images/LoginPage.jpg';
+import { login } from '../util/login';
+import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
   // Define state variables for username and password
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
   // Define a function to handle form submission
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async(event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    
     // Add your login logic here, e.g., sending a request to your authentication server
     console.log('Username:', username);
     console.log('Password:', password);
+
+    const result = await login(username , password);
+
+    navigate('/refugee');
   };
 
   return (
     <Box
       sx={{
         display: 'flex',
-        justifyContent: 'center', 
-        alignItems: 'center', 
-        height: '100vh', 
-        width: '100%',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100vh',
+        width: '100vw',
+        backgroundImage: `url(${loginPageImage})`, 
+        backgroundSize: 'cover', 
+        backgroundPosition: 'center',
       }}
     >
       {/* Paper component for the login form with shadow */}
       <Paper
         sx={{
-          padding: 4, 
+          padding: 4,
           boxShadow: 3,
           borderRadius: 2,
-          width: '400px', 
+          width: '400px',
           textAlign: 'center',
+          opacity: 0.8,
         }}
       >
         {/* Title */}
@@ -67,15 +80,16 @@ const LoginPage = () => {
           />
 
           {/* Submit button */}
-          <Button
-            type="submit"
-            variant="contained"
-            color="primary"
-            fullWidth
-            sx={{ mt: 2, width: '25%' }}
-          >
-            Login
-          </Button>
+          <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              sx={{ width: '25%' }}
+            >
+              Login
+            </Button>
+          </Box>
         </form>
       </Paper>
     </Box>

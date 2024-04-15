@@ -1,0 +1,21 @@
+meta {
+  name: Update resource by id
+  type: http
+  seq: 5
+}
+
+put {
+  url: http://localhost:4000/resource/3
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "id" : 3,
+    "name" : "Reource-3",
+    "description" : "Added third resource",
+    "location" : "NewYork",
+    "isAvailable" : true
+  }
+}
