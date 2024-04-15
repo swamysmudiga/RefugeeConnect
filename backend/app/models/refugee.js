@@ -1,14 +1,17 @@
 import mongoose from 'mongoose';
-const { Schema } = mongoose;
+import counter from './counterId.js'; 
 
-const refugeeSchema = new Schema({
+const refugeeSchema = new mongoose.Schema({
         personid: { 
-            type: Number, 
-            required: true  
+            type: String, 
+            index: { 
+                unique: true 
+            } 
         },
         username: { 
             type: String, 
-            required: true
+            required: true, 
+            unique: true 
         },
         role: {
             type : String,
@@ -45,10 +48,6 @@ const refugeeSchema = new Schema({
         family_status: { 
             type: String, 
             required: false 
-        },
-        has_dependents: { 
-            type: Boolean, 
-            required: true 
         },
         previous_location: { 
             type: String, 
@@ -112,6 +111,20 @@ const refugeeSchema = new Schema({
         }
 });
 
-const Refugee = mongoose.model('refugee', refugeeSchema);
 
-export default Refugee;
+refugeeSchema.pre('save', async function(next) {
+    if (this.isNew) {  
+        const count = await counter.findByIdAndUpdate(
+            { _id: 'refugee' },  
+            { $inc: { seq: 1 } },  
+            { new: true, upsert: true }  
+        );
+        this.personid = `ref_${count.seq}`;  
+    }
+    next();  
+});
+
+
+const refugeeDetails = mongoose.model('RefugeeDetails', refugeeSchema);
+
+export default refugeeDetails;

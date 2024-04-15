@@ -38,9 +38,3 @@ export const save = async (registrationData) => {
     const { password, ...refugeeDataWithoutPassword } = newRefugee.toObject();
     return refugeeDataWithoutPassword;
 }
-
-//Registering new refugee
-export const save1 = async (refugees) => {
-    const refugee = new refugeeDetails(refugees);
-    return await refugee.save();
-}
