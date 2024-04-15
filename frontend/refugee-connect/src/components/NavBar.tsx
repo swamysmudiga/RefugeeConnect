@@ -6,22 +6,28 @@ import Button from '@mui/material/Button';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import { SelectChangeEvent } from '@mui/material';
-import { Link } from "react-router-dom"
+import { Link , useNavigate } from "react-router-dom"
+import { login, loginOut } from '../util/login';
 
 export default function ButtonAppBar() {
   // Define state to keep track of the selected language
   const [language, setLanguage] = React.useState('English');
-
+  const navigate = useNavigate();
   // Define a function to handle language changes
   const handleLanguageChange = (event: SelectChangeEvent) => {
     setLanguage(event.target.value);
     // Add any additional actions you want to take when the language changes
   };
 
-  function handleLogInLogOut(action : String){
+  async function handleLogInLogOut(action : String){
 
-    
-
+    if(action == 'Log Out'){
+      await loginOut();
+      navigate('/refugee');
+    }else{
+      navigate('/refugee/login');
+    }
+   
   }
 
   const token = localStorage.getItem('token');
