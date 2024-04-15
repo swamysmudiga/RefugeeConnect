@@ -11,13 +11,14 @@ const LoginPage = () => {
   const navigate = useNavigate();
 
   // Define a function to handle form submission
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async(event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     
     // Add your login logic here, e.g., sending a request to your authentication server
     console.log('Username:', username);
     console.log('Password:', password);
-    const result = login(username , password);
+
+    const result = await login(username , password);
 
     navigate('/refugee');
   };
