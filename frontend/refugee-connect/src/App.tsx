@@ -1,30 +1,33 @@
 
 import { useEffect } from 'react';
 import { login } from './util/login';
-import MainHomePage from './components/MainHomePage'
+import RegistrationForm from './components/RegistrationForm';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import Error from './pages/Error';
+import LoginPage from './components/LoginPage';
+import MainHomePage from './components/MainHomePage';
+import RootLayout from './pages/NavBar';
+
+
+const route = createBrowserRouter([
+  { 
+    path:'/refugee',
+    element:<RootLayout/>,
+    errorElement:<Error></Error>,
+    children:[
+      { path:'', element:<MainHomePage/>,},
+      {  path:'login', element:<LoginPage/> },
+      { path:'signup', element:<RegistrationForm/> },
+  
+    ]
+  },
+    
+]);
+
 
 function App() {
   console.log('App is rendering with RegistrationForm');
-
-
-  useEffect(()=>{
-
-    async function  getTokn(){
-
-      const data = await login("Swami Mudiga");
-      console.log(data);
-    }
-
-    getTokn();
-  },[]);
-
-
-  return (
-    <div>
-      {/* <h1>Welcome to Refugee Connect</h1> */}
-      <MainHomePage />
-    </div>
-  );
+  return (<RouterProvider router={route} />);
 }
 
 export default App;

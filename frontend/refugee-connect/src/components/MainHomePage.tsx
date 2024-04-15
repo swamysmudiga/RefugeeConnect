@@ -1,13 +1,14 @@
 import React from 'react';
 import ContentSection from './ContentSection';
 import ButtonAppBar from './NavBar';
+// import NavBar from './NavBar';
 // import SideBar from './SideBar';
 
 const MainHomePage = () => {
   return (
     <div>
-      <ButtonAppBar />
-      {/* <SideBar /> */}
+      {/* <NavBar />
+      <SideBar /> */}
       <ContentSection />
     </div>
   );
