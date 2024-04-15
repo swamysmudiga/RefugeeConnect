@@ -1,23 +1,6 @@
-// Camp:
-//       type: object
-//       properties:
-//         donationid:
-//           type: integer
-//           format: int64
-//           examples:
-//             - 20
-//         personid:
-//           type: integer
-//           format: int64
-//           examples:
-//             - 40
-//         donationAmount:
-//           type: number  
-//           format: double   
-//           examples:
-//             - 2000.0
-
 import mongoose from "mongoose";
+import counter from './counterId.js';
+
 
 //Schema for Camp Facilities 
 const campFacilities = new mongoose.Schema({
@@ -58,8 +41,10 @@ const supportingOrganizations = new mongoose.Schema({
 //Schema for entire Camp
 const camp = new mongoose.Schema({
     campId:{
-        type : Number,
-        required : true
+        type : String,
+        index:{
+            unique : true
+        }
     },
     campName:{
         type : String,
@@ -106,6 +91,17 @@ const camp = new mongoose.Schema({
     }
 });
 
+camp.pre('save', async function(next) {
+    if (this.isNew) {  
+        const count = await counter.findByIdAndUpdate(
+            { _id: 'camp' },  
+            { $inc: { seq: 1 } },  
+            { new: true, upsert: true }  
+        );
+        this.campId = `cam_${count.seq}`; 
+    }
+    next();  
+});
 
 const camp_model = mongoose.model('camp',camp);
 
