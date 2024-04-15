@@ -1,4 +1,3 @@
-
 import RefugeeRouter  from "./refugeeRoutes.js";
 import ResourceRouter  from "./ResourceRoutes.js";
 import LogInroutes from "./LogInRoutes.js"
@@ -10,6 +9,4 @@ export const initializeRouter = (app)=>{
     app.use('/refugee',RefugeeRouter);
     app.use('/resource',ResourceRouter);
     app.use('/instructor',instructorRoutes);
-
-    
 }
