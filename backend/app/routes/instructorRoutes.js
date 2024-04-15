@@ -11,7 +11,7 @@ InstructorRouter.route('/register')
 
 InstructorRouter.route('/:id')
     .get(instructorController.get)
-    .delete(instructorController.deleteResource)
-    .put(instructorController.updateResource);
+    .delete(instructorController.deleteInstructor)
+    .put(instructorController.updateInstructor);
 
 export default InstructorRouter;

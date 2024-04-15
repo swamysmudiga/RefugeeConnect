@@ -27,7 +27,7 @@ export const save = async (instructor) => {
     const newObject = {username: instructor.username, password: instructor.password, role: instructor.role};
     const success = await addLogIn(newObject);
     console.log(success);
-    const hashedPassword = await bcrypt.hash(registrationData.password, 8);
+    const hashedPassword = await bcrypt.hash(instructor.password, 8);
     const newInstructor = new instructors({ ...instructor, password: hashedPassword });
     await newInstructor.save();
     const { password, ...instructorDataWithoutPassword } = newInstructor.toObject();
