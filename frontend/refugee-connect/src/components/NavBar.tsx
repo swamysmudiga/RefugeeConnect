@@ -38,9 +38,9 @@ export default function ButtonAppBar() {
         <Toolbar>
           {/* Add the company logo image */}
           <img
-            src="/path/to/logo.png"
+            src="../src/images/logo.png"
             alt="Company Logo"
-            style={{ height: '40px', marginRight: '16px' }}
+            style={{ height: '50px', marginRight: '16px' }}
           />
           <Link to="/refugee"><Button color="secondary">Home</Button></Link>
           <Button color="inherit">Contact Us</Button>
