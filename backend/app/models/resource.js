@@ -13,6 +13,19 @@ const resource = new mongoose.Schema({
         type : String,
         required : true
     },
+    contentType: {
+        type : String,
+        required : true
+    },
+    createdDate: {
+        type: Date,
+        default: Date.now,
+        required: true
+    },
+    userId: {
+        type : String,
+        required : true
+    },
     location: {
         type : String,
         required : true
