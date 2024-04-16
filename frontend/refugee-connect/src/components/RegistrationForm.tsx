@@ -6,7 +6,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Typography, TextField, Button, RadioGroup, Radio, FormControlLabel, FormControl, Paper, Grid, Container } from '@mui/material';
 import '../App.css';
 import refugeeImage from '../images/refugee.jpg';
-import { Outlet } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import  { crearegistration }  from '../util/refugee-services';
 
 const userValidationSchema = Yup.object({
   username: Yup.string()
@@ -19,7 +20,7 @@ const userValidationSchema = Yup.object({
   email: Yup.string()
     .email('Invalid email')
     .required('Email is required'),
-    contact_no: Yup.string()
+    phone_no: Yup.string()
     .matches(/^[0-9]{10}$/, "Contact number must be number and 10 digits")
     .required('Contact number is required'),
 });
@@ -63,7 +64,7 @@ const initialUserValues = {
   username: '',
   password: '',
   email: '',
-  contact_no: '',
+  phone_no: '',
 };
 
 // Initial values for refugee form
@@ -96,11 +97,16 @@ const initialRefugeeValues = {
 
 const RegistrationForm = () => {
     const [accountType, setAccountType] = useState('user');
+    const navigate = useNavigate();
 
-    const handleSubmit = (values: any, actions: { setSubmitting: (arg0: boolean) => void; }) => {
+    const handleSubmit = async(values: any, actions: { setSubmitting: (arg0: boolean) => void; }) => {
       toast.success("Registration Successful!");
+      values.role = accountType;
       console.log(values);
+
+      const response = await crearegistration(values);
       actions.setSubmitting(false);
+      navigate('/refugee/login');
     };
 
 
@@ -146,14 +152,12 @@ const RegistrationForm = () => {
                     <Field as={TextField} name="email" label="Email" fullWidth margin="normal" />
                     <ErrorMessage name="email" component="div" className="field-error" />
                   </Grid>
+                  <Grid item xs={12} md={6}>
+                        <Field as={TextField} name="phone_no" label="Phone Number" fullWidth margin="normal" />
+                        <ErrorMessage name="phone_no" component="div" className="field-error" />
+                  </Grid>
                   
-                  {/* User Specific Fields */}
-                  {accountType === 'user' && (
-                    <Grid item xs={12}>
-                      <Field as={TextField} name="contact_no" label="Contact Number" fullWidth margin="normal" />
-                      <ErrorMessage name="contact_no" component="div" className="field-error" />
-                    </Grid>
-                  )}
+                 
                   
                   {/* Refugee Specific Fields */}
                   {accountType === 'refugee' && (
@@ -237,10 +241,6 @@ const RegistrationForm = () => {
                         <ErrorMessage name="address" component="div" className="field-error" />
                       </Grid>
                       <Grid item xs={12} md={6}>
-                        <Field as={TextField} name="phone_no" label="Phone Number" fullWidth margin="normal" />
-                        <ErrorMessage name="phone_no" component="div" className="field-error" />
-                      </Grid>
-                      <Grid item xs={12} md={6}>
                         <Field as={TextField} name="blood_type" label="Blood Type" fullWidth margin="normal" />
                         <ErrorMessage name="blood_type" component="div" className="field-error" />
                       </Grid>
@@ -252,8 +252,8 @@ const RegistrationForm = () => {
                         <Field as={TextField} name="weight" label="Weight" fullWidth margin="normal" />
                         <ErrorMessage name="weight" component="div" className="field-error" />
                       </Grid>
-                    </>
-                  )}
+                    </>)
+                  }
                   
                   <Grid item xs={12}>
                     <Button
@@ -277,4 +277,6 @@ const RegistrationForm = () => {
     );
 }
   
-  export default RegistrationForm;
+export default RegistrationForm;
+
+  

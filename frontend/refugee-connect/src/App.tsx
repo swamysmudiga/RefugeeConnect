@@ -7,6 +7,8 @@ import Error from './pages/Error';
 import LoginPage from './components/LoginPage';
 import MainHomePage from './components/MainHomePage';
 import RootLayout from './pages/NavBar';
+import { Provider } from 'react-redux'; 
+import store from './store/store';
 
 
 const route = createBrowserRouter([
@@ -27,7 +29,7 @@ const route = createBrowserRouter([
 
 function App() {
   console.log('App is rendering with RegistrationForm');
-  return (<RouterProvider router={route} />);
+  return (<Provider store={store}><RouterProvider router={route} /></Provider>);
 }
 
 export default App;
