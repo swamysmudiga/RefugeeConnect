@@ -3,7 +3,7 @@ import counter from './counterId.js';
 
 const userStorySchema = new mongoose.Schema({
     storyId: {
-        type: Number,
+        type: String,
         index:{
             unique : true
         }
