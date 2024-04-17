@@ -1,24 +1,38 @@
 import React, { useState } from 'react';
 import { TextField, Button, Typography, Container, Grid } from '@mui/material';
+import { addStoryAsync } from '../store/story/story-reducer-actions';
+import { useNavigate } from 'react-router-dom';
 
 const AddStoryForm = () => {
   const [storyData, setStoryData] = useState({
-    storyId: '',
     refugeeId: '',
     title: '',
     description: '',
     image: '',
   });
 
+  const navigate = useNavigate();
+
   const handleChange = (e : any) => {
     const { name, value } = e.target;
     setStoryData({ ...storyData, [name]: value });
   };
 
-  const handleSubmit = (e : any) => {
+  const handleImageChange = (e : any) => {
+    const imageFile = e.target.files[0]; // Get the selected image file
+    setStoryData({ ...storyData, image: imageFile }); // Update the image property in storyData
+  };
+
+  const handleSubmit = async(e : any) => {
     e.preventDefault();
     // Handle submission of storyData
     console.log(storyData);
+    const writeStory = {...storyData , refugeeId : localStorage.getItem("personId")}
+    console.log("Story Object - ", writeStory);
+    //const response  = await addStoryAsync(storyData);
+
+    navigate('/refugee/story');
+
   };
 
   return (
@@ -28,24 +42,6 @@ const AddStoryForm = () => {
       </Typography>
       <form onSubmit={handleSubmit}>
         <Grid container spacing={3}>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              fullWidth
-              label="Story ID"
-              name="storyId"
-              value={storyData.storyId}
-              onChange={handleChange}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              fullWidth
-              label="Refugee ID"
-              name="refugeeId"
-              value={storyData.refugeeId}
-              onChange={handleChange}
-            />
-          </Grid>
           <Grid item xs={12}>
             <TextField
               fullWidth
@@ -67,13 +63,18 @@ const AddStoryForm = () => {
             />
           </Grid>
           <Grid item xs={12}>
-            <TextField
-              fullWidth
-              label="Image Path"
-              name="image"
-              value={storyData.image}
-              onChange={handleChange}
+            <input
+              accept="image/*"
+              style={{ display: 'none' }}
+              id="contained-button-file"
+              type="file"
+              onChange={handleImageChange}
             />
+            <label htmlFor="contained-button-file">
+              <Button variant="contained" component="span">
+                Upload Image
+              </Button>
+            </label>
           </Grid>
           <Grid item xs={12}>
             <Button type="submit" variant="contained" color="primary">
