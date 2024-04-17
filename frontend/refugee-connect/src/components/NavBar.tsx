@@ -43,6 +43,7 @@ export default function ButtonAppBar() {
             style={{ height: '50px', marginRight: '16px' }}
           />
           <Link to="/refugee"><Button color="secondary">Home</Button></Link>
+          { token && (role === 'refugee') && <Link to="/refugee/addStory"><Button color="secondary">Add Story</Button></Link>}
           <Button color="inherit">Contact Us</Button>
           <Button color="inherit">Donate Us</Button>
           

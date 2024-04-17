@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container, Typography, Dialog, DialogTitle, DialogContent, DialogActions, Button, Grid } from '@mui/material';
 import Slider, { Settings } from 'react-slick';
 import 'slick-carousel/slick/slick.css';
@@ -9,17 +9,47 @@ import UserStory2 from '../images/UserStory-2.jpg';
 import UserStory3 from '../images/UserStory-3.jpg';
 import UserStory5 from '../images/UserStory-5.jpg';
 import UserStory6 from '../images/UserStory-6.jpg';
+import { addStoryAsync , removeStoryAsync , updateStoryAsync , getAllStoryAsync } from '../store/story/story-reducer-actions'
+import {  useSelector , useDispatch } from 'react-redux';
+import { RootState } from '../store/root-reducers'; 
+import { number } from 'yup';
 
 // Define the Story interface
-interface Story {
+export interface Story {
+    storyId: number;
+    refugeeId: number;
     title: string;
-    image: string;
     description: string;
-}
+    image: string;
+  }
 
 const UserStories: React.FC = () => {
     const [selectedStory, setSelectedStory] = useState<Story | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const story = useSelector((state: RootState) => state.story.userStories); 
+    console.log("story is ",story);
+    
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        const fetchAllStory = async () => {
+          await dispatch(getAllStoryAsync());
+        };
+    
+        fetchAllStory();
+      }, [dispatch]);
+
+    const handleModalDelete = (storyId : number) =>{
+
+        const fetchAllStory = async () => {
+            await dispatch(removeStoryAsync(storyId));
+            setSelectedStory(null);
+          };
+      
+          fetchAllStory();
+
+    }
 
     // Define arrow components for the slider
     const SamplePrevArrow = ({ className, style, onClick }: any) => (
@@ -80,39 +110,6 @@ const UserStories: React.FC = () => {
         nextArrow: <SampleNextArrow />,
     };
 
-    const stories: Story[] = [
-        {
-            title: "Amina's Journey from Syria",
-            image: UserStory1,
-            description: 'Amina was a school teacher in Aleppo when the conflict started. She fled with her family to Turkey, leaving behind everything they owned. With the help of friends, they crossed the border and found temporary refuge in a camp. Life in the camp was difficult, but she was grateful for safety. Eventually, Amina and her family were resettled in Germany, where she began teaching Arabic to other refugee children while also learning German.',
-        },
-        {
-            title: "Carlos' Escape from Venezuela",
-            image: UserStory2,
-            description: "Carlos was a university student when Venezuela's political crisis worsened. Facing food shortages and violence, he decided to leave for Colombia. The journey was long and perilous, but Carlos eventually made it to Bogotá, where he found work as a laborer. He continues to support his family back home and hopes to one day return to finish his studies.",
-        },
-        {
-            title: "Linh's Resettlement from Myanmar",
-            image: UserStory3,
-            description: "Linh, a member of the Rohingya minority in Myanmar, faced persecution and violence in her home country. She and her family fled to a refugee camp in Bangladesh, where they spent years living in challenging conditions. With the help of international organizations, Linh and her family were resettled in Australia. Linh now works in a community center helping other refugees adjust to their new lives.",
-        },
-        {
-            title: "Suleiman's New Life from Sudan",
-            image: UserStory4,
-            description: "Suleiman fled the conflict in Darfur when he was a teenager. He spent several years in a refugee camp in Chad before being resettled in the United States. Despite facing numerous challenges, Suleiman was determined to build a new life. He found work in a restaurant and later started his own catering business. Today, Suleiman uses his culinary skills to introduce Sudanese cuisine to his new community.",
-        },
-        {
-            title: "Fatima's Struggle from Afghanistan",
-            image: UserStory5,
-            description: "Fatima's family fled Afghanistan due to ongoing violence and insecurity. They traveled to Pakistan, where they lived as undocumented refugees for many years. Eventually, Fatima's family was granted asylum in Canada. Fatima now works as a nurse, helping other newcomers access healthcare services and supporting her own family.",
-        },
-        {
-            title: "Samuel's Pursuit of Peace from Eritrea",
-            image: UserStory6,
-            description: "Samuel was conscripted into indefinite military service in Eritrea. Seeking freedom and a better future, he escaped and made his way to Ethiopia, where he sought refuge. After spending some time in a refugee camp, Samuel was resettled in Norway. He now works as a translator and is actively involved in advocacy for human rights and refugee support.",
-        },
-    ];
-
     const handleStoryClick = (story: Story) => {
         setSelectedStory(story);
         setIsModalOpen(true);
@@ -145,7 +142,7 @@ const UserStories: React.FC = () => {
                         </Typography>
 
                         <Slider {...sliderSettings}>
-                            {stories.map((story, index) => (
+                            {story.map((story, index) => (
                                 <div
                                     key={index}
                                     onClick={() => handleStoryClick(story)}
@@ -209,6 +206,9 @@ const UserStories: React.FC = () => {
                             </Grid>
                         </DialogContent>
                         <DialogActions>
+                        <Button onClick={() => handleModalDelete(selectedStory.storyId)} color="primary">
+                                Delete
+                            </Button>
                             <Button onClick={handleModalClose} color="primary">
                                 Close
                             </Button>
