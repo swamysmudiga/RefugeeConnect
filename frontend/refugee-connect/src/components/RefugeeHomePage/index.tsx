@@ -3,6 +3,10 @@ import Accommodation from './Accomodation';
 import FoodDistributionCenter from './FoodDistributionCenter';
 import MedicalClinic from './MedicialClinic';
 import ResourceSection from './Resources';
+import UserStories from '../UserStories';
+import { Container, Typography, Button, Grid, Card, CardContent, IconButton, CardMedia } from '@mui/material';
+import ViwAllResourceAndNearbyCamps from './NewResource';
+
 
 
 
@@ -13,7 +17,11 @@ const ResourceHomePage = () => {
       <FoodDistributionCenter />
       <FoodDistributionCenter />
       <MedicalClinic /> */}
-      <ResourceSection />
+      <ViwAllResourceAndNearbyCamps />
+      {/* <Container style={{ maxHeight: '80vh', overflowY: 'scroll' }}>
+        <UserStories />
+      </Container> */}
+      
     </div>
   );
 };
