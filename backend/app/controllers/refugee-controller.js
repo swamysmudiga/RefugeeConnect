@@ -14,12 +14,16 @@ export const getAllRefugee = async (request, response) => {
 
 export const refugeeRegister = async (request , response) => {
     try {
+
+        console.log("request body is - ",request.body);
+        
         const success = await loginService.findByUserName(request.body.username);
         
         if(success){
             return response.status(402).json({ message: 'User already created.'});
         }
         const refugee = { ...request.body };
+        console.log(" Refugee is from register - ", refugee);
         const refugees = await refugeeService.save(refugee);
         setResponse(refugees, response);
     } catch(error) {

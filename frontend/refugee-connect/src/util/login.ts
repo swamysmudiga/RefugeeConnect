@@ -14,6 +14,7 @@ export const login= async(username : String , password : String) =>{
 
     localStorage.setItem('token', resData.token);
     localStorage.setItem('role', resData.user.role);
+    localStorage.setItem('personId', resData.user.personid);
 
 
    }catch(error){
