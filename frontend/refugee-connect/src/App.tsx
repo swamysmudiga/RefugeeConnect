@@ -11,12 +11,9 @@ import RootLayout from './pages/NavBar';
 import Accommodation from './components/RefugeeHomePage/Accomodation';
 import FoodDistributionCenter from './components/RefugeeHomePage/FoodDistributionCenter';
 import MedicalClinic from './components/RefugeeHomePage/MedicialClinic';
-<<<<<<< HEAD
 import AddStoryForm from './components/AddStory';
 import UserStories from './components/UserStories';
-=======
-import ViewResource from './components/RefugeeHomePage/ViewResource.tsx';
->>>>>>> 8bf6e22a61e41a29ed67a57f91840bef15fb908f
+
 
 const route = createBrowserRouter([
   { 
@@ -30,14 +27,10 @@ const route = createBrowserRouter([
       { path:'signup', element:<RegistrationForm/> },
       { path:'accommodation', element:<Accommodation/> },
       { path:'food-distribution', element:<FoodDistributionCenter/> },
-<<<<<<< HEAD
       { path:'medical-clinic', element:<MedicalClinic/> },
       { path:'addStory', element:<AddStoryForm/> },
       { path:'story', element:<UserStories/> }
-=======
-      { path:'medical-clinic', element:<MedicalClinic/> }
-  
->>>>>>> 8bf6e22a61e41a29ed67a57f91840bef15fb908f
+
     ]
   },
     
