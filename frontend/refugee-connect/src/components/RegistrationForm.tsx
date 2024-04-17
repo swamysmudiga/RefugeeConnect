@@ -7,7 +7,7 @@ import { Typography, TextField, Button, RadioGroup, Radio, FormControlLabel, For
 import '../App.css';
 import refugeeImage from '../images/refugee.jpg';
 import { useNavigate } from "react-router-dom";
-import  { crearegistration }  from '../util/refugee-services';
+import  { createRegistration }  from '../util/refugee-services';
 
 const userValidationSchema = Yup.object({
   username: Yup.string()
@@ -104,9 +104,9 @@ const RegistrationForm = () => {
       values.role = accountType;
       console.log(values);
 
-      const response = await crearegistration(values);
+      const response = await createRegistration(values);
       actions.setSubmitting(false);
-      navigate('/refugee/login');
+      navigate('/login');
     };
 
 
