@@ -33,37 +33,49 @@ export default function ButtonAppBar() {
   }
   
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="fixed" color="primary" enableColorOnDark>
-        <Toolbar>
-          {/* Add the company logo image */}
-          <img
-            src="../src/images/logo.png"
-            alt="Company Logo"
-            style={{ height: '50px', marginRight: '16px' }}
-          />
-          <Link to="/refugee"><Button color="secondary">Home</Button></Link>
-          { token && (role === 'refugee') && <Link to="/refugee/addStory"><Button color="secondary">Add Story</Button></Link>}
-          <Button color="inherit">Contact Us</Button>
-          <Button color="inherit">Donate Us</Button>
-          
-          {/* Add a Box with flexGrow: 1 to push the other elements to the right */}
-          <Box sx={{ flexGrow: 1 }} />
-          
-          {/* Add the language dropdown to the right side */}
-          <Select
-            value={language}
-            onChange={handleLanguageChange}
-            sx={{ marginRight: 2 }}
-          >
-            <MenuItem value="English">English</MenuItem>
-            <MenuItem value="Marathi">Marathi</MenuItem>
-          </Select>
-          {/* Add Login and Sign Up buttons to the right side */}
-          <Button color="secondary" onClick={ () => handleLogInLogOut(token && role ? 'Log Out' : 'Log In') }>{ (token && role) ?'Log Out':'Log In'}</Button>
-          { (token && role)?'':<Link to="signup"><Button color="secondary">Sign Up</Button></Link> }
-        </Toolbar>
-      </AppBar>
-    </Box>
+    <ThemeProvider theme={theme}>
+      <Slide appear={false} direction="down" in={!trigger}>
+        <AppBar position="fixed" color="primary">
+          <Toolbar>
+            <Box sx={{ display: 'flex', alignItems: 'center', mr: 2 }}>
+              <img src="../src/images/logo.png" alt="Refugee Connect Logo" height="40" />
+              <Typography variant="h6" component="div" sx={{ fontFamily: 'cursive', ml: 1 }}>
+                Refugee Connect
+              </Typography>
+            </Box>
+            <Box sx={{ flexGrow: 1 }} />
+            <Link to="/refugee"><Button color="secondary" variant="contained" sx={{ mr: 2 }}>Home</Button></Link>
+            <Button color="inherit" sx={{ mr: 2 }}>Contact</Button>
+            <Button color="inherit" sx={{ mr: 2 }}>Donate</Button>
+            <Select
+              value={language}
+              onChange={handleLanguageChange}
+              sx={{ width: 100, marginRight: 2, bgcolor: 'background.paper' }}
+              size="small"
+            >
+              <MenuItem value="English">English</MenuItem>
+              <MenuItem value="Marathi">Marathi</MenuItem>
+            </Select>
+            <Button color="secondary" onClick={() => handleLogInLogOut(token && role ? 'Log Out' : 'Log In')} sx={{ mr: 2 }}>
+              {token && role ? 'Log Out' : 'Log In'}
+            </Button>
+            {!token && !role && (
+              <Button
+                color="secondary"
+                variant="outlined"
+                sx={{ mr: 2 }}
+                onClick={() => navigate('/refugee/signup')} // Add this line to handle the click event
+              >
+                Sign Up
+              </Button>
+            )}
+            <FormControlLabel
+              control={<Switch checked={themeMode === 'light'} onChange={handleThemeChange} />}
+              label="Theme"
+            />
+          </Toolbar>
+        </AppBar>
+      </Slide>
+    </ThemeProvider>
   );
 }
