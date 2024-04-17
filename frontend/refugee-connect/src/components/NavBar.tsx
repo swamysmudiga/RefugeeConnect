@@ -1,37 +1,86 @@
 import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import Button from '@mui/material/Button';
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
-import { SelectChangeEvent } from '@mui/material';
-import { Link , useNavigate } from "react-router-dom"
-import { login, loginOut } from '../util/login';
+import { AppBar, Box, Toolbar, Typography, Button, Select, MenuItem, SelectChangeEvent, useMediaQuery, ThemeProvider, createTheme, Switch, FormControlLabel, Slide, useScrollTrigger } from '@mui/material';
+import { Link, useNavigate } from "react-router-dom";
+import { loginOut } from '../util/login';
 
-export default function ButtonAppBar() {
-  // Define state to keep track of the selected language
+// Dynamic Theme
+const getTheme = (mode: 'light' | 'dark') => createTheme({
+  palette: {
+    mode,
+    ...(mode === 'dark' ? {
+      primary: {
+        main: '#90caf9',
+      },
+      secondary: {
+        main: '#f48fb1',
+      },
+      background: {
+        default: '#000000',
+        paper: '#424242',
+      },
+    } : {
+      primary: {
+        main: '#1976d2',
+      },
+      secondary: {
+        main: '#dc004e',
+      },
+    }),
+  },
+  components: {
+    MuiAppBar: {
+      styleOverrides: {
+        root: {
+          borderBottom: mode === 'dark' ? '1px solid rgba(255, 255, 255, 0.12)' : '1px solid rgba(0, 0, 0, 0.12)',
+        },
+      },
+    },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          borderRadius: 20,
+          marginLeft: '16px', // Add spacing between buttons
+        },
+      },
+    },
+    MuiTypography: {
+      styleOverrides: {
+        h6: {
+          fontFamily: 'cursive', // Change font style for "Refugee Connect"
+        },
+      },
+    },
+  },
+});
+
+export default function StylishNavBar() {
   const [language, setLanguage] = React.useState('English');
+  const [themeMode, setThemeMode] = React.useState<'light' | 'dark'>('dark');
   const navigate = useNavigate();
   const token = localStorage.getItem('token');
   const role = localStorage.getItem('role');
-  // Define a function to handle language changes
+  const matches = useMediaQuery('(min-width:600px)');
+  const trigger = useScrollTrigger();
+
   const handleLanguageChange = (event: SelectChangeEvent) => {
     setLanguage(event.target.value);
-    // Add any additional actions you want to take when the language changes
   };
 
-  async function handleLogInLogOut(action : String){
-
-    if(action == 'Log Out'){
+  async function handleLogInLogOut(action: String) {
+    if (action === 'Log Out') {
       await loginOut();
       navigate('/refugee');
-    }else{
+    } else {
       navigate('/refugee/login');
     }
-   
   }
-  
+
+  const handleThemeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setThemeMode(event.target.checked ? 'light' : 'dark');
+  };
+
+  const theme = React.useMemo(() => getTheme(themeMode), [themeMode]);
+
   return (
     <ThemeProvider theme={theme}>
       <Slide appear={false} direction="down" in={!trigger}>
