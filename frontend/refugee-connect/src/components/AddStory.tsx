@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
 import { TextField, Button, Typography, Container, Grid } from '@mui/material';
+import { addStoryAsync } from '../store/story/story-reducer-actions';
+import { useNavigate } from 'react-router-dom';
 
 const AddStoryForm = () => {
   const [storyData, setStoryData] = useState({
-    storyId: '',
     refugeeId: '',
     title: '',
     description: '',
     image: '',
   });
+
+  const navigate = useNavigate();
 
   const handleChange = (e : any) => {
     const { name, value } = e.target;
@@ -20,10 +23,16 @@ const AddStoryForm = () => {
     setStoryData({ ...storyData, image: imageFile }); // Update the image property in storyData
   };
 
-  const handleSubmit = (e : any) => {
+  const handleSubmit = async(e : any) => {
     e.preventDefault();
     // Handle submission of storyData
     console.log(storyData);
+    const writeStory = {...storyData , refugeeId : localStorage.getItem("personId")}
+    console.log("Story Object - ", writeStory);
+    //const response  = await addStoryAsync(storyData);
+
+    navigate('/refugee/story');
+
   };
 
   return (
