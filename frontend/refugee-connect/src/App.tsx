@@ -11,6 +11,7 @@ import RootLayout from './pages/NavBar';
 import Accommodation from './components/RefugeeHomePage/Accomodation';
 import FoodDistributionCenter from './components/RefugeeHomePage/FoodDistributionCenter';
 import MedicalClinic from './components/RefugeeHomePage/MedicialClinic';
+import ViewResource from './components/RefugeeHomePage/ViewResource.tsx';
 
 const route = createBrowserRouter([
   { 
@@ -34,6 +35,7 @@ const route = createBrowserRouter([
 function App() {
   console.log('App is rendering with RegistrationForm');
   return (<RouterProvider router={route} />);
+  //return (<ViewResource />)
 }
 
 export default App;
