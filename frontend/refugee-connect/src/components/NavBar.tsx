@@ -60,7 +60,7 @@ export default function ButtonAppBar() {
             <MenuItem value="Marathi">Marathi</MenuItem>
           </Select>
           {/* Add Login and Sign Up buttons to the right side */}
-          <Link to="login"><Button color="secondary" onClick={ () => handleLogInLogOut(token && role ? 'Log Out' : 'Log In') }>{ (token && role) ?'Log Out':'Log In'}</Button></Link>
+          <Button color="secondary" onClick={ () => handleLogInLogOut(token && role ? 'Log Out' : 'Log In') }>{ (token && role) ?'Log Out':'Log In'}</Button>
           { (token && role)?'':<Link to="signup"><Button color="secondary">Sign Up</Button></Link> }
         </Toolbar>
       </AppBar>

@@ -15,6 +15,11 @@ const AddStoryForm = () => {
     setStoryData({ ...storyData, [name]: value });
   };
 
+  const handleImageChange = (e : any) => {
+    const imageFile = e.target.files[0]; // Get the selected image file
+    setStoryData({ ...storyData, image: imageFile }); // Update the image property in storyData
+  };
+
   const handleSubmit = (e : any) => {
     e.preventDefault();
     // Handle submission of storyData
@@ -28,24 +33,6 @@ const AddStoryForm = () => {
       </Typography>
       <form onSubmit={handleSubmit}>
         <Grid container spacing={3}>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              fullWidth
-              label="Story ID"
-              name="storyId"
-              value={storyData.storyId}
-              onChange={handleChange}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              fullWidth
-              label="Refugee ID"
-              name="refugeeId"
-              value={storyData.refugeeId}
-              onChange={handleChange}
-            />
-          </Grid>
           <Grid item xs={12}>
             <TextField
               fullWidth
@@ -67,13 +54,18 @@ const AddStoryForm = () => {
             />
           </Grid>
           <Grid item xs={12}>
-            <TextField
-              fullWidth
-              label="Image Path"
-              name="image"
-              value={storyData.image}
-              onChange={handleChange}
+            <input
+              accept="image/*"
+              style={{ display: 'none' }}
+              id="contained-button-file"
+              type="file"
+              onChange={handleImageChange}
             />
+            <label htmlFor="contained-button-file">
+              <Button variant="contained" component="span">
+                Upload Image
+              </Button>
+            </label>
           </Grid>
           <Grid item xs={12}>
             <Button type="submit" variant="contained" color="primary">

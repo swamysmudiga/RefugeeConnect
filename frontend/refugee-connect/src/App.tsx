@@ -11,6 +11,7 @@ import RootLayout from './pages/NavBar';
 import Accommodation from './components/RefugeeHomePage/Accomodation';
 import FoodDistributionCenter from './components/RefugeeHomePage/FoodDistributionCenter';
 import MedicalClinic from './components/RefugeeHomePage/MedicialClinic';
+import AddStoryForm from './components/AddStory';
 
 const route = createBrowserRouter([
   { 
@@ -24,8 +25,8 @@ const route = createBrowserRouter([
       { path:'signup', element:<RegistrationForm/> },
       { path:'accommodation', element:<Accommodation/> },
       { path:'food-distribution', element:<FoodDistributionCenter/> },
-      { path:'medical-clinic', element:<MedicalClinic/> }
-  
+      { path:'medical-clinic', element:<MedicalClinic/> },
+      { path:'addStory', element:<AddStoryForm/> }
     ]
   },
     
