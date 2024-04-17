@@ -29,12 +29,11 @@ export const remove = async (id) => {
 
 export const save = async (registrationData) => {
     console.log("This is register", registrationData);
-    const newObject = {username: registrationData.username, password: registrationData.password, role: registrationData.role};
-    const success = await addLogIn(newObject);
-    console.log(success);
     const hashedPassword = await bcrypt.hash(registrationData.password, 8);
     const newRefugee = new refugeeDetails({ ...registrationData, password: hashedPassword });
-    await newRefugee.save();
+    const savedObject = await newRefugee.save();
+    const newObject = {personid: savedObject.personid ,username: savedObject.username, password: savedObject.password, role: savedObject.role};
+    const success = await addLogIn(newObject);
     const { password, ...refugeeDataWithoutPassword } = newRefugee.toObject();
     return refugeeDataWithoutPassword;
 }
