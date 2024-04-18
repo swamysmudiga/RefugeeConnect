@@ -43,10 +43,10 @@ const route = createBrowserRouter([
 
 function App() {
   console.log('App is rendering with RegistrationForm');
-  return (<RouterProvider router={route} />);  
+  //return (<RouterProvider router={route} />);  
   //return (<RouterProvider router={route} />);
   //return (<ViewResource />)
-  //return (<ViewCamp />);
+  return (<AddResource />);
 }
 
 export default App;
