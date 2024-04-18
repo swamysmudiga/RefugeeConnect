@@ -108,6 +108,10 @@ const refugeeSchema = new mongoose.Schema({
         weight: { 
             type: Number, 
             required: false 
+        },
+        image: {
+            type: String,
+            required: true
         }
 });
 

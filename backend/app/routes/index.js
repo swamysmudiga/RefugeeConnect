@@ -6,6 +6,7 @@ import instructorRoutes from "./instructorRoutes.js";
 import donationRoutes from "./donation-routes.js";
 import campRoutes from "./camp-routes.js";
 import userstoryRoutes from "./userstoryRoutes.js"
+import userRoutes from "./userRoutes.js";
 import  multer from 'multer';
 import path from 'path';
 //Initilize the routes
@@ -18,6 +19,7 @@ export const initializeRouter = (app)=>{
     app.use('/donation',donationRoutes);
     app.use('/camp',campRoutes);
     app.use('/userstory',userstoryRoutes);
+    app.use('/user',userRoutes);
 
 
 

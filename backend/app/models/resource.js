@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import counter from './counterId.js';
 
 const resource = new mongoose.Schema({
     id:{
@@ -31,6 +32,10 @@ const resource = new mongoose.Schema({
     location: {
         type : String,
         required : true
+    },
+    image: {
+        type: String,
+        required: true
     },
     isAvailable: {
         type : Boolean,
