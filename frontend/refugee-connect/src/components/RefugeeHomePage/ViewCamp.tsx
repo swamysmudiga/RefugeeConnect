@@ -31,14 +31,16 @@ const PageContent = styled.div`
   align-items: flex-start;
   position: relative; /* Added position relative for overlay */
   z-index: 1; /* Ensure content appears above the overlay */
+  gap: 20px; /* Added gap between the two sections */
 `;
+
 
 const CardContainer = styled.div`
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  width: 100%; /* Changed width to 100% */
+  width: 50%; /* Changed width to 50% */
 `;
 
 const CardHeader = styled.div`
@@ -77,6 +79,29 @@ const CardFooter = styled.div`
   align-items: center;
   padding: 16px;
   border-top: 1px solid #f5f5f5;
+`;
+
+const MapContainer = styled.div`
+  background-color: #8b4513; /* Changed background color to reddish brown */
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  width: 50%; /* Changed width to 50% */
+`;
+
+const MapHeader = styled.div`
+  background-color: #8b4513; /* Changed background color to reddish brown */
+  padding: 24px;
+  color: #fff;
+  h2 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 600;
+  }
+`;
+
+const MapContent = styled.div`
+  padding: 20px;
 `;
 
 const ResourceDetailPage: React.FC = () => {
@@ -162,6 +187,15 @@ const ResourceDetailPage: React.FC = () => {
               </div>
             </CardFooter>
           </CardContainer>
+          <MapContainer>
+            <MapHeader>
+              <h2>See the location</h2>
+            </MapHeader>
+            <MapContent>
+              {/* Map component goes here */}
+              {/* Assuming there is a Map component to display */}
+            </MapContent>
+          </MapContainer>
         </PageContent>
       ) : (
         <div>Loading...</div>
