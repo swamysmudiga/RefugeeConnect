@@ -14,7 +14,6 @@ import MedicalClinic from './components/RefugeeHomePage/MedicialClinic';
 import AddStoryForm from './components/AddStory';
 import UserStories from './components/UserStories';
 
-
 const route = createBrowserRouter([
   { 
     path:'/refugee',
@@ -38,8 +37,7 @@ const route = createBrowserRouter([
 
 function App() {
   console.log('App is rendering with RegistrationForm');
-  return (<RouterProvider router={route} />);
-  //return (<ViewResource />)
+  return (<RouterProvider router={route} />);  
 }
 
 export default App;
