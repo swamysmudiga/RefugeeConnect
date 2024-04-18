@@ -94,6 +94,7 @@ export default function StylishNavBar() {
             </Box>
             <Box sx={{ flexGrow: 1 }} />
             <Link to="/refugee"><Button color="secondary" variant="contained" sx={{ mr: 2 }}>Home</Button></Link>
+            { token && role == "refugee" &&<Link to="addStory"><Button color="inherit" sx={{ mr: 2 }}>Add Story</Button></Link>}
             <Button color="inherit" sx={{ mr: 2 }}>Contact</Button>
             <Button color="inherit" sx={{ mr: 2 }}>Donate</Button>
             <Select
