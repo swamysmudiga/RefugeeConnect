@@ -1,0 +1,23 @@
+meta {
+  name: Add new user
+  type: http
+  seq: 17
+}
+
+post {
+  url: http://localhost:4000/user/register
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "Jane Smith",
+    "username": "janesmith",
+    "password": "anothersecurepassword",
+    "email": "janesmith@example.com",
+    "phone_no": "987-654-3210",
+    "image": "https://example.com/images/user456.jpg"
+  }
+  
+}
