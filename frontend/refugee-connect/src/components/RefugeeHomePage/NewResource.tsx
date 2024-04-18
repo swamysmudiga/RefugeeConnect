@@ -4,8 +4,25 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
+import { useNavigate } from 'react-router-dom';
+
 
 const ViwAllResourceAndNearbyCamps = () => {
+const useNavigation = useNavigate();
+
+const handleResourceClick = (resource: string) => {
+  // Navigate to the respective page based on the clicked resource
+  switch (resource) {
+    case 'ViewAllResource':
+      useNavigation('/refugee/viewAllResource');
+      break;
+    case 'ViewNearByCamps':
+      useNavigation('/refugee/viewNearByCamps');
+      break;
+    default:
+      break;
+  }
+};
   return (
     <>
       {/* First Container */}
@@ -33,9 +50,12 @@ const ViwAllResourceAndNearbyCamps = () => {
                 <span style={{ fontSize: '1.2rem', fontFamily: 'cursive', color: 'red' }}> accommodation, food distribution centers, and medical clinics.</span>
                 <span> Our user-friendly platform ensures swift access to vital services, facilitating support for those in need."</span>
               </Typography>
-              <Button variant="contained" style={{ marginTop: '1rem', width: 'auto' }}>
+              <Button variant="contained" style={{ marginTop: '1rem', width: 'auto' }} color="primary" onClick={() => handleResourceClick('ViewAllResource')}>
                 View All Resources
               </Button>
+              {/* <Button variant="contained" color="primary" onClick={() => handleResourceClick('Accommodation')}>
+                            Go to Accommodation
+              </Button> */}
             </Box>
           </Grid>
         </Grid>
@@ -66,7 +86,7 @@ const ViwAllResourceAndNearbyCamps = () => {
                 <span style={{ fontSize: '1.2rem', fontFamily: 'cursive', color: 'red' }}> 'View Nearby Camps'</span>
                 <span> for detailed information on locations and amenities.</span>
               </Typography>
-              <Button variant="contained" style={{ marginTop: '1rem', width: 'auto' }}>
+              <Button variant="contained" style={{ marginTop: '1rem', width: 'auto' }} color="primary" onClick={() => handleResourceClick('ViewNearByCamps')}>
                 View Nearby Camps
               </Button>
             </Box>

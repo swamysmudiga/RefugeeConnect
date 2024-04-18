@@ -13,6 +13,8 @@ import FoodDistributionCenter from './components/RefugeeHomePage/FoodDistributio
 import MedicalClinic from './components/RefugeeHomePage/MedicialClinic';
 import AddStoryForm from './components/AddStory';
 import UserStories from './components/UserStories';
+import ViewAllResources from './components/RefugeeHomePage/ViewAllResources';
+import ViewAllCamp from './components/RefugeeHomePage/ViewAllCamp';
 import ViewResource from './components/RefugeeHomePage/ViewResource.tsx';
 import ViewCamp from './components/RefugeeHomePage/ViewCamp.tsx';
 import AddResource from './components/UserHomePage/AddResource.tsx';
@@ -27,12 +29,13 @@ const route = createBrowserRouter([
       { path:'refugeeHomePage', element:<RefugeeHomePage/>,},
       {  path:'login', element:<LoginPage/> },
       { path:'signup', element:<RegistrationForm/> },
+      {path:'viewAllResource', element:<ViewAllResources />},
+      {path:'viewNearByCamps', element:<ViewAllCamp />},
       { path:'accommodation', element:<Accommodation/> },
       { path:'food-distribution', element:<FoodDistributionCenter/> },
       { path:'medical-clinic', element:<MedicalClinic/> },
       { path:'addStory', element:<AddStoryForm/> },
       { path:'story', element:<UserStories/> }
-
     ]
   },
     
@@ -40,12 +43,10 @@ const route = createBrowserRouter([
 
 function App() {
   console.log('App is rendering with RegistrationForm');
+  return (<RouterProvider router={route} />);  
   //return (<RouterProvider router={route} />);
   //return (<ViewResource />)
   //return (<ViewCamp />);
-  return (<AddResource />);
-  
-  
 }
 
 export default App;

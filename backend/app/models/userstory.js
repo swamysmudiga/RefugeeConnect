@@ -9,9 +9,8 @@ const userStorySchema = new mongoose.Schema({
         }
     },
     refugeeId: {
-        type: Number,
+        type: String,
         required: true,
-        unique: true
     },
     title: {
         type: String,

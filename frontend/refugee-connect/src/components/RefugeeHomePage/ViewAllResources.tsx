@@ -1,5 +1,6 @@
 import React from 'react';
 import { Grid, Typography, Container } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 const resources = [
     {
@@ -25,8 +26,8 @@ const resources = [
         isAvailable: false,
     },
     {
-        id: 'res_2',
-        name: 'Resource 2',
+        id: 'res_3',
+        name: 'Resource 3',
         description: 'This is the second resource.',
         contentType: 'Type B',
         createdDate: new Date('2023-02-15'),
@@ -36,8 +37,8 @@ const resources = [
         isAvailable: false,
     },
     {
-        id: 'res_2',
-        name: 'Resource 2',
+        id: 'res_4',
+        name: 'Resource 4',
         description: 'This is the second resource.',
         contentType: 'Type B',
         createdDate: new Date('2023-02-15'),
@@ -47,8 +48,8 @@ const resources = [
         isAvailable: false,
     },
     {
-        id: 'res_2',
-        name: 'Resource 2',
+        id: 'res_5',
+        name: 'Resource 5',
         description: 'This is the second resource.',
         contentType: 'Type B',
         createdDate: new Date('2023-02-15'),
@@ -58,8 +59,8 @@ const resources = [
         isAvailable: false,
     },
     {
-        id: 'res_2',
-        name: 'Resource 2',
+        id: 'res_6',
+        name: 'Resource 6',
         description: 'This is the second resource.',
         contentType: 'Type B',
         createdDate: new Date('2023-02-15'),
@@ -69,8 +70,8 @@ const resources = [
         isAvailable: false,
     },
     {
-        id: 'res_2',
-        name: 'Resource 2',
+        id: 'res_7',
+        name: 'Resource 7',
         description: 'This is the second resource.',
         contentType: 'Type B',
         createdDate: new Date('2023-02-15'),
@@ -83,7 +84,11 @@ const resources = [
 ];
 
 const ResourcePage = () => {
+    const navigate = useNavigate();
+    
     const handleResourceClick = (resource: { id: string; name: string; description: string; contentType: string; createdDate: Date; userId: string; location: string; image: string; isAvailable: boolean; }) => {
+        
+        navigate(`/refugee/viewResource/${resource.id}`);
         console.log(resource);
     }
     return (
