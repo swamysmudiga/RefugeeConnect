@@ -32,6 +32,7 @@ const initialResourceValues = {
   contentType: '',
   location: '',
   isAvailable: false,
+  photo: null, // Added photo field
 };
 
 // Styled component for overlay
@@ -46,6 +47,7 @@ const Overlay = styled.div`
 
 const ResourceAdditionPage = () => {
   const [showImage, setShowImage] = useState(false);
+  const [selectedPhoto, setSelectedPhoto] = useState<File | null>(null); // Specify type as File | null
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -59,6 +61,7 @@ const ResourceAdditionPage = () => {
     try {
       // Simulate resource creation
       console.log('Resource values:', values);
+      console.log('Selected Photo:', selectedPhoto); // Log selected photo
       actions.setSubmitting(false);
       toast.success('Resource added successfully!');
     } catch (error) {
@@ -92,7 +95,7 @@ const ResourceAdditionPage = () => {
                   validationSchema={resourceValidationSchema}
                   onSubmit={handleSubmit}
                 >
-                  {({ isValid, dirty }) => (
+                  {({ isValid, dirty, setFieldValue }) => (
                     <Form style={{ height: '100%' }}>
                       <Grid container spacing={2} style={{ height: '100%' }}>
                         <Grid item xs={12}>
@@ -117,6 +120,27 @@ const ResourceAdditionPage = () => {
                             label="Available"
                           />
                           <ErrorMessage name="isAvailable" render={msg => <div style={{ color: 'red' }}>{msg}</div>} />
+                        </Grid>
+                        <Grid item xs={12}>
+                          {/* Input for uploading photo */}
+                          <input
+                            id="photo"
+                            name="photo"
+                            type="file"
+                            onChange={(event) => {
+                              const file = event.currentTarget.files && event.currentTarget.files[0]; // Check if files exist before accessing
+                              if (file) {
+                                setFieldValue("photo", file); // Store selected photo in formik state
+                                setSelectedPhoto(file); // Store selected photo in local state
+                              }
+                            }}
+                            style={{ display: 'none' }}
+                          />
+                          <label htmlFor="photo">
+                            <Button variant="outlined" component="span" fullWidth>
+                              Upload Photo
+                            </Button>
+                          </label>
                         </Grid>
                         <Grid item xs={12}>
                           <Button
