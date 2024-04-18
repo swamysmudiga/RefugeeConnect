@@ -11,7 +11,6 @@ const userStorySchema = new mongoose.Schema({
     refugeeId: {
         type: String,
         required: true,
-        unique: true
     },
     title: {
         type: String,
