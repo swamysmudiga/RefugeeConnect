@@ -15,7 +15,7 @@ import AddStoryForm from './components/AddStory';
 import UserStories from './components/UserStories';
 import ViewAllResources from './components/RefugeeHomePage/ViewAllResources';
 import ViewAllCamp from './components/RefugeeHomePage/ViewAllCamp';
-
+import ViewResource from './components/ViewResource'
 const route = createBrowserRouter([
   { 
     path:'/refugee',
@@ -32,7 +32,8 @@ const route = createBrowserRouter([
       { path:'food-distribution', element:<FoodDistributionCenter/> },
       { path:'medical-clinic', element:<MedicalClinic/> },
       { path:'addStory', element:<AddStoryForm/> },
-      { path:'story', element:<UserStories/> }
+      { path:'story', element:<UserStories/> },
+      { path:'viewResource/:id', element:<ViewResource/> }
     ]
   },
     

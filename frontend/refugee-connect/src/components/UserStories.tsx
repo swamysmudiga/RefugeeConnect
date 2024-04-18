@@ -196,7 +196,7 @@ const UserStories: React.FC = () => {
                             <Grid container spacing={2}>
                                 {/* Left column for the image */}
                                 <Grid item xs={6}>
-                                    <img src={selectedStory.image} alt={selectedStory.title} style={{ width: '100%' }} />
+                                    <img src={`http://localhost:4000/${selectedStory.image}`} alt={selectedStory.title} style={{ width: '100%' }} />
                                 </Grid>
                                 {/* Right column for the title and description */}
                                 <Grid item xs={6}>
