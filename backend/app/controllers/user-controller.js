@@ -11,10 +11,20 @@ export const userLogin = async (request, response) => {
     }
 };
 
+export const search = async (request, response) => {
+    try {
+        const params = {...request.query};
+        const user = await userService.search(params);
+        setResponse(user, response);
+    } catch(error) {
+        setError(error, response);
+    }
+}
+
 export const userRegister = async (request, response) => {
     try {
         const newUserDetails = request.body;
-        const newUser = await userService.registerUser(newUserDetails);
+        const newUser = await userService.save(newUserDetails);
         setResponse(newUser, response);
     } catch (error) {
         setError(error, response);
@@ -23,7 +33,7 @@ export const userRegister = async (request, response) => {
 
 export const getUserById = async (request, response) => {
     try {
-        const user = await userService.findUserById(request.params.id);
+        const user = await userService.get(request.params.id);
         setResponse(user, response);
     } catch (error) {
         setError(error, response);
@@ -34,7 +44,7 @@ export const updateUserById = async (request, response) => {
     try {
         const { id } = request.params;
         const updateData = request.body;
-        const updatedUser = await userService.updateUserById(id, updateData);
+        const updatedUser = await userService.updateUser(id, updateData);
         setResponse(updatedUser, response);
     } catch (error) {
         setError(error, response);
@@ -43,7 +53,7 @@ export const updateUserById = async (request, response) => {
 
 export const removeUserById = async (request, response) => {
     try {
-        const removeUser = await refugeeService.remove(request.params.id);
+        const removeUser = await userService.deleteUser(request.params.id);
         setResponse(removeUser, response); 
     } catch (error) {
         setError(error, response);

@@ -62,6 +62,10 @@ const camp = new mongoose.Schema({
         type : Number,
         required : true
     },
+    campImage: {
+        type: String,
+        required: true
+    },
     campFacilities:[campFacilities],
     campServices:[campServices],
     campManagementName:{
