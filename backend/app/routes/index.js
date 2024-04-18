@@ -9,8 +9,12 @@ import userstoryRoutes from "./userstoryRoutes.js"
 import userRoutes from "./userRoutes.js";
 import  multer from 'multer';
 import path from 'path';
+import express from 'express';
+
 //Initilize the routes
 export const initializeRouter = (app)=>{
+
+
 
     app.use('/refugee/login',LogInroutes);
     app.use('/refugee',RefugeeRouter);
@@ -34,6 +38,8 @@ export const initializeRouter = (app)=>{
 
       const upload = multer({ storage: storage });
       const __dirname = path.dirname(new URL(import.meta.url).pathname);
+
+      app.use('/uploads', express.static('uploads'));
 
     app.post('/upload', upload.single('image'), (req, res) => {
         // Check if file is present in the request
