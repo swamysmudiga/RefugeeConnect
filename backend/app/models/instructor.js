@@ -31,6 +31,10 @@ const instructor = new mongoose.Schema({
     phone_no: { 
         type: String, 
         required: false 
+    },
+    image: {
+        type: String,
+        required: true
     }
 });
 
