@@ -32,8 +32,7 @@ export const loginOut= async() =>{
      //const resData = await response.json();
      //console.log(resData);
  
-     localStorage.removeItem('token');
-     localStorage.removeItem('role');
+     localStorage.clear();
 
     
     // return resData;

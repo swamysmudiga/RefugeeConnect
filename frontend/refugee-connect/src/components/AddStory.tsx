@@ -2,16 +2,18 @@ import React, { useState } from 'react';
 import { TextField, Button, Typography, Container, Grid } from '@mui/material';
 import { addStoryAsync } from '../store/story/story-reducer-actions';
 import { useNavigate } from 'react-router-dom';
+import {  useSelector , useDispatch } from 'react-redux';
 
 const AddStoryForm = () => {
   const [storyData, setStoryData] = useState({
     refugeeId: '',
     title: '',
     description: '',
-    image: '',
+    image: null as File | null, 
   });
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleChange = (e : any) => {
     const { name, value } = e.target;
@@ -27,9 +29,14 @@ const AddStoryForm = () => {
     e.preventDefault();
     // Handle submission of storyData
     console.log(storyData);
-    const writeStory = {...storyData , refugeeId : localStorage.getItem("personId")}
+    const writeStory = {
+      title  : storyData.title,
+      description : storyData.description,
+      image : '',
+      refugeeId : localStorage.getItem("personId")
+    }
     console.log("Story Object - ", writeStory);
-    //const response  = await addStoryAsync(storyData);
+    const response  = await dispatch(addStoryAsync(writeStory , storyData.image));
 
     navigate('/refugee/story');
 

@@ -153,7 +153,7 @@ const UserStories: React.FC = () => {
                                     }}
                                 >
                                     <img
-                                        src={story.image}
+                                        src={`http://localhost:4000/uploads/${story.image}`}
                                         alt={story.title}
                                         style={{
                                             width: '95%',

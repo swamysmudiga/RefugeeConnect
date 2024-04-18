@@ -106,7 +106,7 @@ const RegistrationForm = () => {
 
       const response = await createRegistration(values);
       actions.setSubmitting(false);
-      navigate('/login');
+      navigate('/refugee/login');
     };
 
 
