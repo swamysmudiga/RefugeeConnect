@@ -20,7 +20,7 @@ const LoginPage = () => {
 
     const result = await login(username , password);
 
-    navigate('/refugee');
+    navigate('/refugee/refugeeHomePage');
   };
 
   return (
