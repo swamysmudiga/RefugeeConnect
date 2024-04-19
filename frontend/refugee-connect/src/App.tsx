@@ -17,8 +17,14 @@ import ViewAllResources from './components/RefugeeHomePage/ViewAllResources';
 import ViewAllCamp from './components/RefugeeHomePage/ViewAllCamp';
 import ViewCamp from './components/RefugeeHomePage/ViewCamp.tsx';
 import AddResource from './components/UserHomePage/AddResource.tsx';
+<<<<<<< HEAD
 import ViewResource from './components/ViewResource.tsx'
 import ResourceAdditionPage from './components/UserHomePage/AddResource.tsx';
+=======
+import AddCamp from './components/AdminHomePage/AddCamp.tsx';
+
+>>>>>>> dffb934b385a1bc558bd6a0e876e2c6f807f8687
+>>>>>>> a7dc191883629a7da488f3ce37abda4e9dd875db
 const route = createBrowserRouter([
   { 
     path:'/refugee',
@@ -47,7 +53,7 @@ const route = createBrowserRouter([
 function App() {
   console.log('App is rendering with RegistrationForm');
   return (<RouterProvider router={route} />);  
-  //return (<AddResource />);
+
 }
 
 export default App;
