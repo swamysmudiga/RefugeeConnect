@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { useParams  } from 'react-router-dom';
+
 import styled from 'styled-components';
 import axios from 'axios';
 
@@ -106,20 +108,24 @@ const MapContent = styled.div`
 
 const ResourceDetailPage: React.FC = () => {
   const [camp, setCamp] = useState<any>(null);
+  const { id } = useParams();
 
   useEffect(() => {
-    const fetchCamp = async () => {
+    const fetchResource = async () => {
       try {
-        const response = await axios.get('/api/camp');
+        console.log(`http://localhost:4000/camp/${id}`);
+
+        const response = await axios.get(`http://localhost:4000/camp/${id}`);
         setCamp(response.data);
+        console.log("Camp data " ,response.data);
       } catch (error) {
-        console.error('Error fetching camp:', error);
+        console.error('Error fetching resource:', error);
       }
     };
 
-    fetchCamp();
-  }, []);
-
+    fetchResource();
+  }, [id]);
+ console.log(" camp is ", camp)
   // Function to handle back button click
   const handleBack = () => {
     // Add your navigation logic here to go back to the previous page

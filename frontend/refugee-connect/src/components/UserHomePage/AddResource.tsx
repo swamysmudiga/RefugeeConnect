@@ -15,6 +15,9 @@ import { ToastContainer, toast } from 'react-toastify';
 import { useSpring, animated } from 'react-spring';
 import 'react-toastify/dist/ReactToastify.css';
 import styled from 'styled-components';
+import { addResourceAsync } from '../../store/resource/resource-reducer-actions';
+import { useNavigate } from 'react-router-dom';
+import {  useSelector , useDispatch } from 'react-redux';
 
 // Validation Schema
 const resourceValidationSchema = Yup.object({
@@ -35,6 +38,21 @@ const initialResourceValues = {
   photo: null, // Added photo field
 };
 
+
+export interface Resource {
+  id? : string,
+  contentType: string
+  name : string,
+  createdDate : Date,
+  userId : string,
+  description : string,
+  location : string,
+  isAvailable: boolean,
+  image: string
+}
+
+
+
 // Styled component for overlay
 const Overlay = styled.div`
   background: linear-gradient(rgba(255,255,255,0.6), rgba(224,224,224,0.6), rgba(51,51,51,0.6)); /* Overlay to enhance readability */
@@ -48,6 +66,8 @@ const Overlay = styled.div`
 const ResourceAdditionPage = () => {
   const [showImage, setShowImage] = useState(false);
   const [selectedPhoto, setSelectedPhoto] = useState<File | null>(null); // Specify type as File | null
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -64,6 +84,9 @@ const ResourceAdditionPage = () => {
       console.log('Selected Photo:', selectedPhoto); // Log selected photo
       actions.setSubmitting(false);
       toast.success('Resource added successfully!');
+
+      const success  = await dispatch(addResourceAsync(values, selectedPhoto));
+
     } catch (error) {
       console.error('Error creating resource:', error);
       actions.setSubmitting(false);

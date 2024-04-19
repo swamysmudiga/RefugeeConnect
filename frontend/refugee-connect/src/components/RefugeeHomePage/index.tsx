@@ -22,6 +22,7 @@ const ResourceHomePage = () => {
       }}
     >
       <HeaderSection />
+      <UserStories/>
       <ViwAllResourceAndNearbyCamps />
     </div>
   );

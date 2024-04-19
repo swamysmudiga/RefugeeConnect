@@ -21,6 +21,7 @@ import ViewResource from './components/ViewResource.tsx'
 import ResourceAdditionPage from './components/UserHomePage/AddResource.tsx';
 import AddCamp from './components/AdminHomePage/AddCamp.tsx';
 import CampAdditionPage from './components/AdminHomePage/AddCamp.tsx';
+import CampAdditionPage from './components/AdminHomePage/AddCamp.tsx';
 
 const route = createBrowserRouter([
   { 
