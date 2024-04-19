@@ -20,6 +20,10 @@ import AddResource from './components/UserHomePage/AddResource.tsx';
 import ViewResource from './components/ViewResource.tsx'
 import ResourceAdditionPage from './components/UserHomePage/AddResource.tsx';
 import AddCamp from './components/AdminHomePage/AddCamp.tsx';
+<<<<<<< HEAD
+import CampAdditionPage from './components/AdminHomePage/AddCamp.tsx';
+=======
+>>>>>>> d8cc6378a99e855d521187efa35c01e780199200
 const route = createBrowserRouter([
   { 
     path:'/refugee',
@@ -30,8 +34,8 @@ const route = createBrowserRouter([
       { path:'refugeeHomePage', element:<RefugeeHomePage/>,},
       {  path:'login', element:<LoginPage/> },
       { path:'signup', element:<RegistrationForm/> },
-      {path:'viewAllResource', element:<ViewAllResources />},
-      {path:'viewNearByCamps', element:<ViewAllCamp />},
+      { path:'viewAllResource', element:<ViewAllResources />},
+      { path:'viewNearByCamps', element:<ViewAllCamp />},
       { path:'accommodation', element:<Accommodation/> },
       { path:'food-distribution', element:<FoodDistributionCenter/> },
       { path:'medical-clinic', element:<MedicalClinic/> },
@@ -39,7 +43,8 @@ const route = createBrowserRouter([
       { path:'story', element:<UserStories/> },
       { path:'viewResource/:id', element:<ViewResource/> },
       { path:'addResource', element:<ResourceAdditionPage/> },
-
+      { path:'addCamp', element:<CampAdditionPage/> },
+      { path:'camp/:id', element:<ViewCamp/> }
     ]
   },
     

@@ -1,13 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export interface Camp {
-  campId: number;
+  campId: string;
   campName: string;
-  campCapacity: number;
+  campCapacity: string;
   campLocation: string;
-  campCurrentOccupancy: number;
+  campCurrentOccupancy: string;
   campFacilities: {
-    campFacilityID: number;
+    campFacilityID: string;
     campFacilityName: string;
     _id: string;
   }[];
@@ -19,14 +19,14 @@ export interface Camp {
   campManagementName: string;
   campSecurityLevel: string;
   supportingOrganizations: {
-    supportingOrganizationID: number;
+    supportingOrganizationID: string;
     SupportingOrganizationName: string;
     _id: string;
   }[];
   infrastructure: string;
-  personId: number;
-  donationId: number;
-  donationAmount: number;
+  personId: string;
+  donationId: string;
+  donationAmount: string;
 }
 
 export interface CampState {
