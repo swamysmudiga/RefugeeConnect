@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import { Typography, TextField, Button, RadioGroup, Radio, FormControlLabel, FormControl, Paper, Grid, Container } from '@mui/material';
-import '../App.css';
 import refugeeImage from '../images/refugee.jpg';
 import { useNavigate } from "react-router-dom";
-import  { createRegistration }  from '../util/refugee-services';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const userValidationSchema = Yup.object({
   username: Yup.string()
@@ -20,7 +18,7 @@ const userValidationSchema = Yup.object({
   email: Yup.string()
     .email('Invalid email')
     .required('Email is required'),
-    phone_no: Yup.string()
+  phone_no: Yup.string()
     .matches(/^[0-9]{10}$/, "Contact number must be number and 10 digits")
     .required('Contact number is required'),
 });
@@ -59,7 +57,6 @@ const refugeeValidationSchema = Yup.object({
   weight: Yup.number().positive().required('Weight must be a number'),
 });
 
-// Initial values for user form
 const initialUserValues = {
   username: '',
   password: '',
@@ -67,7 +64,6 @@ const initialUserValues = {
   phone_no: '',
 };
 
-// Initial values for refugee form
 const initialRefugeeValues = {
   username: '',
   password: '',
@@ -96,69 +92,68 @@ const initialRefugeeValues = {
 };
 
 const RegistrationForm = () => {
-    const [accountType, setAccountType] = useState('user');
-    const navigate = useNavigate();
+  const [accountType, setAccountType] = useState('user');
+  const navigate = useNavigate();
 
-    const handleSubmit = async(values: any, actions: { setSubmitting: (arg0: boolean) => void; }) => {
-      toast.success("Registration Successful!");
-      values.role = accountType;
-      console.log(values);
+  const handleSubmit = async (values: { role: string; }, actions: { setSubmitting: (arg0: boolean) => void; }) => {
+    toast.success("Registration Successful!");
+    values.role = accountType;
+    console.log(values);
 
-      const response = await createRegistration(values);
-      actions.setSubmitting(false);
-      navigate('/refugee/login');
-    };
+    // Your logic for form submission
+    actions.setSubmitting(false);
+    navigate('/refugee/login'); // Example navigation
+  };
 
 
-    return (
-      <Container maxWidth="md" style={{ padding: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh', backgroundImage: `url(${refugeeImage})`, backgroundSize: 'cover' }}>
-        <Paper elevation={3} className="paper" style={{ backgroundColor: 'rgba(255, 255, 255, 0.85)', borderRadius: '10px', width: '100%', maxWidth: '600px' }}>
-          <Typography variant="h4" align="center" color="primary" gutterBottom>
-            Welcome to Registration Form
-          </Typography>
-          <Formik
-            initialValues={accountType === 'user' ? initialUserValues : initialRefugeeValues}
-            validationSchema={accountType === 'user' ? userValidationSchema : refugeeValidationSchema}
-            onSubmit={handleSubmit}
-          >
-            {({ isValid, dirty, values }) => (
-              <Form>
-                <Grid container spacing={2} justifyContent="center">
-                  <Grid item xs={12}>
-                    <FormControl component="fieldset" fullWidth>
-                      <RadioGroup
-                        row
-                        aria-label="accountType"
-                        name="accountType"
-                        value={accountType}
-                        onChange={(e) => setAccountType(e.target.value)}
-                      >
-                        <FormControlLabel value="user" control={<Radio />} label="User" />
-                        <FormControlLabel value="refugee" control={<Radio />} label="Refugee" />
-                      </RadioGroup>
-                    </FormControl>
-                  </Grid>
-                  
-                  {/* Shared Fields */}
-                  <Grid item xs={12} md={6}>
-                    <Field as={TextField} name="username" label="Username" fullWidth margin="normal" />
-                    <ErrorMessage name="username" component="div" className="field-error" />
-                  </Grid>
-                  <Grid item xs={12} md={6}>
-                    <Field as={TextField} type="password" name="password" label="Password" fullWidth margin="normal" />
-                    <ErrorMessage name="password" component="div" className="field-error" />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <Field as={TextField} name="email" label="Email" fullWidth margin="normal" />
-                    <ErrorMessage name="email" component="div" className="field-error" />
-                  </Grid>
-                  <Grid item xs={12} md={6}>
-                        <Field as={TextField} name="phone_no" label="Phone Number" fullWidth margin="normal" />
-                        <ErrorMessage name="phone_no" component="div" className="field-error" />
-                  </Grid>
-                  
-                 
-                  
+
+  return (
+    <Container maxWidth="lg" style={{ marginTop: '7%', marginBottom: '40px', position: 'relative', height: 'calc(100% - 40px)' }}>
+      <Grid container spacing={3} style={{ height: '100%' }}>
+        <Grid item xs={12} md={6}>
+          <Paper elevation={3} style={{ padding: '20px', position: 'relative', height: '85%' }}>
+            <Typography variant="h4" align="center" color="primary" gutterBottom>
+              Welcome to Registration Form
+            </Typography>
+            <Formik
+              initialValues={accountType === 'user' ? { ...initialUserValues, role: 'user' } : { ...initialRefugeeValues, role: 'refugee' }}
+              validationSchema={accountType === 'user' ? userValidationSchema : refugeeValidationSchema}
+              onSubmit={handleSubmit}
+            >
+              {({ isValid, dirty, values }) => (
+                <Form>
+                  <Grid container spacing={2} justifyContent="center">
+                    <Grid item xs={12}>
+                      <FormControl component="fieldset" fullWidth>
+                        <RadioGroup
+                          row
+                          aria-label="accountType"
+                          name="accountType"
+                          value={accountType}
+                          onChange={(e) => setAccountType(e.target.value)}
+                        >
+                          <FormControlLabel value="user" control={<Radio />} label="User" />
+                          <FormControlLabel value="refugee" control={<Radio />} label="Refugee" />
+                        </RadioGroup>
+                      </FormControl>
+                    </Grid>
+                    
+                    <Grid item xs={12} md={6}>
+                      <Field as={TextField} name="username" label="Username" fullWidth margin="normal" />
+                      <ErrorMessage name="username" component="div" className="field-error" />
+                    </Grid>
+                    <Grid item xs={12} md={6}>
+                      <Field as={TextField} type="password" name="password" label="Password" fullWidth margin="normal" />
+                      <ErrorMessage name="password" component="div" className="field-error" />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <Field as={TextField} name="email" label="Email" fullWidth margin="normal" />
+                      <ErrorMessage name="email" component="div" className="field-error" />
+                    </Grid>
+                    <Grid item xs={12} md={6}>
+                      <Field as={TextField} name="phone_no" label="Phone Number" fullWidth margin="normal" />
+                      <ErrorMessage name="phone_no" component="div" className="field-error" />
+                    </Grid>
                   {/* Refugee Specific Fields */}
                   {accountType === 'refugee' && (
                     <>
@@ -273,10 +268,22 @@ const RegistrationForm = () => {
           </Formik>
           <ToastContainer />
         </Paper>
-      </Container>
-    );
-}
+      </Grid>
+      <Grid item xs={12} md={6} style={{ position: 'relative' }}>
+        <Paper
+          elevation={3}
+          style={{
+            padding: '20px',
+            width: '100%',
+            height: '85%',
+            backgroundImage: `url(${refugeeImage})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }}
+        />
+      </Grid>
+    </Grid>
+  </Container>
+);}
   
 export default RegistrationForm;
-
-  
