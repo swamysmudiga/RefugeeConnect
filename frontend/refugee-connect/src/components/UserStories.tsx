@@ -131,7 +131,7 @@ const UserStories: React.FC = () => {
     return (
         <div style={{ width: '100%' }}>
             <div style={{ textAlign: 'center' }}>
-                <section style={{ backgroundColor: 'lightgrey', padding: '40px' }}>
+                <section style={{ padding: '40px' }}>
                     <Container>
                         <Typography
                             variant="h4"
