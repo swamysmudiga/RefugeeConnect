@@ -2,12 +2,16 @@
 import { createSlice, PayloadAction , createAsyncThunk } from '@reduxjs/toolkit';
 
 export interface Resource {
-    id: number;
+    id? : string,
+    contentType: string
     name : string,
+    createdDate : Date,
+    userId : string,
     description : string,
     location : string,
     isAvailable: boolean
 }
+
 
 export interface ResourceState {
   resources: Resource[];
