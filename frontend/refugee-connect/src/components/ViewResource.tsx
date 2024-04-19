@@ -1,6 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
+import { useParams , Link } from 'react-router-dom';
+
+
+interface Resource {
+  id: string;
+  name: string;
+  description: string;
+  contentType: string;
+  creationDate: string;
+  location: string;
+  isAvailable: boolean;
+  image: string;
+  userId: string;
+  _id: string;
+  __v: number;
+}
 
 const PageContainer = styled.div`
   display: flex;
@@ -103,21 +119,27 @@ const MapContent = styled.div`
 `;
 
 const ResourceDetailPage: React.FC = () => {
-  const [resource, setResource] = useState<any>(null);
+  const [resource, setResource] = useState<Resource | null>(null);
+  const { id } = useParams();
 
   useEffect(() => {
     const fetchResource = async () => {
       try {
-        const response = await axios.get('/api/resource');
-        setResource(response.data);
+        console.log(`http://localhost:4000/resource/${id}`);
+
+        const response = await axios.get(`http://localhost:4000/resource/${id}`);
+        setResource(response.data[0]);
+        console.log(response.data);
       } catch (error) {
         console.error('Error fetching resource:', error);
       }
     };
 
     fetchResource();
-  }, []);
+  }, [id]);
 
+
+  console.log("from resource view ",resource);
   // Function to handle back button click
   const handleBack = () => {
     // Add your navigation logic here to go back to the previous page
@@ -159,12 +181,12 @@ const ResourceDetailPage: React.FC = () => {
               </Attribute>
               <Attribute>
                 <label>Image:</label>
-                <img src={resource.imageUrl} alt="Resource" />
+                <img src={`http://localhost:4000/${resource.image}`} alt="Resource" />
               </Attribute>
             </CardBody>
             <CardFooter>
               {/* Back button */}
-              <button onClick={handleBack}>Back</button>
+              <Link to=".."><button onClick={handleBack}>Back</button></Link>
               {/* Edit and delete buttons */}
               <div>
                 <button>Edit</button>
