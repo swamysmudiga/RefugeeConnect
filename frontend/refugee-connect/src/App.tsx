@@ -21,6 +21,7 @@ import ViewResource from './components/ViewResource'
 import ViewResource from './components/RefugeeHomePage/ViewResource.tsx';
 import ViewCamp from './components/RefugeeHomePage/ViewCamp.tsx';
 import AddResource from './components/UserHomePage/AddResource.tsx';
+import AddCamp from './components/AdminHomePage/AddCamp.tsx';
 
 >>>>>>> dffb934b385a1bc558bd6a0e876e2c6f807f8687
 const route = createBrowserRouter([
@@ -48,10 +49,10 @@ const route = createBrowserRouter([
 
 function App() {
   console.log('App is rendering with RegistrationForm');
-  //return (<RouterProvider router={route} />);  
+  return (<RouterProvider router={route} />);  
   //return (<RouterProvider router={route} />);
   //return (<ViewResource />)
-  return (<AddResource />);
+  //eturn (<RegistrationForm />);
 }
 
 export default App;
