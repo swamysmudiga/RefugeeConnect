@@ -20,10 +20,9 @@ import AddResource from './components/UserHomePage/AddResource.tsx';
 import ViewResource from './components/ViewResource.tsx'
 import ResourceAdditionPage from './components/UserHomePage/AddResource.tsx';
 import AddCamp from './components/AdminHomePage/AddCamp.tsx';
-<<<<<<< HEAD
 import CampAdditionPage from './components/AdminHomePage/AddCamp.tsx';
-=======
->>>>>>> d8cc6378a99e855d521187efa35c01e780199200
+import CampAdditionPage from './components/AdminHomePage/AddCamp.tsx';
+
 const route = createBrowserRouter([
   { 
     path:'/refugee',
