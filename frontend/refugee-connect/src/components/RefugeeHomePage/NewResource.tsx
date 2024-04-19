@@ -1,11 +1,8 @@
 import React from 'react';
-import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
+import { Container, Typography, Button, Grid, IconButton } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-
+import { Facebook, Twitter, LinkedIn, YouTube } from '@mui/icons-material';
 
 const ViwAllResourceAndNearbyCamps = () => {
 const useNavigation = useNavigate();
@@ -68,7 +65,7 @@ const handleResourceClick = (resource: string) => {
             <Box display="flex" justifyContent="center">
               <img
                 className="w-full h-auto rounded-lg object-cover"
-                src="../src/images/NearByCamp.png"
+                src="../src/images/NearByCamps.png"
                 alt="camp"
                 style={{ maxWidth: '100%', height: 'auto', width: '500px' }}
               />
@@ -93,6 +90,59 @@ const handleResourceClick = (resource: string) => {
           </Grid>
         </Grid>
       </Container>
+      <footer style={{ backgroundColor: '#000', color: '#fff', padding: '40px 0', width: '100%' }}>
+        <Container maxWidth="lg">
+          <Grid container spacing={5} justifyContent="space-between" alignItems="center">
+            
+            {/* Support our work section */}
+            <Grid item xs={12} sm={6} md={3}>
+              <Typography variant="h6" gutterBottom>
+                Support our work
+              </Typography>
+              <Typography variant="body2" gutterBottom>
+                Please help refugees in need.
+              </Typography>
+              <Button variant="outlined" color="inherit">
+                Donate now
+              </Button>
+            </Grid>
+            
+            {/* Global Voices for Refugee section */}
+            <Grid item xs={12} sm={6} md={3}>
+              <Typography variant="h6" gutterBottom>
+                Global Voices for Refugee
+              </Typography>
+              <IconButton color="inherit"><Facebook /></IconButton>
+              <IconButton color="inherit"><Twitter /></IconButton>
+              <IconButton color="inherit"><LinkedIn/></IconButton>
+              <IconButton color="inherit"><YouTube/></IconButton>
+            </Grid>
+            
+            {/* Stay informed section */}
+            <Grid item xs={12} sm={6} md={3}>
+              <Typography variant="h6" gutterBottom>
+                Stay informed
+              </Typography>
+              <Typography variant="body2" gutterBottom>
+                Sign up to our  to learn more about people forced to flee and how you can support them.
+              </Typography>
+              <Button variant="outlined" color="inherit">
+                Subscribe
+              </Button>
+            </Grid>
+            
+          </Grid>
+          <Typography variant="caption" align="center" display="block" gutterBottom style={{ marginTop: '20px', borderTop: '1px solid #fff', paddingTop: '20px' }}>
+            Privacy policy | Terms and conditions of use | Copyright
+            <br />
+            © RefugeeConnect 2024
+          </Typography>
+          <div style={{ textAlign: 'center', marginTop: '20px' }}>
+            <img src="../src/images/logo.png" alt="Your Logo" style={{ height: '50px', width: 'auto' }} />
+          </div>
+        </Container>
+      </footer> 
+      
     </>
   );
 };
