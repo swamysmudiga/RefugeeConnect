@@ -5,7 +5,7 @@ import counter from './counterId.js';
 //Schema for Camp Facilities 
 const campFacilities = new mongoose.Schema({
     campFacilityID:{
-        type : Number,
+        type : String,
         required : true
     },
     campFacilityName : {
@@ -17,7 +17,7 @@ const campFacilities = new mongoose.Schema({
 //Schema for Camp Services 
 const campServices = new mongoose.Schema({
     campServiceID:{
-        type : Number,
+        type : String,
         required : true
     },
     campServiceName : {
@@ -29,7 +29,7 @@ const campServices = new mongoose.Schema({
 //Schema for SupportingOrganizations 
 const supportingOrganizations = new mongoose.Schema({
     supportingOrganizationID:{
-        type : Number,
+        type : String,
         required : true
     },
     SupportingOrganizationName : {
@@ -82,11 +82,11 @@ const camp = new mongoose.Schema({
         required : true
     },
     personId:{
-        type : Number,
+        type : String,
         required : true
     },
     donationId:{
-        type : Number,
+        type : String,
         required : true
     },
     donationAmount : {

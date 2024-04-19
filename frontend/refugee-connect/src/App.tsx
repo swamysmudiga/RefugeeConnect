@@ -17,14 +17,10 @@ import ViewAllResources from './components/RefugeeHomePage/ViewAllResources';
 import ViewAllCamp from './components/RefugeeHomePage/ViewAllCamp';
 import ViewCamp from './components/RefugeeHomePage/ViewCamp.tsx';
 import AddResource from './components/UserHomePage/AddResource.tsx';
-<<<<<<< HEAD
 import ViewResource from './components/ViewResource.tsx'
 import ResourceAdditionPage from './components/UserHomePage/AddResource.tsx';
-=======
 import AddCamp from './components/AdminHomePage/AddCamp.tsx';
-
->>>>>>> dffb934b385a1bc558bd6a0e876e2c6f807f8687
->>>>>>> a7dc191883629a7da488f3ce37abda4e9dd875db
+import CampAdditionPage from './components/AdminHomePage/AddCamp.tsx';
 const route = createBrowserRouter([
   { 
     path:'/refugee',
@@ -35,8 +31,8 @@ const route = createBrowserRouter([
       { path:'refugeeHomePage', element:<RefugeeHomePage/>,},
       {  path:'login', element:<LoginPage/> },
       { path:'signup', element:<RegistrationForm/> },
-      {path:'viewAllResource', element:<ViewAllResources />},
-      {path:'viewNearByCamps', element:<ViewAllCamp />},
+      { path:'viewAllResource', element:<ViewAllResources />},
+      { path:'viewNearByCamps', element:<ViewAllCamp />},
       { path:'accommodation', element:<Accommodation/> },
       { path:'food-distribution', element:<FoodDistributionCenter/> },
       { path:'medical-clinic', element:<MedicalClinic/> },
@@ -44,7 +40,8 @@ const route = createBrowserRouter([
       { path:'story', element:<UserStories/> },
       { path:'viewResource/:id', element:<ViewResource/> },
       { path:'addResource', element:<ResourceAdditionPage/> },
-
+      { path:'addCamp', element:<CampAdditionPage/> },
+      { path:'camp/:id', element:<ViewCamp/> }
     ]
   },
     

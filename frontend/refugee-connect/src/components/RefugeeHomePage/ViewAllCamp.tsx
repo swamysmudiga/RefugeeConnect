@@ -1,171 +1,31 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Grid, Typography, Container } from '@mui/material';
-
-const camps = [
-    {
-        campId: 'cam_1',
-        campName: 'Lakeview Camp',
-        campCapacity: 150,
-        campLocation: 'Lake District',
-        campImage: 'https://via.placeholder.com/300x200',
-        campCurrentOccupancy: 120,
-        campManagementName: 'Lakeview Management',
-        campSecurityLevel: 'High',
-        SupportingOrganizations: [
-            { supportingOrganizationID: 1, SupportingOrganizationName: 'Lake Trust' },
-            { supportingOrganizationID: 2, SupportingOrganizationName: 'Green Foundation' }
-        ],
-        Infrastructure: 'Water facilities, WiFi, Medical center',
-        personId: 101,
-        donationId: 1001,
-        donationAmount: 10000,
-        campFacilities: [
-            { campFacilityID: 1, campFacilityName: 'Sports Complex' },
-            { campFacilityID: 2, campFacilityName: 'Dining Hall' }
-        ],
-        campServices: [
-            { campServiceID: 1, campServiceName: 'Counseling' },
-            { campServiceID: 2, campServiceName: 'Medical Care' }
-        ]
-    },
-    {
-        campId: 'cam_2',
-        campName: 'Mountain Retreat',
-        campCapacity: 200,
-        campLocation: 'Rocky Mountains',
-        campImage: 'https://via.placeholder.com/300x200',
-        campCurrentOccupancy: 160,
-        campManagementName: 'Mountain Retreat Management',
-        campSecurityLevel: 'Medium',
-        SupportingOrganizations: [
-            { supportingOrganizationID: 3, SupportingOrganizationName: 'Mountain Safety' },
-            { supportingOrganizationID: 4, SupportingOrganizationName: 'Wildlife Association' }
-        ],
-        Infrastructure: 'Shelter, Medical center, WiFi',
-        personId: 102,
-        donationId: 1002,
-        donationAmount: 8000,
-        campFacilities: [
-            { campFacilityID: 3, campFacilityName: 'Climbing Wall' },
-            { campFacilityID: 4, campFacilityName: 'Dining Hall' }
-        ],
-        campServices: [
-            { campServiceID: 3, campServiceName: 'First Aid' },
-            { campServiceID: 4, campServiceName: 'Guided Hikes' }
-        ]
-    },
-    {
-        campId: 'cam_3',
-        campName: 'Forest Haven',
-        campCapacity: 100,
-        campLocation: 'Pine Forest',
-        campImage: 'https://via.placeholder.com/300x200',
-        campCurrentOccupancy: 80,
-        campManagementName: 'Forest Haven Management',
-        campSecurityLevel: 'Low',
-        SupportingOrganizations: [
-            { supportingOrganizationID: 5, SupportingOrganizationName: 'Forest Protection' },
-            { supportingOrganizationID: 6, SupportingOrganizationName: 'Eco Group' }
-        ],
-        Infrastructure: 'Nature trails, Shelters',
-        personId: 103,
-        donationId: 1003,
-        donationAmount: 5000,
-        campFacilities: [
-            { campFacilityID: 5, campFacilityName: 'Nature Center' },
-            { campFacilityID: 6, campFacilityName: 'Camping Grounds' }
-        ],
-        campServices: [
-            { campServiceID: 5, campServiceName: 'Wildlife Tours' },
-            { campServiceID: 6, campServiceName: 'Campfire Events' }
-        ]
-    },
-    {
-        campId: 'cam_3',
-        campName: 'Forest Haven',
-        campCapacity: 100,
-        campLocation: 'Pine Forest',
-        campImage: 'https://via.placeholder.com/300x200',
-        campCurrentOccupancy: 80,
-        campManagementName: 'Forest Haven Management',
-        campSecurityLevel: 'Low',
-        SupportingOrganizations: [
-            { supportingOrganizationID: 5, SupportingOrganizationName: 'Forest Protection' },
-            { supportingOrganizationID: 6, SupportingOrganizationName: 'Eco Group' }
-        ],
-        Infrastructure: 'Nature trails, Shelters',
-        personId: 103,
-        donationId: 1003,
-        donationAmount: 5000,
-        campFacilities: [
-            { campFacilityID: 5, campFacilityName: 'Nature Center' },
-            { campFacilityID: 6, campFacilityName: 'Camping Grounds' }
-        ],
-        campServices: [
-            { campServiceID: 5, campServiceName: 'Wildlife Tours' },
-            { campServiceID: 6, campServiceName: 'Campfire Events' }
-        ]
-    },
-    {
-        campId: 'cam_3',
-        campName: 'Forest Haven',
-        campCapacity: 100,
-        campLocation: 'Pine Forest',
-        campImage: 'https://via.placeholder.com/300x200',
-        campCurrentOccupancy: 80,
-        campManagementName: 'Forest Haven Management',
-        campSecurityLevel: 'Low',
-        SupportingOrganizations: [
-            { supportingOrganizationID: 5, SupportingOrganizationName: 'Forest Protection' },
-            { supportingOrganizationID: 6, SupportingOrganizationName: 'Eco Group' }
-        ],
-        Infrastructure: 'Nature trails, Shelters',
-        personId: 103,
-        donationId: 1003,
-        donationAmount: 5000,
-        campFacilities: [
-            { campFacilityID: 5, campFacilityName: 'Nature Center' },
-            { campFacilityID: 6, campFacilityName: 'Camping Grounds' }
-        ],
-        campServices: [
-            { campServiceID: 5, campServiceName: 'Wildlife Tours' },
-            { campServiceID: 6, campServiceName: 'Campfire Events' }
-        ]
-    },
-    {
-        campId: 'cam_3',
-        campName: 'Forest Haven',
-        campCapacity: 100,
-        campLocation: 'Pine Forest',
-        campImage: 'https://via.placeholder.com/300x200',
-        campCurrentOccupancy: 80,
-        campManagementName: 'Forest Haven Management',
-        campSecurityLevel: 'Low',
-        SupportingOrganizations: [
-            { supportingOrganizationID: 5, SupportingOrganizationName: 'Forest Protection' },
-            { supportingOrganizationID: 6, SupportingOrganizationName: 'Eco Group' }
-        ],
-        Infrastructure: 'Nature trails, Shelters',
-        personId: 103,
-        donationId: 1003,
-        donationAmount: 5000,
-        campFacilities: [
-            { campFacilityID: 5, campFacilityName: 'Nature Center' },
-            { campFacilityID: 6, campFacilityName: 'Camping Grounds' }
-        ],
-        campServices: [
-            { campServiceID: 5, campServiceName: 'Wildlife Tours' },
-            { campServiceID: 6, campServiceName: 'Campfire Events' }
-        ]
-    }
-    
-];
-
-
+import { RootState } from '../../store/root-reducers';
+import {  useSelector , useDispatch } from 'react-redux';
+import { getAllCampAsync } from '../../store/camp/camp-reducer-actions';
+import { useNavigate } from 'react-router-dom'
 const CampPage = () => {
-    const handleCampClick = (camp: { campId: string; campName: string; campCapacity: number; campLocation: string; campImage: string; campCurrentOccupancy: number; campManagementName: string; campSecurityLevel: string; SupportingOrganizations: { supportingOrganizationID: number; SupportingOrganizationName: string; }[]; Infrastructure: string; personId: number; donationId: number; donationAmount: number; campFacilities: { campFacilityID: number; campFacilityName: string; }[]; campServices: { campServiceID: number; campServiceName: string; }[]; }) => {
-        console.log(camp);
+
+
+    const camps = useSelector((state: RootState) => state.camp.camps); 
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const handleCampClick = (campId : string) => {
+        console.log("Inside camp solo view.....", campId);
+        navigate(`/refugee/camp/${campId}`);
     };
+
+    useEffect(() => {
+        const fetchAllStory = async () => {
+          await dispatch(getAllCampAsync());
+        };
+    
+        fetchAllStory();
+      }, [dispatch]);
+
+
+    console.log("Input camps ", camps)
 
     return (
         <Container
@@ -194,7 +54,7 @@ const CampPage = () => {
                                 borderRadius: '8px',
                                 cursor: 'pointer',
                             }}
-                            onClick={() => handleCampClick(camp)}
+                            onClick={() => handleCampClick(camp.campId)}
                         >
                             {/* Display camp image */}
                             <img
