@@ -1,4 +1,4 @@
- 
+
 import { useEffect } from 'react';
 import { login } from './util/login';
 import RegistrationForm from './components/RegistrationForm';
@@ -21,9 +21,9 @@ import ViewResource from './components/ViewResource.tsx'
 import ResourceAdditionPage from './components/UserHomePage/AddResource.tsx';
 import AddCamp from './components/AdminHomePage/AddCamp.tsx';
 import CampAdditionPage from './components/AdminHomePage/AddCamp.tsx';
- 
+
 const route = createBrowserRouter([
-  {
+  { 
     path:'/refugee',
     element:<RootLayout/>,
     errorElement:<Error></Error>,
@@ -47,11 +47,11 @@ const route = createBrowserRouter([
   },
     
 ]);
- 
+
 function App() {
   console.log('App is rendering with RegistrationForm');
   return (<RouterProvider router={route} />);  
- 
+
 }
- 
+
 export default App;
