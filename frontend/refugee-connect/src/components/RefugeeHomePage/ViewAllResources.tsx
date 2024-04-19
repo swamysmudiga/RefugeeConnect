@@ -1,90 +1,24 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Grid, Typography, Container } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-
-const resources = [
-    {
-        id: 'res_1',
-        name: 'Resource 1',
-        description: 'This is the first resource.',
-        contentType: 'Type A',
-        createdDate: new Date('2023-01-01'),
-        userId: 'user_1',
-        location: 'Location 1',
-        image: 'https://via.placeholder.com/300x200',
-        isAvailable: true,
-    },
-    {
-        id: 'res_2',
-        name: 'Resource 2',
-        description: 'This is the second resource.',
-        contentType: 'Type B',
-        createdDate: new Date('2023-02-15'),
-        userId: 'user_2',
-        location: 'Location 2',
-        image: 'https://via.placeholder.com/300x200',
-        isAvailable: false,
-    },
-    {
-        id: 'res_3',
-        name: 'Resource 3',
-        description: 'This is the second resource.',
-        contentType: 'Type B',
-        createdDate: new Date('2023-02-15'),
-        userId: 'user_2',
-        location: 'Location 2',
-        image: 'https://via.placeholder.com/300x200',
-        isAvailable: false,
-    },
-    {
-        id: 'res_4',
-        name: 'Resource 4',
-        description: 'This is the second resource.',
-        contentType: 'Type B',
-        createdDate: new Date('2023-02-15'),
-        userId: 'user_2',
-        location: 'Location 2',
-        image: 'https://via.placeholder.com/300x200',
-        isAvailable: false,
-    },
-    {
-        id: 'res_5',
-        name: 'Resource 5',
-        description: 'This is the second resource.',
-        contentType: 'Type B',
-        createdDate: new Date('2023-02-15'),
-        userId: 'user_2',
-        location: 'Location 2',
-        image: 'https://via.placeholder.com/300x200',
-        isAvailable: false,
-    },
-    {
-        id: 'res_6',
-        name: 'Resource 6',
-        description: 'This is the second resource.',
-        contentType: 'Type B',
-        createdDate: new Date('2023-02-15'),
-        userId: 'user_2',
-        location: 'Location 2',
-        image: 'https://via.placeholder.com/300x200',
-        isAvailable: false,
-    },
-    {
-        id: 'res_7',
-        name: 'Resource 7',
-        description: 'This is the second resource.',
-        contentType: 'Type B',
-        createdDate: new Date('2023-02-15'),
-        userId: 'user_2',
-        location: 'Location 2',
-        image: 'https://via.placeholder.com/300x200',
-        isAvailable: false,
-    },
-    // Add more resources here...
-];
+import { RootState } from '../../store/root-reducers';
+import { useSelector , useDispatch } from 'react-redux'
+import { getAllResourceAsync } from '../../store/resource/resource-reducer-actions';
 
 const ResourcePage = () => {
     const navigate = useNavigate();
+    const resources = useSelector((state: RootState) => state.resources.resources); 
+    const dispatch = useDispatch();
+
+    useEffect(()=>{
+
+        const fetchAllStory = async () => {
+            await dispatch(getAllResourceAsync());
+          };
+      
+          fetchAllStory();
+
+    },[]);
     
     const handleResourceClick = (resource: { id: string; name: string; description: string; contentType: string; createdDate: Date; userId: string; location: string; image: string; isAvailable: boolean; }) => {
         
@@ -109,7 +43,7 @@ const ResourcePage = () => {
                 Explore Resources
             </Typography>
             <Grid container spacing={4}>
-                {resources.map((resource) => (
+                {resources.map((resource : any) => (
                     <Grid item xs={12} sm={6} md={4} key={resource.id}>
                         <div
                             style={{
@@ -122,7 +56,7 @@ const ResourcePage = () => {
                         >
                             {/* Display resource image */}
                             <img
-                                src={resource.image}
+                                src={`http://localhost:4000/${resource.image}`}
                                 alt={resource.name}
                                 style={{ width: '100%', height: '200px', objectFit: 'cover', borderRadius: '4px' }}
                             />
