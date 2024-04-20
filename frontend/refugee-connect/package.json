@@ -13,8 +13,10 @@
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
     "@mapbox/mapbox-gl-geocoder": "^5.0.2",
+    "@mapbox/polyline": "^1.2.1",
     "@mui/icons-material": "^5.15.15",
     "@mui/material": "^5.15.15",
+    "@react-google-maps/api": "^2.19.3",
     "@reduxjs/toolkit": "^2.2.3",
     "@types/mapbox__mapbox-gl-geocoder": "^5.0.0",
     "axios": "^1.6.8",
@@ -39,8 +41,14 @@
     "yup": "^0.32.11"
   },
   "devDependencies": {
+<<<<<<< HEAD
+    "@types/mapbox__polyline": "^1.0.5",
+    "@types/react": "^18.2.66",
+=======
     "@types/react": "^18.2.79",
+>>>>>>> 3133edb7e80ae9a6497930d695afa147d5c230c7
     "@types/react-dom": "^18.2.22",
+    "@types/react-map-gl": "^6.1.6",
     "@types/react-slick": "^0.23.13",
     "@typescript-eslint/eslint-plugin": "^7.2.0",
     "@typescript-eslint/parser": "^7.2.0",

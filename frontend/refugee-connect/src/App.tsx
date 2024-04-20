@@ -21,7 +21,9 @@ import ViewResource from './components/ViewResource.tsx'
 import ResourceAdditionPage from './components/UserHomePage/AddResource.tsx';
 import AddCamp from './components/AdminHomePage/AddCamp.tsx';
 import CampAdditionPage from './components/AdminHomePage/AddCamp.tsx';
+import MapComponentView from './components/Map/Mapdirections.tsx';
 import AdminHome from './components/AdminHomePage/AdminHome.tsx';
+
 
 const route = createBrowserRouter([
   { 
@@ -43,9 +45,10 @@ const route = createBrowserRouter([
       { path:'viewResource/:id', element:<ViewResource/> },
       { path:'addResource', element:<ResourceAdditionPage/> },
       { path:'addCamp', element:<CampAdditionPage/> },
-      { path:'camp/:id', element:<ViewCamp/> }
+      { path:'camp/:id', element:<ViewCamp/> },
     ]
   },
+  { path:'/resource/mapView/:startingLatitude/:startingLongitude/:endingLatitude/:endingLongitude' , element : <MapComponentView/>}
     
 ]);
 
