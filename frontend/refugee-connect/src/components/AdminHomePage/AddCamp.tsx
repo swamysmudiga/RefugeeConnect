@@ -65,6 +65,9 @@ const CampAdditionPage = () => {
       // Simulate camp creation
       console.log('Camp values:', values);
       actions.setSubmitting(false);
+      console.log(JSON.stringify(values));
+
+
       toast.success('Camp added successfully!');
     } catch (error) {
       console.error('Error creating camp:', error);

@@ -46,9 +46,10 @@ const route = createBrowserRouter([
       { path:'addResource', element:<ResourceAdditionPage/> },
       { path:'addCamp', element:<CampAdditionPage/> },
       { path:'camp/:id', element:<ViewCamp/> },
+      { path:'resource/mapView/:startingLatitude/:startingLongitude/:endingLatitude/:endingLongitude' , element : <MapComponentView/>}
     ]
   },
-  { path:'/resource/mapView/:startingLatitude/:startingLongitude/:endingLatitude/:endingLongitude' , element : <MapComponentView/>}
+  
     
 ]);
 
