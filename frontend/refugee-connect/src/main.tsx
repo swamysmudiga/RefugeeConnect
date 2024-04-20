@@ -4,7 +4,7 @@ import App from './App'; // Ensure this path is correct
 import './index.css';
 import { Provider } from 'react-redux';
 import store from './store/store';
-
+import 'mapbox-gl/dist/mapbox-gl.css';
 
 const rootElement = document.getElementById('root');
 if (!rootElement) {
