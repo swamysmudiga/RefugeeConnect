@@ -5,16 +5,16 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { Facebook, Twitter, LinkedIn, YouTube } from '@mui/icons-material';
 import { ArrowBackIos, ArrowForwardIos } from '@mui/icons-material';
-
+ 
 const ContentSection = () => {
   const sliderRef = useRef<Slider>(null);
   const [currentSlide, setCurrentSlide] = useState(0);
-
+ 
   const sliderSettings = {
     dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: 1, 
+    slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 3000,
@@ -22,45 +22,26 @@ const ContentSection = () => {
     prevArrow: <ArrowBackIos />,
     afterChange: (current: number) => setCurrentSlide(current)
   };
-
+ 
   const cultures = [
-    { 
-      title: 'Economic Contributions', 
+    {
+      title: 'Economic Contributions',
       description: 'Refugees can make significant economic contributions to their host countries. Many refugees are skilled professionals, entrepreneurs, and workers who bring diverse talents, knowledge, and innovation. By participating in the labor market and starting businesses, refugees contribute to economic growth, job creation, and cultural diversity. Their entrepreneurial spirit often leads to the creation of new opportunities and stable economies.'
     },
-    { 
-      title: 'Cultural Enrichment', 
-      description: 'Refugees bring with them rich cultural heritage, traditions, and experiences. Their presence can enrich the cultural tapestry of host communities, promoting cross-cultural understanding, tolerance, and appreciation. By sharing their stories and traditions, refugees contribute to the cultural diversity and vibrancy of society. Additionally, their integration into local arts, cuisine, and festivities adds layers of depth to community life, fostering unity.' 
+    {
+      title: 'Cultural Enrichment',
+      description: 'Refugees bring with them rich cultural heritage, traditions, and experiences. Their presence can enrich the cultural tapestry of host communities, promoting cross-cultural understanding, tolerance, and appreciation. By sharing their stories and traditions, refugees contribute to the cultural diversity and vibrancy of society. Additionally, their integration into local arts, cuisine, and festivities adds layers of depth to community life, fostering unity.'
     },
-    { 
-      title: 'Educational Opportunities', 
-      description: 'Providing access to education for refugee children and youth is essential for their long-term well-being and future prospects. Education empowers refugees to acquire knowledge, skills, and qualifications necessary for meaningful employment, social integration, and civic engagement. By investing in refugee education, societies can unlock human potential and promote sustainable development.' 
+    {
+      title: 'Educational Opportunities',
+      description: 'Providing access to education for refugee children and youth is essential for their long-term well-being and future prospects. Education empowers refugees to acquire knowledge, skills, and qualifications necessary for meaningful employment, social integration, and civic engagement. By investing in refugee education, societies can unlock human potential and promote sustainable development.'
     },
-    { 
-      title: 'Labor Market Dynamics', 
-      description: 'In some cases, refugees fill critical gaps in the labor market, particularly in sectors facing shortages of skilled workers or manual labor. By contributing to industries such as healthcare, agriculture, construction, and hospitality, refugees play a vital role in sustaining economic activities and meeting workforce demands. Moreover, refugees often display strong work ethic and adaptability, making them valuable assets to employers.' 
+    {
+      title: 'Labor Market Dynamics',
+      description: 'In some cases, refugees fill critical gaps in the labor market, particularly in sectors facing shortages of skilled workers or manual labor. By contributing to industries such as healthcare, agriculture, construction, and hospitality, refugees play a vital role in sustaining economic activities and meeting workforce demands. Moreover, refugees often display strong work ethic and adaptability, making them valuable assets to employers.'
     }
   ];
-
-    const secondCultures = [
-    { 
-      title: 'Economic Contributions', 
-      description: 'Refugees can make significant economic contributions to their host countries. Many refugees are skilled professionals, entrepreneurs, and workers who bring diverse talents, knowledge, and innovation. By participating in the labor market and starting businesses, refugees contribute to economic growth, job creation, and cultural diversity. Their entrepreneurial spirit often leads to the creation of new opportunities and stable economies.'
-    },
-    { 
-      title: 'Cultural Enrichment', 
-      description: 'Refugees bring with them rich cultural heritage, traditions, and experiences. Their presence can enrich the cultural tapestry of host communities, promoting cross-cultural understanding, tolerance, and appreciation. By sharing their stories and traditions, refugees contribute to the cultural diversity and vibrancy of society. Additionally, their integration into local arts, cuisine, and festivities adds layers of depth to community life, fostering unity.' 
-    },
-    { 
-      title: 'Educational Opportunities', 
-      description: 'Providing access to education for refugee children and youth is essential for their long-term well-being and future prospects. Education empowers refugees to acquire knowledge, skills, and qualifications necessary for meaningful employment, social integration, and civic engagement. By investing in refugee education, societies can unlock human potential and promote sustainable development.' 
-    },
-    { 
-      title: 'Labor Market Dynamics', 
-      description: 'In some cases, refugees fill critical gaps in the labor market, particularly in sectors facing shortages of skilled workers or manual labor. By contributing to industries such as healthcare, agriculture, construction, and hospitality, refugees play a vital role in sustaining economic activities and meeting workforce demands. Moreover, refugees often display strong work ethic and adaptability, making them valuable assets to employers.' 
-    }
-  ];
-
+ 
   const alternatingSections = [
     {
       title: 'Refugee Connect Camp',
@@ -75,19 +56,19 @@ const ContentSection = () => {
       imageFirst: false,
     },
   ];
-
+ 
   const goToNextSlide = () => {
     if (sliderRef.current) {
       sliderRef.current.slickNext?.();
     }
   };
-
+ 
   const goToPrevSlide = () => {
     if (sliderRef.current) {
       sliderRef.current.slickPrev?.();
     }
   };
-
+ 
   return (
     <div style={{ overflowY: 'auto', maxHeight: '100vh', position: 'relative' }}>
     <section style={{ position: 'relative', width: '100%', overflow: 'hidden' }}>
@@ -100,63 +81,38 @@ const ContentSection = () => {
         </Typography>
       </div>
     </section>
-
+ 
     <Container maxWidth="lg" style={{ padding: '40px 0' }}>
       <Grid container spacing={4} alignItems="center" justifyContent="center">
       
         {/* First Set of Culture Cards */}
-        <Grid item xs={12} md={6}>
-          <Typography variant="h4" gutterBottom style={{ textDecoration: 'underline' }}>
-            How Refugee Matters!
-          </Typography>
-          <div style={{ maxWidth: '100%', overflowX: 'auto' }}>
-            <Slider {...sliderSettings} ref={sliderRef}>
-              {cultures.map((culture, index) => (
-                <div key={index}>
-                  <Card style={{ boxShadow: 'none', border: '1px solid #ddd', borderRadius: '4px', backgroundColor: '#fff' }}>
-                    <CardContent>
-                      <Typography variant="h5" style={{ color: '#333' }}>{culture.title}</Typography>
-                      <Typography variant="body2">{culture.description}</Typography>
-                    </CardContent>
-                  </Card>
-                </div>
-              ))}
-            </Slider>
-            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-              <IconButton onClick={goToPrevSlide}><ArrowBackIos /></IconButton>
-              <IconButton onClick={goToNextSlide}><ArrowForwardIos /></IconButton>
-            </div>
+              <Grid item xs={12} md={6}>
+        <Typography variant="h4" gutterBottom style={{ borderRadius: '15px', backgroundColor: '#f0f0f0', padding: '10px', marginBottom: '20px' }}>
+          How Refugee Matters!
+        </Typography>
+        <div style={{ maxWidth: '100%', overflowX: 'auto' }}>
+          <Slider {...sliderSettings} ref={sliderRef}>
+            {cultures.map((culture, index) => (
+              <div key={index}>
+                <Card style={{ boxShadow: 'none', border: '1px solid #ddd', borderRadius: '4px', backgroundColor: '#fff' }}>
+                  <CardContent>
+                    <Typography variant="h5" style={{ color: '#333' }}>{culture.title}</Typography>
+                    <Typography variant="body2">{culture.description}</Typography>
+                  </CardContent>
+                </Card>
+              </div>
+            ))}
+          </Slider>
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <IconButton onClick={goToPrevSlide}><ArrowBackIos /></IconButton>
+            <IconButton onClick={goToNextSlide}><ArrowForwardIos /></IconButton>
           </div>
-        </Grid>
-        
-        {/* Second Set of Culture Cards */}
-        <Grid item xs={12} md={6}>
-          <Typography variant="h4" gutterBottom style={{ textDecoration: 'underline' }}>
-            Second Set of Culture Cards
-          </Typography>
-          <div style={{ maxWidth: '100%', overflowX: 'auto' }}>
-            <Slider {...sliderSettings} ref={sliderRef}>
-              {secondCultures.map((culture, index) => (
-                <div key={index}>
-                  <Card style={{ boxShadow: 'none', border: '1px solid #ddd', borderRadius: '4px', backgroundColor: '#fff' }}>
-                    <CardContent>
-                      <Typography variant="h5" style={{ color: '#333' }}>{culture.title}</Typography>
-                      <Typography variant="body2">{culture.description}</Typography>
-                    </CardContent>
-                  </Card>
-                </div>
-              ))}
-            </Slider>
-            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-              <IconButton onClick={goToPrevSlide}><ArrowBackIos /></IconButton>
-              <IconButton onClick={goToNextSlide}><ArrowForwardIos /></IconButton>
-            </div>
-          </div>
-        </Grid>
+        </div>
+      </Grid>
         
       </Grid>
     </Container>
-      {alternatingSections.map((section, index) => (
+          {alternatingSections.map((section, index) => (
         <Container key={index} maxWidth="lg" style={{ padding: '40px 0' }}>
           <Grid container spacing={4} alignItems="center" direction={section.imageFirst ? 'row' : 'row-reverse'}>
             <Grid item xs={12} md={6}>
@@ -167,7 +123,7 @@ const ContentSection = () => {
                 style={{ width: '100%', height: 'auto' }}
               />
             </Grid>
-            <Grid item xs={12} md={6} style={{ color: 'white', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+            <Grid item xs={12} md={6} style={{ color: '#000', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
               <Typography variant="h4" gutterBottom>
                 {section.title}
               </Typography>
@@ -178,7 +134,7 @@ const ContentSection = () => {
           </Grid>
         </Container>
       ))}
-
+ 
       <footer style={{ backgroundColor: '#000', color: '#fff', padding: '40px 0', width: '100%' }}>
         <Container maxWidth="lg">
           <Grid container spacing={5} justifyContent="space-between" alignItems="center">
@@ -230,9 +186,9 @@ const ContentSection = () => {
             <img src="../src/images/logo.png" alt="Your Logo" style={{ height: '50px', width: 'auto' }} />
           </div>
         </Container>
-      </footer> 
+      </footer>
     </div>
   );
 };
-
+ 
 export default ContentSection;
