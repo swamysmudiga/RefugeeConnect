@@ -10,6 +10,7 @@ import userRoutes from "./userRoutes.js";
 import  multer from 'multer';
 import path from 'path';
 import express from 'express';
+import axios from 'axios';
 
 //Initilize the routes
 export const initializeRouter = (app)=>{
@@ -54,6 +55,29 @@ export const initializeRouter = (app)=>{
       
         // Respond with the file path
         res.json({ imagePath: filePath });
+      });
+
+
+      app.get('/directions', async (req, res) => {
+        try {
+          // Extract query parameters from the request
+          const { origin, destination, key } = req.query;
+      
+          // Make a request to the Google Maps API
+          const response = await axios.get('https://maps.googleapis.com/maps/api/directions/json', {
+            params: {
+              origin,
+              destination,
+              key,
+            },
+          });
+      
+          // Forward the response from Google Maps API to the client
+          res.json(response.data);
+        } catch (error) {
+          console.error('Error fetching directions:', error.message);
+          res.status(500).json({ error: 'Internal server error' });
+        }
       });
       
 }
