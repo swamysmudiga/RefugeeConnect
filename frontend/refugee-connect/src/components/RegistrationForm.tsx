@@ -6,6 +6,7 @@ import refugeeImage from '../images/refugee.jpg';
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { createRegistration } from '../util/refugee-services';
 
 const userValidationSchema = Yup.object({
   username: Yup.string()
@@ -21,6 +22,7 @@ const userValidationSchema = Yup.object({
   phone_no: Yup.string()
     .matches(/^[0-9]{10}$/, "Contact number must be number and 10 digits")
     .required('Contact number is required'),
+    image: Yup.mixed().required("Image is required"),
 });
 
 const refugeeValidationSchema = Yup.object({
@@ -55,6 +57,7 @@ const refugeeValidationSchema = Yup.object({
   blood_type: Yup.string().required('Blood type is required'),
   height: Yup.number().positive().required('Height must be a number'),
   weight: Yup.number().positive().required('Weight must be a number'),
+  image: Yup.mixed().required("Image is required"),
 });
 
 const initialUserValues = {
@@ -62,6 +65,7 @@ const initialUserValues = {
   password: '',
   email: '',
   phone_no: '',
+  image: null,
 };
 
 const initialRefugeeValues = {
@@ -89,72 +93,97 @@ const initialRefugeeValues = {
   blood_type: '',
   height: '',
   weight: '',
+  image: null,
 };
 
 const RegistrationForm = () => {
   const [accountType, setAccountType] = useState('user');
+  const [image, setImage] = useState(null); 
+  const [imageName, setImageName] = useState('');
   const navigate = useNavigate();
 
-  const handleSubmit = async (values: { role: string; }, actions: { setSubmitting: (arg0: boolean) => void; }) => {
+  const handleSubmit = async (values: { role: string; image: null; }, actions: { setSubmitting: (arg0: boolean) => void; }) => {
     toast.success("Registration Successful!");
-    values.role = accountType;
-    console.log(values);
-
-    // Your logic for form submission
+    values.role = accountType; 
+    values.image = image; 
+    const response = await createRegistration(values);
     actions.setSubmitting(false);
-    navigate('/refugee/login'); // Example navigation
+    navigate('/refugee/login'); 
   };
-
-
 
   return (
     <Container maxWidth="lg" style={{ marginTop: '7%', marginBottom: '40px', position: 'relative', height: 'calc(100% - 40px)' }}>
-      <Grid container spacing={3} style={{ height: '100%' }}>
-        <Grid item xs={12} md={6}>
-          <Paper elevation={3} style={{ padding: '20px', position: 'relative', height: '85%' }}>
-            <Typography variant="h4" align="center" color="primary" gutterBottom>
-              Welcome to Registration Form
-            </Typography>
-            <Formik
-              initialValues={accountType === 'user' ? { ...initialUserValues, role: 'user' } : { ...initialRefugeeValues, role: 'refugee' }}
-              validationSchema={accountType === 'user' ? userValidationSchema : refugeeValidationSchema}
-              onSubmit={handleSubmit}
-            >
-              {({ isValid, dirty, values }) => (
-                <Form>
-                  <Grid container spacing={2} justifyContent="center">
-                    <Grid item xs={12}>
-                      <FormControl component="fieldset" fullWidth>
-                        <RadioGroup
-                          row
-                          aria-label="accountType"
-                          name="accountType"
-                          value={accountType}
-                          onChange={(e) => setAccountType(e.target.value)}
-                        >
-                          <FormControlLabel value="user" control={<Radio />} label="User" />
-                          <FormControlLabel value="refugee" control={<Radio />} label="Refugee" />
-                        </RadioGroup>
-                      </FormControl>
-                    </Grid>
-                    
-                    <Grid item xs={12} md={6}>
-                      <Field as={TextField} name="username" label="Username" fullWidth margin="normal" />
-                      <ErrorMessage name="username" component="div" className="field-error" />
-                    </Grid>
-                    <Grid item xs={12} md={6}>
-                      <Field as={TextField} type="password" name="password" label="Password" fullWidth margin="normal" />
-                      <ErrorMessage name="password" component="div" className="field-error" />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <Field as={TextField} name="email" label="Email" fullWidth margin="normal" />
-                      <ErrorMessage name="email" component="div" className="field-error" />
-                    </Grid>
-                    <Grid item xs={12} md={6}>
-                      <Field as={TextField} name="phone_no" label="Phone Number" fullWidth margin="normal" />
-                      <ErrorMessage name="phone_no" component="div" className="field-error" />
-                    </Grid>
-                  {/* Refugee Specific Fields */}
+    <Grid container spacing={3} style={{ height: '100%' }}>
+      <Grid item xs={12} md={6}>
+        <Paper elevation={3} style={{ padding: '20px', position: 'relative', height: '85%' }}>
+          <Typography variant="h4" align="center" color="primary" gutterBottom>
+            Welcome to Registration Form
+          </Typography>
+          {/* Formik form */}
+          <Formik
+            initialValues={accountType === 'user' ? { ...initialUserValues, role: 'user' } : { ...initialRefugeeValues, role: 'refugee' }}
+            validationSchema={accountType === 'user' ? userValidationSchema : refugeeValidationSchema}
+            onSubmit={handleSubmit}
+          >
+            {({ isValid, dirty, values, setFieldValue }) => (
+              <Form>
+                <Grid container spacing={2} justifyContent="center">
+                  {/* Account type radio buttons */}
+                  <Grid item xs={12}>
+                    <FormControl component="fieldset" fullWidth>
+                      <RadioGroup
+                        row
+                        aria-label="accountType"
+                        name="accountType"
+                        value={accountType}
+                        onChange={(e) => setAccountType(e.target.value)}
+                      >
+                        <FormControlLabel value="user" control={<Radio />} label="User" />
+                        <FormControlLabel value="refugee" control={<Radio />} label="Refugee" />
+                      </RadioGroup>
+                    </FormControl>
+                  </Grid>
+                  {/* User fields */}
+                  <Grid item xs={12} md={6}>
+                    <Field as={TextField} name="username" label="Username" fullWidth margin="normal" />
+                    <ErrorMessage name="username" component="div" className="field-error" />
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                    <Field as={TextField} type="password" name="password" label="Password" fullWidth margin="normal" />
+                    <ErrorMessage name="password" component="div" className="field-error" />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Field as={TextField} name="email" label="Email" fullWidth margin="normal" />
+                    <ErrorMessage name="email" component="div" className="field-error" />
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                    <Field as={TextField} name="phone_no" label="Phone Number" fullWidth margin="normal" />
+                    <ErrorMessage name="phone_no" component="div" className="field-error" />
+                  </Grid>
+                  {/* Image upload */}
+                  <Grid item xs={12}>
+                    <input
+                      id="userImage"
+                      name="image"
+                      type="file"
+                      onChange={(event) => {
+                        if (event.currentTarget.files && event.currentTarget.files.length > 0) {
+                          const file = event.currentTarget.files[0];
+                          setFieldValue("image", file);
+                          setImageName(file.name);
+                        }
+                      }}
+                      style={{ display: 'none' }}
+                    />
+                    <label htmlFor="userImage">
+                      <Button variant="outlined" component="span" fullWidth>
+                        Upload Image
+                      </Button>
+                    </label>
+                    {imageName && <Typography variant="caption" style={{ marginTop: '0.5rem' }}>{imageName}</Typography>}
+                    <ErrorMessage name="image" component="div" className="field-error" />
+                  </Grid>
+                  {/* Refugee specific fields */}
                   {accountType === 'refugee' && (
                     <>
                       <Grid item xs={12} md={6}>

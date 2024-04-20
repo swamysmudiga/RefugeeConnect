@@ -39,7 +39,7 @@ const MapComponent = ({ resource }: { resource: Resource }) => {
     if (startingCoordinates && endingCoordinates) {
 
       console.log(" lat & log  ", startingCoordinates.latitude,startingCoordinates.longitude,endingCoordinates.latitude,endingCoordinates.longitude)
-      navigate(`/resource/mapView/${startingCoordinates.latitude}/${startingCoordinates.longitude}/${endingCoordinates.latitude}/${endingCoordinates.longitude}`);
+      navigate(`/refugee/resource/mapView/${startingCoordinates.latitude}/${startingCoordinates.longitude}/${endingCoordinates.latitude}/${endingCoordinates.longitude}`);
     }
   }
 

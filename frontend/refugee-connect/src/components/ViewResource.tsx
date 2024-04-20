@@ -187,7 +187,7 @@ const ResourceDetailPage: React.FC = () => {
             </CardBody>
             <CardFooter>
               {/* Back button */}
-              <Link to=".."><button onClick={handleBack}>Back</button></Link>
+              <Link to="../viewAllResource"><button onClick={handleBack}>Back</button></Link>
               {/* Edit and delete buttons */}
               <div>
                 <button>Edit</button>
@@ -202,8 +202,6 @@ const ResourceDetailPage: React.FC = () => {
             </MapHeader>
             <MapContent>
              <MapComponent resource={resource}/>
-              {/* Map component goes here */}
-              {/* Assuming there is a Map component to display */}
             </MapContent>
           </MapContainer>
         </PageContent>
