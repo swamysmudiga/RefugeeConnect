@@ -6,6 +6,7 @@ import refugeeImage from '../images/refugee.jpg';
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { createRegistration } from '../util/refugee-services';
 
 const userValidationSchema = Yup.object({
   username: Yup.string()
@@ -97,14 +98,17 @@ const initialRefugeeValues = {
 
 const RegistrationForm = () => {
   const [accountType, setAccountType] = useState('user');
+  const [Image, setImage] = useState({
+    image: null as File | null
+  })
   const navigate = useNavigate();
 
   const handleSubmit = async (values: { role: string; }, actions: { setSubmitting: (arg0: boolean) => void; }) => {
     toast.success("Registration Successful!");
     values.role = accountType;
     console.log(values);
-
-    // Your logic for form submission
+    console.log("image is - ", Image);
+    const response = await createRegistration(values);
     actions.setSubmitting(false);
     navigate('/refugee/login'); // Example navigation
   };
@@ -112,7 +116,9 @@ const RegistrationForm = () => {
 
 
   function setFieldValue(arg0: string, file: File) {
-    throw new Error('Function not implemented.');
+   // Get the selected image file
+   setImage({image: file }); 
+    
   }
 
   return (
@@ -274,27 +280,6 @@ const RegistrationForm = () => {
                       <Grid item xs={12} md={6}>
                         <Field as={TextField} name="weight" label="Weight" fullWidth margin="normal" />
                         <ErrorMessage name="weight" component="div" className="field-error" />
-                      </Grid>
-                      Copy code
-                      <Grid item xs={12}>
-                        <input
-                          id="refugeeImage"
-                          name="image"
-                          type="file"
-                          onChange={(event) => {
-                            if (event.currentTarget.files && event.currentTarget.files.length > 0) {
-                              const file = event.currentTarget.files[0];
-                              setFieldValue("image", file);
-                            }
-                          }}
-                          style={{ display: 'none' }}
-                        />
-                        <label htmlFor="refugeeImage">
-                          <Button variant="outlined" component="span" fullWidth>
-                            Upload Image
-                          </Button>
-                        </label>
-                        <ErrorMessage name="image" component="div" className="field-error" />
                       </Grid>
                     </>)
                   }
