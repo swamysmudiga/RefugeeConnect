@@ -96,6 +96,7 @@ export default function StylishNavBar() {
             <Link to="/refugee"><Button color="secondary" variant="contained" sx={{ mr: 2 }}>Home</Button></Link>
             { token && role == "refugee" &&<Link to="addStory"><Button color="inherit" sx={{ mr: 2 }}>Add Story</Button></Link>}
             { token && role == "refugee" &&<Link to="addResource"><Button color="inherit" sx={{ mr: 2 }}>Add Resource</Button></Link>}
+            { token && role == "refugee" &&<Link to="addCamp"><Button color="inherit" sx={{ mr: 2 }}>Add Camp</Button></Link>}
             <Button color="inherit" sx={{ mr: 2 }}>Contact</Button>
             <Button color="inherit" sx={{ mr: 2 }}>Donate</Button>
             <Select

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import { useParams , Link } from 'react-router-dom';
+import MapComponent from './Map/Map';
 
 
 interface Resource {
@@ -200,6 +201,7 @@ const ResourceDetailPage: React.FC = () => {
               <h2>See the location</h2>
             </MapHeader>
             <MapContent>
+             <MapComponent resource={resource}/>
               {/* Map component goes here */}
               {/* Assuming there is a Map component to display */}
             </MapContent>

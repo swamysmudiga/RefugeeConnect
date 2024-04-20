@@ -17,6 +17,11 @@ const campValidationSchema = Yup.object({
   campManagementName: Yup.string().required('Management Name is required'),
   campSecurityLevel: Yup.string().required('Security Level is required'),
   Infrastructure: Yup.string().required('Infrastructure is required'),
+  donationAmount: Yup.number().required('Donation Amount is required').positive(),
+  campFacilities: Yup.array().of(Yup.string().required('Facility name is required'))
+    .min(1, 'At least one facility is required'),
+  supportingOrganizations: Yup.array().of(Yup.string().required('Organization name is required'))
+    .min(1, 'At least one organization is required'),
 });
 
 // Initial Values for Camp
@@ -29,6 +34,9 @@ const initialCampValues = {
   campManagementName: '',
   campSecurityLevel: '',
   Infrastructure: '',
+  donationAmount: '',
+  campFacilities: [],
+  supportingOrganizations: [],
 };
 
 // Styled component for overlay
@@ -76,11 +84,12 @@ const CampAdditionPage = () => {
 
   return (
     <Overlay>
-      <Container maxWidth="lg" style={{ marginTop: '7%', marginBottom: '40px', position: 'relative', height: 'calc(100% - 40px)' }}>
-        <Grid container spacing={3} style={{ height: '100%' }}>
-          <Grid item xs={12} md={6}>
-            <animated.div style={{ ...formAnimation, height: '100%' }}>
-              <Paper elevation={3} style={{ padding: '20px', position: 'relative', height: '85%' }}>
+      <Container maxWidth="lg" style={{ marginTop: '7%', marginBottom: '40px', position: 'relative' }}>
+        <Grid container spacing={3} justifyContent="center">
+          {/* Form Card Grid Item */}
+          <Grid item xs={12} md={6} lg={6}>
+            <animated.div style={formAnimation}>
+              <Paper elevation={3} style={{ padding: '20px', maxHeight: '80vh', overflowY: 'auto' }}>
                 <Typography variant="h4" align="center" color="primary" gutterBottom>
                   Add Camp
                 </Typography>
@@ -89,9 +98,10 @@ const CampAdditionPage = () => {
                   validationSchema={campValidationSchema}
                   onSubmit={handleSubmit}
                 >
-                  {({ isValid, dirty, setFieldValue }) => (
-                    <Form style={{ height: '100%' }}>
+                  {({ isValid, dirty, values, setFieldValue, errors, touched }) => (
+                    <Form>
                       <Grid container spacing={2}>
+                        {/* Detailed Form Fields */}
                         <Grid item xs={12} sm={6}>
                           <Field as={TextField} name="campName" label="Camp Name *" fullWidth />
                           <ErrorMessage name="campName" render={msg => <div style={{ color: 'red' }}>{msg}</div>} />
@@ -120,18 +130,75 @@ const CampAdditionPage = () => {
                           <Field as={TextField} name="Infrastructure" label="Infrastructure *" fullWidth />
                           <ErrorMessage name="Infrastructure" render={msg => <div style={{ color: 'red' }}>{msg}</div>} />
                         </Grid>
+                        <Grid item xs={12} sm={6}>
+                          <Field as={TextField} name="donationAmount" label="Donation Amount *" fullWidth />
+                          <ErrorMessage name="donationAmount" render={msg => <div style={{ color: 'red' }}>{msg}</div>} />
+                        </Grid>
                         <Grid item xs={12}>
-                          {/* Input for uploading image */}
+                          <Button
+                            variant="outlined"
+                            fullWidth
+                            onClick={() => setFieldValue("campFacilities", [...values.campFacilities, ""])}
+                            style={{ marginBottom: '10px' }}
+                          >
+                            Add Facility
+                          </Button>
+                          {values.campFacilities.map((facility, index) => (
+                            <div key={index}>
+                              <Field
+                                as={TextField}
+                                name={`campFacilities.${index}`}
+                                label="Facility"
+                                fullWidth
+                                variant="outlined"
+                                margin="dense"
+                                size="small"
+                              />
+                              <ErrorMessage name={`campFacilities.${index}`} render={msg => <div style={{ color: 'red' }}>{msg}</div>} />
+                            </div>
+                          ))}
+                          {errors.campFacilities && touched.campFacilities ? (
+                            <div style={{ color: 'red' }}>{errors.campFacilities}</div>
+                          ) : null}
+                        </Grid>
+                        <Grid item xs={12}>
+                          <Button
+                            variant="outlined"
+                            fullWidth
+                            onClick={() => setFieldValue("supportingOrganizations", [...values.supportingOrganizations, ""])}
+                            style={{ marginBottom: '10px' }}
+                          >
+                            Add Organization
+                          </Button>
+                          {values.supportingOrganizations.map((organization, index) => (
+                            <div key={index}>
+                              <Field
+                                as={TextField}
+                                name={`supportingOrganizations.${index}`}
+                                label="Organization"
+                                fullWidth
+                                variant="outlined"
+                                margin="dense"
+                                size="small"
+                              />
+                              <ErrorMessage name={`supportingOrganizations.${index}`} render={msg => <div style={{ color: 'red' }}>{msg}</div>} />
+                            </div>
+                          ))}
+                          {errors.supportingOrganizations && touched.supportingOrganizations ? (
+                            <div style={{ color: 'red' }}>{errors.supportingOrganizations}</div>
+                          ) : null}
+                        </Grid>
+                        <Grid item xs={12}>
                           <input
                             id="campImage"
                             name="campImage"
                             type="file"
                             onChange={(event) => {
-                              const file = event.currentTarget.files && event.currentTarget.files[0]; // Check if files exist before accessing
-                              if (file) {
-                                setFieldValue("campImage", file); // Store selected image in formik state
-                              }
-                            }}
+                                if (event.currentTarget.files && event.currentTarget.files.length > 0) {
+                                  const file = event.currentTarget.files[0];
+                                  setFieldValue("campImage", file);
+                                }
+                              }}
                             style={{ display: 'none' }}
                           />
                           <label htmlFor="campImage">
@@ -159,14 +226,15 @@ const CampAdditionPage = () => {
               </Paper>
             </animated.div>
           </Grid>
-          <Grid item xs={12} md={6} style={{ position: 'relative' }}>
+  
+          {/* Image Card Grid Item */}
+          <Grid item xs={12} md={6} lg={6}>
             {showImage && (
               <Paper
                 elevation={3}
                 style={{
                   padding: '20px',
-                  width: '100%',
-                  height: '85%', // Adjusted height
+                  height: '78vh',
                   backgroundImage: `url(${imageUrl})`,
                   backgroundSize: 'cover',
                   backgroundPosition: 'center',
@@ -178,7 +246,7 @@ const CampAdditionPage = () => {
         <ToastContainer />
       </Container>
     </Overlay>
-  );
-};
+  );  
+}
 
 export default CampAdditionPage;

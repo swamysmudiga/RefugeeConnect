@@ -66,12 +66,12 @@ export const addCampAsync = (data : Camp) => {
     };
   };
 
-  export const getAllResourceAsync = () => {
+  export const getAllCampAsync = () => {
     return async (dispatch : Dispatch) => {
       const resourceHandler = async () => {
        
         const response = await axios
-          .get(``) //get url for resources
+          .get(`http://localhost:4000/camp`) //get url for resources
           .then((res) => {
             return res.data;
           });
