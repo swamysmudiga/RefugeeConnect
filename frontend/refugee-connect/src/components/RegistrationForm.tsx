@@ -21,6 +21,7 @@ const userValidationSchema = Yup.object({
   phone_no: Yup.string()
     .matches(/^[0-9]{10}$/, "Contact number must be number and 10 digits")
     .required('Contact number is required'),
+    image: Yup.mixed().required("Image is required"),
 });
 
 const refugeeValidationSchema = Yup.object({
@@ -55,6 +56,7 @@ const refugeeValidationSchema = Yup.object({
   blood_type: Yup.string().required('Blood type is required'),
   height: Yup.number().positive().required('Height must be a number'),
   weight: Yup.number().positive().required('Weight must be a number'),
+  image: Yup.mixed().required("Image is required"),
 });
 
 const initialUserValues = {
@@ -62,6 +64,7 @@ const initialUserValues = {
   password: '',
   email: '',
   phone_no: '',
+  image: null,
 };
 
 const initialRefugeeValues = {
@@ -89,6 +92,7 @@ const initialRefugeeValues = {
   blood_type: '',
   height: '',
   weight: '',
+  image: null,
 };
 
 const RegistrationForm = () => {
@@ -106,6 +110,10 @@ const RegistrationForm = () => {
   };
 
 
+
+  function setFieldValue(arg0: string, file: File) {
+    throw new Error('Function not implemented.');
+  }
 
   return (
     <Container maxWidth="lg" style={{ marginTop: '7%', marginBottom: '40px', position: 'relative', height: 'calc(100% - 40px)' }}>
@@ -154,6 +162,26 @@ const RegistrationForm = () => {
                       <Field as={TextField} name="phone_no" label="Phone Number" fullWidth margin="normal" />
                       <ErrorMessage name="phone_no" component="div" className="field-error" />
                     </Grid>
+                    <Grid item xs={12}>
+                    <input
+                      id="userImage"
+                      name="image"
+                      type="file"
+                      onChange={(event) => {
+                        if (event.currentTarget.files && event.currentTarget.files.length > 0) {
+                          const file = event.currentTarget.files[0];
+                          setFieldValue("image", file);
+                        }
+                      }}
+                      style={{ display: 'none' }}
+                    />
+                    <label htmlFor="userImage">
+                      <Button variant="outlined" component="span" fullWidth>
+                        Upload Image
+                      </Button>
+                    </label>
+                    <ErrorMessage name="image" component="div" className="field-error" />
+                  </Grid>
                   {/* Refugee Specific Fields */}
                   {accountType === 'refugee' && (
                     <>
@@ -246,6 +274,27 @@ const RegistrationForm = () => {
                       <Grid item xs={12} md={6}>
                         <Field as={TextField} name="weight" label="Weight" fullWidth margin="normal" />
                         <ErrorMessage name="weight" component="div" className="field-error" />
+                      </Grid>
+                      Copy code
+                      <Grid item xs={12}>
+                        <input
+                          id="refugeeImage"
+                          name="image"
+                          type="file"
+                          onChange={(event) => {
+                            if (event.currentTarget.files && event.currentTarget.files.length > 0) {
+                              const file = event.currentTarget.files[0];
+                              setFieldValue("image", file);
+                            }
+                          }}
+                          style={{ display: 'none' }}
+                        />
+                        <label htmlFor="refugeeImage">
+                          <Button variant="outlined" component="span" fullWidth>
+                            Upload Image
+                          </Button>
+                        </label>
+                        <ErrorMessage name="image" component="div" className="field-error" />
                       </Grid>
                     </>)
                   }
