@@ -22,6 +22,7 @@ import ResourceAdditionPage from './components/UserHomePage/AddResource.tsx';
 import AddCamp from './components/AdminHomePage/AddCamp.tsx';
 import CampAdditionPage from './components/AdminHomePage/AddCamp.tsx';
 import MapComponentView from './components/Map/Mapdirections.tsx';
+import AdminHome from './components/AdminHomePage/AdminHome.tsx';
 
 
 const route = createBrowserRouter([
