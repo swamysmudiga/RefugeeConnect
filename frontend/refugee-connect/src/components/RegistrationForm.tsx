@@ -98,15 +98,16 @@ const initialRefugeeValues = {
 
 const RegistrationForm = () => {
   const [accountType, setAccountType] = useState('user');
-  const [image, setImage] = useState(null); 
+  const [image, setImage] = useState<File>(); 
   const [imageName, setImageName] = useState('');
   const navigate = useNavigate();
 
   const handleSubmit = async (values: { role: string; image: null; }, actions: { setSubmitting: (arg0: boolean) => void; }) => {
     toast.success("Registration Successful!");
     values.role = accountType; 
-    values.image = image; 
-    const response = await createRegistration(values);
+    //values.image = image; 
+    console.log("Image from form ", image);
+    const response = await createRegistration(values , image);
     actions.setSubmitting(false);
     navigate('/refugee/login'); 
   };
@@ -169,6 +170,7 @@ const RegistrationForm = () => {
                       onChange={(event) => {
                         if (event.currentTarget.files && event.currentTarget.files.length > 0) {
                           const file = event.currentTarget.files[0];
+                          setImage(file);
                           setFieldValue("image", file);
                           setImageName(file.name);
                         }
