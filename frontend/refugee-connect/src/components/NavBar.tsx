@@ -85,6 +85,16 @@ export default function StylishNavBar() {
 
   const theme = React.useMemo(() => getTheme(themeMode), [themeMode]);
 
+  const handleDonateClick = (resource: string) => {
+    // Navigate to the respective page based on the clicked resource
+    switch (resource) {
+      case 'Donate':
+        window.location.href='https://donate.stripe.com/test_7sIcOV4mm0hEc9O000'
+        break;
+      default:
+        break;
+    }
+  };
   return (
     <ThemeProvider theme={theme}>
       <Slide appear={false} direction="down" in={!trigger}>
@@ -102,7 +112,7 @@ export default function StylishNavBar() {
             { token && role == "refugee" &&<Link to="addResource"><Button color="inherit" sx={{ mr: 2 }}>Add Resource</Button></Link>}
             { token && role == "refugee" &&<Link to="addCamp"><Button color="inherit" sx={{ mr: 2 }}>Add Camp</Button></Link>}
             <Button color="inherit" sx={{ mr: 2 }}>Contact</Button>
-            <Button color="inherit" sx={{ mr: 2 }}>Donate</Button>
+            <Button color="inherit" sx={{ mr: 2 }} onClick={() => handleDonateClick('Donate')}>Donate</Button>
             <Select
               value={language}
               onChange={handleLanguageChange}
