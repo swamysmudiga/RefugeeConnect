@@ -5,28 +5,12 @@ export interface Camp {
   campName: string;
   campCapacity: string;
   campLocation: string;
-  campCurrentOccupancy: string;
-  campFacilities: {
-    campFacilityID: string;
-    campFacilityName: string;
-    _id: string;
-  }[];
-  campServices: {
-    campServiceID: string;
-    campServiceName: string;
-    _id: string;
-  }[];
+  campCurrentOccupancy: Number;
+  campImage:string;
   campManagementName: string;
-  campSecurityLevel: string;
-  supportingOrganizations: {
-    supportingOrganizationID: string;
-    SupportingOrganizationName: string;
-    _id: string;
-  }[];
-  infrastructure: string;
+  supportingOrganizations:string;
+  Infrastructure: string;
   personId: string;
-  donationId: string;
-  donationAmount: string;
 }
 
 export interface CampState {

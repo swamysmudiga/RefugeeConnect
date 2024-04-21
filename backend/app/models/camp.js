@@ -33,7 +33,7 @@ const camp = new mongoose.Schema({
         type : String,
         required : true
     },
-    SupportingOrganizations:{
+    supportingOrganizations:{
         type: String,
         required: true
     },
