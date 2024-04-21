@@ -59,7 +59,7 @@ const UserStories: React.FC = () => {
                 width: '40px',
                 height: '40px',
                 zIndex: 1,
-                margin: '0 10px',
+                margin: '0px 10px 0px 0px',
                 cursor: 'pointer',
             }}
             onClick={onClick}
@@ -82,7 +82,7 @@ const UserStories: React.FC = () => {
                 width: '40px',
                 height: '40px',
                 zIndex: 1,
-                margin: '0 10px',
+                margin: '0px 0px 0px -30px',
                 cursor: 'pointer',
             }}
             onClick={onClick}
@@ -122,7 +122,7 @@ const UserStories: React.FC = () => {
     };
 
     return (
-        <div style={{ width: '100%' }}>
+        <div style={{ width: '100%', backgroundColor: 'white' }}>
             <div style={{ textAlign: 'center' }}>
                 <section style={{ padding: '40px' }}>
                     <Container>
