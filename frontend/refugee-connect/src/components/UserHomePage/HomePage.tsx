@@ -3,6 +3,8 @@ import { Container, Grid, Typography, Button } from '@mui/material';
 import { useSpring, animated } from 'react-spring';
 import { Box, CardMedia, IconButton } from '@mui/material';
 import Footer from '../RefugeeHomePage/Footer';
+import { useNavigate } from 'react-router-dom';
+import UserStories from '../UserStories';
 
 const UserHomePage = () => {
     // Define the animation properties using useSpring
@@ -11,6 +13,18 @@ const UserHomePage = () => {
         from: { opacity: 0 },
         config: { duration: 2000 },
     });
+    const navigate = useNavigate();
+
+
+    function handleClick(value : string){
+
+        switch(value){
+            case  'view':  navigate('/user/viewAllResource'); break;
+            case 'add' : navigate('/user/addResource'); break;
+            case 'donate': window.location.href='https://donate.stripe.com/test_7sIcOV4mm0hEc9O000'; break;
+            default:break;
+        }
+    }
 
     return (<>
        <Container style={{ overflowY: 'auto', padding: '0px', maxWidth: '100vw', backgroundColor: 'lightgrey'}}>
@@ -69,7 +83,7 @@ const UserHomePage = () => {
                                     <Grid item>
                                         <Button
                                             variant="contained"
-                                            color="primary"
+                                            color="primary" onClick={ () => handleClick('view')}
                                         >
                                             View All Resources
                                         </Button>
@@ -78,7 +92,7 @@ const UserHomePage = () => {
                                         <Button
                                             variant="contained"
                                             color="primary"
-                                        >
+                                            onClick={ () => handleClick('add')} >
                                             Add New Resource
                                         </Button>
                                     </Grid>
@@ -87,6 +101,8 @@ const UserHomePage = () => {
                         </Grid>
                     </Container>
                 </Grid>
+
+                <UserStories/>
 
                 {/* Donation section */}
                 <Grid item xs={12} md={12} style={{ marginTop: '20px' }}> {/* Added marginTop */}
@@ -101,7 +117,8 @@ const UserHomePage = () => {
                                 <Typography variant="body1" align="center" paragraph>
                                     Your donation can make a significant difference in the lives of those in need. By contributing, you are helping provide essential resources such as food, shelter, and medical supplies to people who require assistance. Together, we can create a positive impact on the community.
                                 </Typography>
-                                <Button variant="contained" color="primary" style={{ marginTop: '16px' }}>
+                                <Button variant="contained" color="primary" style={{ marginTop: '16px' }}
+                                 onClick={ () => handleClick('donate')}>
                                     Donate Now
                                 </Button>
                             </Grid>
