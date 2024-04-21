@@ -38,7 +38,7 @@ const AddStoryForm = () => {
     console.log("Story Object - ", writeStory);
     const response  = await dispatch(addStoryAsync(writeStory , storyData.image));
 
-    navigate('/refugee/story');
+    navigate('/refugee/refugeeHomePage');
 
   };
 
