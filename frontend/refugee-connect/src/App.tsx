@@ -44,11 +44,14 @@ const route = createBrowserRouter([
       { path:'resource/mapView/:startingLatitude/:startingLongitude/:endingLatitude/:endingLongitude' , element : <MapComponentView/>}
     ]
   },
-  { path:'/userHomePage', element:<UserHomePage/>,},
-
-
-  
-  
+  { 
+    path:'/user',
+    element:<RootLayout/>,
+    errorElement:<Error></Error>,
+    children:[
+      { path:'userHomePage', element:<UserHomePage/>},
+    ]
+  }
     
 ]);
 
