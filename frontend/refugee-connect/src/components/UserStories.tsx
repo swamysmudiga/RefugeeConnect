@@ -3,16 +3,11 @@ import { Container, Typography, Dialog, DialogTitle, DialogContent, DialogAction
 import Slider, { Settings } from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import UserStory4 from '../images/UserStory-4.jpg';
-import UserStory1 from '../images/UserStory-1.jpg';
-import UserStory2 from '../images/UserStory-2.jpg';
-import UserStory3 from '../images/UserStory-3.jpg';
-import UserStory5 from '../images/UserStory-5.jpg';
-import UserStory6 from '../images/UserStory-6.jpg';
 import { addStoryAsync , removeStoryAsync , updateStoryAsync , getAllStoryAsync } from '../store/story/story-reducer-actions'
 import {  useSelector , useDispatch } from 'react-redux';
 import { RootState } from '../store/root-reducers'; 
 import { number } from 'yup';
+import { ArrowBackIos, ArrowForwardIos, Padding } from '@mui/icons-material';
 
 // Define the Story interface
 export interface Story {
@@ -21,7 +16,7 @@ export interface Story {
     title: string;
     description: string;
     image: string;
-  }
+}
 
 const UserStories: React.FC = () => {
     const [selectedStory, setSelectedStory] = useState<Story | null>(null);
@@ -38,21 +33,19 @@ const UserStories: React.FC = () => {
         };
     
         fetchAllStory();
-      }, [dispatch]);
+    }, [dispatch]);
 
-    const handleModalDelete = (storyId : number) =>{
-
+    const handleModalDelete = (storyId : number) => {
         const fetchAllStory = async () => {
             await dispatch(removeStoryAsync(storyId));
             setSelectedStory(null);
-          };
+        };
       
-          fetchAllStory();
-
+        fetchAllStory();
     }
 
     // Define arrow components for the slider
-    const SamplePrevArrow = ({ className, style, onClick }: any) => (
+    const ArrowBackIos = ({ className, style, onClick }: any) => (
         <div
             className={className}
             style={{
@@ -75,7 +68,7 @@ const UserStories: React.FC = () => {
         </div>
     );
 
-    const SampleNextArrow = ({ className, style, onClick }: any) => (
+    const ArrowForwardIos = ({ className, style, onClick }: any) => (
         <div
             className={className}
             style={{
@@ -98,7 +91,7 @@ const UserStories: React.FC = () => {
         </div>
     );
 
-    const sliderSettings: Settings = {
+    const sliderSettings = {
         dots: true,
         infinite: true,
         speed: 500,
@@ -106,8 +99,8 @@ const UserStories: React.FC = () => {
         slidesToScroll: 1,
         autoplay: true,
         autoplaySpeed: 3000,
-        prevArrow: <SamplePrevArrow />,
-        nextArrow: <SampleNextArrow />,
+        prevArrow: <ArrowForwardIos />,
+        nextArrow: <ArrowBackIos />,
     };
 
     const handleStoryClick = (story: Story) => {
@@ -148,15 +141,19 @@ const UserStories: React.FC = () => {
                                     onClick={() => handleStoryClick(story)}
                                     style={{
                                         cursor: 'pointer',
-                                        marginRight: '20px',
+                                        marginRight: '0px',
+                                        marginLeft: '0px',
                                         padding: '10px',
+                                        transition: 'transform 0.3s ease', // Apply transition for smooth scaling
                                     }}
+                                    onMouseEnter={(e) => { e.currentTarget.style.transform = 'scale(1.1)', e.currentTarget.style.zIndex = '5000' }} // Enlarge the user story on hover
+                                    onMouseLeave={(e) => { e.currentTarget.style.transform = 'scale(1)', e.currentTarget.style.zIndex = '1' }} // Reset scale on mouse leave
                                 >
                                     <img
                                         src={`http://localhost:4000/${story.image}`}
                                         alt={story.title}
                                         style={{
-                                            width: '95%',
+                                            width: '90%',
                                             height: '200px', // Fixed height for all images
                                             cursor: 'pointer',
                                             borderRadius: '10px',
@@ -166,16 +163,13 @@ const UserStories: React.FC = () => {
                                     <div style={{ cursor: 'pointer' }}>
                                         <Typography
                                             variant="h5"
-                                            style={{ width: '95%' , fontSize: '20px', fontWeight: 'bold' }}
+                                            style={{ width: '90%' , fontSize: '20px', fontWeight: 'bold' }}
                                         >
                                             {story.title}
                                         </Typography>
-
-
-                                        {/* Display the truncated description */}
                                         <Typography
                                             variant="h5"
-                                            style={{ width: '95%' , fontSize: '16px' }}
+                                            style={{ width: '90%' , fontSize: '16px' }}
                                         >
                                             {truncateDescription(story.description)}
                                         </Typography>
