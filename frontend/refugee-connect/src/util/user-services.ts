@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const createUserRegistration = async (values: any , image : File) => {
+export const createUserRegistration = async (values: any , image : File | undefined) => {
 
     const formData = new FormData();
     formData.append('image', image as Blob);// Append the image file to the FormData object
