@@ -1,10 +1,20 @@
 
+import axios from 'axios';
 
-
-export const createRegistration = async (values: any) => {
+export const createRegistration = async (values: any ,  image : File | undefined) => {
     try {
-        // Log the JSON object being sent in the request body
-        console.log("JSON Object:", JSON.stringify(values));
+        
+        console.log("file is - ",image);
+        const formData = new FormData();
+        formData.append('image', image as Blob);// Append the image file to the FormData object
+        const uploadResponse = await axios.post('http://localhost:4000/upload', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data', // Set content type to multipart/form-data
+        },
+      });
+
+       values.image = uploadResponse.data.imagePath;
+       console.log("JSON Object:", JSON.stringify(values));
 
         const response = await fetch('http://localhost:4000/refugee/register', {
             method: 'POST',
