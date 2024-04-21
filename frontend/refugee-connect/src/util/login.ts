@@ -5,8 +5,7 @@ const role : String = "";
 export const login= async(username : String , password : String) =>{
 
    try{
-   
-    
+
     localStorage.clear();
     const response = await fetch('http://localhost:4000/refugee/login/' + username);
     const resData = await response.json();
@@ -15,10 +14,12 @@ export const login= async(username : String , password : String) =>{
     localStorage.setItem('token', resData.token);
     localStorage.setItem('role', resData.user.role);
     localStorage.setItem('personId', resData.user.personid);
-
+   
+    return 'success';
 
    }catch(error){
     console.log(error);
+    return 'error';
    }
 
 }
@@ -33,7 +34,7 @@ export const loginOut= async() =>{
      //console.log(resData);
  
      localStorage.clear();
-
+     alert("log out successful!!!!!!");
     
     // return resData;
  

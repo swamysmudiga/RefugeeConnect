@@ -50,6 +50,8 @@ const route = createBrowserRouter([
     errorElement:<Error></Error>,
     children:[
       { path:'userHomePage', element:<UserHomePage/>},
+      { path:'viewAllResource', element:<ViewAllResources/>},
+      { path:'addResource', element:<ResourceAdditionPage/>},
     ]
   }
     
