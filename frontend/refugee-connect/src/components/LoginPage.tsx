@@ -3,6 +3,8 @@ import { Box, Button, TextField, Typography, Paper } from '@mui/material';
 import loginPageImage from '../images/LoginPage.jpg';
 import { login } from '../util/login';
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const LoginPage = () => {
   // Define state variables for username and password
@@ -20,10 +22,30 @@ const LoginPage = () => {
 
     const result = await login(username , password);
 
-    navigate('/refugee/refugeeHomePage');
+    if (result === 'success') {
+      toast.success("Log In Successful!");
+
+      setTimeout(() => {
+          const role = localStorage.getItem('role');
+          switch (role) {
+              case 'refugee':  
+                  navigate('/refugee/refugeeHomePage'); 
+                  break;
+              case 'user': 
+                  navigate('/user/userHomePage'); 
+                  break;
+              default:
+                  // Handle other cases or unexpected scenarios
+                  break;
+          }
+      }, 3000); // 3 seconds delay
+  } else {
+      toast.error("incorrect username and password!! Please try again!!!!!");
+  }
   };
 
-  return (
+  return (<>
+  <ToastContainer />
     <Box
       sx={{
         display: 'flex',
@@ -93,6 +115,7 @@ const LoginPage = () => {
         </form>
       </Paper>
     </Box>
+    </>
   );
 };
 
