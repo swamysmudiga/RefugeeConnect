@@ -11,6 +11,7 @@ export const addCampController = async(request,response)=>{
 //  console.log("from addNotes!!");
     try{
         const body = {...request.body};
+        console.log("received body is - ",body);
         const responseData = await addCamps(body);
         setResponse(responseData,response); 
     }catch(error){

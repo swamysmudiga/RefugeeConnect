@@ -7,26 +7,13 @@ import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import MapComponentView from './Mapdirections';
 
-interface Resource {
-  id: string;
-  name: string;
-  description: string;
-  contentType: string;
-  creationDate: string;
-  location: string;
-  isAvailable: boolean;
-  image: string;
-  userId: string;
-  _id: string;
-  __v: number;
-}
 
 interface Coordinates {
   latitude: number;
   longitude: number;
 }
 
-const MapComponent = ({ resource }: { resource: Resource }) => {
+const MapComponent = ({ location }: { location: string }) => {
   const [map, setMap] = useState<Map | null>(null);
   const [startingCoordinates, setStartingCoordinates] = useState<Coordinates | null>(null);
   const [endingCoordinates, setEndCoordinates] = useState<Coordinates | null>(null);
@@ -75,7 +62,7 @@ const MapComponent = ({ resource }: { resource: Resource }) => {
         mapboxgl: mapboxgl
       });
 
-      await axios.get(`https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(resource.location)}.json?access_token=${mapboxgl.accessToken}`)
+      await axios.get(`https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(location)}.json?access_token=${mapboxgl.accessToken}`)
         .then(response => {
           const coordinates = response.data.features[0].geometry.coordinates;
           const [longitude, latitude] = coordinates;
@@ -114,7 +101,7 @@ const MapComponent = ({ resource }: { resource: Resource }) => {
         map.remove();
       }
     }
-  }, [map, resource]);
+  }, [map, location]);
 
   return (
     <>

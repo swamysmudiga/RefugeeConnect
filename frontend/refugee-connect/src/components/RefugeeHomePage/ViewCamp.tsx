@@ -3,6 +3,7 @@ import { useParams  } from 'react-router-dom';
 
 import styled from 'styled-components';
 import axios from 'axios';
+import MapComponent from '../Map/Map';
 
 const PageContainer = styled.div`
   display: flex;
@@ -198,8 +199,7 @@ const ResourceDetailPage: React.FC = () => {
               <h2>See the location</h2>
             </MapHeader>
             <MapContent>
-              {/* Map component goes here */}
-              {/* Assuming there is a Map component to display */}
+            <MapComponent location={camp.campLocation}/>
             </MapContent>
           </MapContainer>
         </PageContent>
