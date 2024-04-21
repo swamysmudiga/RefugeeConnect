@@ -1,6 +1,3 @@
-
-import { useEffect } from 'react';
-import { login } from './util/login';
 import RegistrationForm from './components/RegistrationForm';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Error from './pages/Error';
@@ -16,13 +13,11 @@ import UserStories from './components/UserStories';
 import ViewAllResources from './components/RefugeeHomePage/ViewAllResources';
 import ViewAllCamp from './components/RefugeeHomePage/ViewAllCamp';
 import ViewCamp from './components/RefugeeHomePage/ViewCamp.tsx';
-import AddResource from './components/UserHomePage/AddResource.tsx';
 import ViewResource from './components/ViewResource.tsx'
 import ResourceAdditionPage from './components/UserHomePage/AddResource.tsx';
-import AddCamp from './components/AdminHomePage/AddCamp.tsx';
 import CampAdditionPage from './components/AdminHomePage/AddCamp.tsx';
 import MapComponentView from './components/Map/Mapdirections.tsx';
-import AdminHome from './components/AdminHomePage/AdminHome.tsx';
+import UserHomePage from './components/UserHomePage/HomePage.tsx';
 
 
 const route = createBrowserRouter([
@@ -49,7 +44,14 @@ const route = createBrowserRouter([
       { path:'resource/mapView/:startingLatitude/:startingLongitude/:endingLatitude/:endingLongitude' , element : <MapComponentView/>}
     ]
   },
-  
+  { 
+    path:'/user',
+    element:<RootLayout/>,
+    errorElement:<Error></Error>,
+    children:[
+      { path:'userHomePage', element:<UserHomePage/>},
+    ]
+  }
     
 ]);
 

@@ -5,8 +5,7 @@ import HttpApi from 'i18next-http-backend';
 i18n.use(HttpApi)
     .use(initReactI18next)
     .init({
-        lng: 'en',
-        fallbackLng: 'en',
+        lng: 'English',
         ns: ['common'],
         backend :{
             loadPath: '/i18n/{{lng}}/{{ns}}.json'
@@ -16,4 +15,4 @@ i18n.use(HttpApi)
         }
     });
  
-    export default i18n;
+export default i18n;

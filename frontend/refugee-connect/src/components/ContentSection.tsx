@@ -5,6 +5,7 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { Facebook, Twitter, LinkedIn, YouTube } from '@mui/icons-material';
 import { ArrowBackIos, ArrowForwardIos } from '@mui/icons-material';
+import { useTranslation } from 'react-i18next';
  
 const ContentSection = () => {
   const sliderRef = useRef<Slider>(null);
@@ -22,36 +23,38 @@ const ContentSection = () => {
     prevArrow: <ArrowBackIos />,
     afterChange: (current: number) => setCurrentSlide(current)
   };
+
+  const {t} = useTranslation('common');
  
   const cultures = [
     {
-      title: 'Economic Contributions',
-      description: 'Refugees can make significant economic contributions to their host countries. Many refugees are skilled professionals, entrepreneurs, and workers who bring diverse talents, knowledge, and innovation. By participating in the labor market and starting businesses, refugees contribute to economic growth, job creation, and cultural diversity. Their entrepreneurial spirit often leads to the creation of new opportunities and stable economies.'
+      title: t('culturesTitle1'),
+      description: t('culturesDescription1')
     },
     {
-      title: 'Cultural Enrichment',
-      description: 'Refugees bring with them rich cultural heritage, traditions, and experiences. Their presence can enrich the cultural tapestry of host communities, promoting cross-cultural understanding, tolerance, and appreciation. By sharing their stories and traditions, refugees contribute to the cultural diversity and vibrancy of society. Additionally, their integration into local arts, cuisine, and festivities adds layers of depth to community life, fostering unity.'
+      title: t('culturesTitle2'),
+      description: t('culturesDescription2')
     },
     {
-      title: 'Educational Opportunities',
-      description: 'Providing access to education for refugee children and youth is essential for their long-term well-being and future prospects. Education empowers refugees to acquire knowledge, skills, and qualifications necessary for meaningful employment, social integration, and civic engagement. By investing in refugee education, societies can unlock human potential and promote sustainable development.'
+      title: t('culturesTitle3'),
+      description: t('culturesDescription3')
     },
     {
-      title: 'Labor Market Dynamics',
-      description: 'In some cases, refugees fill critical gaps in the labor market, particularly in sectors facing shortages of skilled workers or manual labor. By contributing to industries such as healthcare, agriculture, construction, and hospitality, refugees play a vital role in sustaining economic activities and meeting workforce demands. Moreover, refugees often display strong work ethic and adaptability, making them valuable assets to employers.'
+      title: t('culturesTitle4'),
+      description: t('culturesDescription4')
     }
   ];
  
   const alternatingSections = [
     {
-      title: 'Refugee Connect Camp',
-      description: 'Welcome to Refugee Connect, a beacon of hope and solidarity established on April 15, 2024, to provide a haven for those displaced by conflict, persecution, or hardship. Nestled within a serene landscape, Refugee Connect Camp embodies a spirit of compassion and resilience, offering a safe refuge where individuals and families can find solace, support, and a sense of community. Our camp is designed with careful consideration for the well-being and dignity of every resident. But Refugee Connect is more than just a place to seek refuge; it is a vibrant community where friendships are forged, cultures are celebrated, and dreams are nurtured. Through cultural exchange programs, artistic endeavors, and communal gatherings, we foster a sense of belonging and solidarity among residents from diverse backgrounds. Welcome to our community; welcome to Refugee Connect Camp. ',
+      title: t('alternatingSectionstitle1'),
+      description: t('alternatingSectionsdescription1'),
       imageUrl: '../src/images/refugee_home1.jpg',
       imageFirst: true,
     },
     {
-      title: 'Our Mission and Vision',
-      description: 'At Refugee Connect, our mission is clear: to provide a better life to those who have been uprooted from their homes and find themselves in need of shelter, safety, and support. We are dedicated to offering refuge to individuals and families fleeing conflict, persecution, and hardship, ensuring they have access to the resources and assistance necessary to rebuild their lives with dignity and hope. We envision a world where no one is forced to endure the hardships of displacement alone. Our vision at Refugee Connect is to be a beacon of compassion and solidarity, providing sanctuary and opportunities for growth to those who seek shelter within our community. Through our unwavering commitment to serving others, we strive to create a future where every individual has the chance to thrive, regardless of the challenges they have faced. With over 50,000 lives touched and counting, we are driven by the belief that together, we can make a meaningful difference in the lives of those in need.',
+      title: t('alternatingSectionstitle2'),
+      description: t('alternatingSectionsdescription2'),
       imageUrl: '../src/images/refugee_home2.jpg',
       imageFirst: false,
     },
@@ -77,7 +80,7 @@ const ContentSection = () => {
       </div>
       <div style={{ position: 'absolute', top: '70%', left: '50%', transform: 'translate(-50%, -50%)', zIndex: 1 }}>
         <Typography variant="h5" style={{ fontWeight: 'bold', fontStyle: 'italic', fontFamily: 'Verdana, sans-serif', color: 'white', textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)', fontSize: '48px', lineHeight: '1.2' }}>
-          "A refugee is someone who survived and who can create the future."
+          {t('MainHeader')}
         </Typography>
       </div>
     </section>
@@ -88,7 +91,7 @@ const ContentSection = () => {
         {/* First Set of Culture Cards */}
               <Grid item xs={12} md={6}>
         <Typography variant="h4" gutterBottom style={{ borderRadius: '15px', backgroundColor: '#f0f0f0', padding: '10px', marginBottom: '20px' }}>
-          How Refugee Matters!
+          {t('culturesHeader')}
         </Typography>
         <div style={{ maxWidth: '100%', overflowX: 'auto' }}>
           <Slider {...sliderSettings} ref={sliderRef}>
@@ -142,20 +145,20 @@ const ContentSection = () => {
             {/* Support our work section */}
             <Grid item xs={12} sm={6} md={3}>
               <Typography variant="h6" gutterBottom>
-                Support our work
+                {t('footerSupport')}
               </Typography>
               <Typography variant="body2" gutterBottom>
-                Please help refugees in need.
+                {t('footerHelp')}
               </Typography>
               <Button variant="outlined" color="inherit">
-                Donate now
+                {t('footerDonate')}
               </Button>
             </Grid>
             
             {/* Global Voices for Refugee section */}
             <Grid item xs={12} sm={6} md={3}>
               <Typography variant="h6" gutterBottom>
-                Global Voices for Refugee
+                {t('footerVoices')}
               </Typography>
               <IconButton color="inherit"><Facebook /></IconButton>
               <IconButton color="inherit"><Twitter /></IconButton>
@@ -166,19 +169,19 @@ const ContentSection = () => {
             {/* Stay informed section */}
             <Grid item xs={12} sm={6} md={3}>
               <Typography variant="h6" gutterBottom>
-                Stay informed
+                {t('footerStay')}
               </Typography>
               <Typography variant="body2" gutterBottom>
-                Sign up to our  to learn more about people forced to flee and how you can support them.
+                {t('footerSignUp')}
               </Typography>
               <Button variant="outlined" color="inherit">
-                Subscribe
+                {t('footerSubscribe')}
               </Button>
             </Grid>
             
           </Grid>
           <Typography variant="caption" align="center" display="block" gutterBottom style={{ marginTop: '20px', borderTop: '1px solid #fff', paddingTop: '20px' }}>
-            Privacy policy | Terms and conditions of use | Copyright
+            {t('footerPrivacy')}
             <br />
             © RefugeeConnect 2024
           </Typography>

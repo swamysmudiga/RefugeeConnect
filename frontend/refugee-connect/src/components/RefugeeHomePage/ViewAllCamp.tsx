@@ -58,7 +58,7 @@ const CampPage = () => {
                         >
                             {/* Display camp image */}
                             <img
-                                src={camp.campImage}
+                                src={`http://localhost:4000/${camp.campImage}`}
                                 alt={camp.campName}
                                 style={{ width: '100%', height: '200px', objectFit: 'cover', borderRadius: '4px' }}
                             />

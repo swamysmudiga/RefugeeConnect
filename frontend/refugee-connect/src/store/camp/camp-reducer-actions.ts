@@ -3,18 +3,35 @@ import { Dispatch } from 'redux';
 import { addCamp, removeCamp, updateCamp, getAllCamps, Camp , CampState} from './camp-reducer'
 
 
-export const addCampAsync = (data : Camp) => {
+export const addCampAsync = (data : Camp , image : File | undefined ) => {
     return async (dispatch : Dispatch) => {
       const resourceHandler = async (data : Camp) => {
-       
-        const response = await axios
-          .post(``, { ...data }) //Post url for resources
+
+        try{
+          const formData = new FormData();
+         formData.append('image', image as Blob);
+
+         console.log("Form Data - ",formData);
+         // Make a POST request to upload the image file to the server
+         const uploadResponse = await axios.post('http://localhost:4000/upload', formData, {
+           headers: {
+             'Content-Type': 'multipart/form-data', // Set content type to multipart/form-data
+           },
+         });
+   
+         // Get the uploaded image path from the server response
+         const imagePath = uploadResponse.data.imagePath;
+         data.campImage = imagePath;
+         const response = await axios
+          .post(`http://localhost:4000/camp/`, { ...data }) //Post url for resources
           .then((res) => {
             return res.data;
           });
-        return response;
+        }catch(error){
+          console.log(error); 
+          return error; 
+        } 
       };
-  
       try {
         const offeringsData = await resourceHandler(data);
         dispatch(addCamp(data));

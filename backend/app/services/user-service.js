@@ -1,4 +1,5 @@
 import users from './../models/user.js'
+import { addLogIn } from './../services/login-service.js';
 
 export const search = async (params = {}) => {
     const user = await users.find(params).exec();
@@ -7,7 +8,12 @@ export const search = async (params = {}) => {
 
 export const save = async (user) => {
     const newUser = new users(user);
-    return newUser.save();
+   const ans =  await newUser.save();
+   console.log("New user- ",ans);
+    const newObject = {personid: newUser.userId ,username: newUser.username, password: newUser.password, role: newUser.role};
+    const success = await addLogIn(newObject);
+    console.log("stored log In is...",success);
+    return ans;
 }
 
 export const get = async (id) => {
