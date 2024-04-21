@@ -1,5 +1,6 @@
 import * as userService from './../services/user-service.js'; 
 import { setResponse, setError } from './handle-response.js';
+import * as loginService from './../services/login-service.js';
 
 export const userLogin = async (request, response) => {
     try {
@@ -23,6 +24,14 @@ export const search = async (request, response) => {
 
 export const userRegister = async (request, response) => {
     try {
+
+        console.log("request body is - ",request.body);
+        const success = await loginService.findByUserName(request.body.username);
+
+        if(success){
+            return response.status(402).json({ message: 'User already created.'});
+        }
+
         const newUserDetails = request.body;
         const newUser = await userService.save(newUserDetails);
         setResponse(newUser, response);

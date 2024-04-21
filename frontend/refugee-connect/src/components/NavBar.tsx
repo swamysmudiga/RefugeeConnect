@@ -2,6 +2,7 @@ import * as React from 'react';
 import { AppBar, Box, Toolbar, Typography, Button, Select, MenuItem, SelectChangeEvent, useMediaQuery, ThemeProvider, createTheme, Switch, FormControlLabel, Slide, useScrollTrigger } from '@mui/material';
 import { Link, useNavigate } from "react-router-dom";
 import { loginOut } from '../util/login';
+import i18n from '../i18n';
 
 // Dynamic Theme
 const getTheme = (mode: 'light' | 'dark') => createTheme({
@@ -54,7 +55,7 @@ const getTheme = (mode: 'light' | 'dark') => createTheme({
 });
 
 export default function StylishNavBar() {
-  const [language, setLanguage] = React.useState('English');
+  const [language, setLanguage] = React.useState("English");
   const [themeMode, setThemeMode] = React.useState<'light' | 'dark'>('dark');
   const navigate = useNavigate();
   const token = localStorage.getItem('token');
@@ -63,7 +64,10 @@ export default function StylishNavBar() {
   const trigger = useScrollTrigger();
 
   const handleLanguageChange = (event: SelectChangeEvent) => {
-    setLanguage(event.target.value);
+    //console.log(event.target.value);
+    //console.log(language);
+    (event.target.value === "English")?setLanguage('English'):setLanguage('Marathi')
+    i18n.changeLanguage(event.target.value);
   };
 
   async function handleLogInLogOut(action: String) {
@@ -81,6 +85,16 @@ export default function StylishNavBar() {
 
   const theme = React.useMemo(() => getTheme(themeMode), [themeMode]);
 
+  const handleDonateClick = (resource: string) => {
+    // Navigate to the respective page based on the clicked resource
+    switch (resource) {
+      case 'Donate':
+        window.location.href='https://donate.stripe.com/test_7sIcOV4mm0hEc9O000'
+        break;
+      default:
+        break;
+    }
+  };
   return (
     <ThemeProvider theme={theme}>
       <Slide appear={false} direction="down" in={!trigger}>
@@ -98,7 +112,7 @@ export default function StylishNavBar() {
             { token && role == "refugee" &&<Link to="addResource"><Button color="inherit" sx={{ mr: 2 }}>Add Resource</Button></Link>}
             { token && role == "refugee" &&<Link to="addCamp"><Button color="inherit" sx={{ mr: 2 }}>Add Camp</Button></Link>}
             <Button color="inherit" sx={{ mr: 2 }}>Contact</Button>
-            <Button color="inherit" sx={{ mr: 2 }}>Donate</Button>
+            <Button color="inherit" sx={{ mr: 2 }} onClick={() => handleDonateClick('Donate')}>Donate</Button>
             <Select
               value={language}
               onChange={handleLanguageChange}

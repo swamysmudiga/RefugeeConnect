@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { createRegistration } from '../util/refugee-services';
+import { createUserRegistration } from '../util/user-services';
 
 const userValidationSchema = Yup.object({
   username: Yup.string()
@@ -104,10 +105,21 @@ const RegistrationForm = () => {
 
   const handleSubmit = async (values: { role: string; image: null; }, actions: { setSubmitting: (arg0: boolean) => void; }) => {
     toast.success("Registration Successful!");
-    values.role = accountType; 
-    //values.image = image; 
+
     console.log("Image from form ", image);
-    const response = await createRegistration(values , image);
+
+    if(image){
+      if(accountType === 'refugee'){
+        values.role = accountType;
+        const response = await createRegistration(values , image);
+      }else{
+        values.role = accountType;
+       const response = await createUserRegistration(values , image);
+      }
+
+    }else{
+      alert("Enter correct Details and upload Image");
+    }
     actions.setSubmitting(false);
     navigate('/refugee/login'); 
   };
@@ -145,6 +157,10 @@ const RegistrationForm = () => {
                     </FormControl>
                   </Grid>
                   {/* User fields */}
+                  <Grid item xs={12} md={6}>
+                        <Field as={TextField} name="name" label="Full Name" fullWidth margin="normal" />
+                        <ErrorMessage name="name" component="div" className="field-error" />
+                    </Grid>
                   <Grid item xs={12} md={6}>
                     <Field as={TextField} name="username" label="Username" fullWidth margin="normal" />
                     <ErrorMessage name="username" component="div" className="field-error" />
@@ -188,10 +204,6 @@ const RegistrationForm = () => {
                   {/* Refugee specific fields */}
                   {accountType === 'refugee' && (
                     <>
-                      <Grid item xs={12} md={6}>
-                        <Field as={TextField} name="name" label="Full Name" fullWidth margin="normal" />
-                        <ErrorMessage name="name" component="div" className="field-error" />
-                      </Grid>
                       <Grid item xs={12} md={6}>
                         <Field as={TextField} name="ethnicity" label="Ethnicity" fullWidth margin="normal" />
                         <ErrorMessage name="ethnicity" component="div" className="field-error" />
