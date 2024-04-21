@@ -2,6 +2,7 @@ import * as React from 'react';
 import { AppBar, Box, Toolbar, Typography, Button, Select, MenuItem, SelectChangeEvent, useMediaQuery, ThemeProvider, createTheme, Switch, FormControlLabel, Slide, useScrollTrigger } from '@mui/material';
 import { Link, useNavigate } from "react-router-dom";
 import { loginOut } from '../util/login';
+import i18n from '../i18n';
 
 // Dynamic Theme
 const getTheme = (mode: 'light' | 'dark') => createTheme({
@@ -54,7 +55,7 @@ const getTheme = (mode: 'light' | 'dark') => createTheme({
 });
 
 export default function StylishNavBar() {
-  const [language, setLanguage] = React.useState('English');
+  const [language, setLanguage] = React.useState("English");
   const [themeMode, setThemeMode] = React.useState<'light' | 'dark'>('dark');
   const navigate = useNavigate();
   const token = localStorage.getItem('token');
@@ -63,7 +64,10 @@ export default function StylishNavBar() {
   const trigger = useScrollTrigger();
 
   const handleLanguageChange = (event: SelectChangeEvent) => {
-    setLanguage(event.target.value);
+    //console.log(event.target.value);
+    //console.log(language);
+    (event.target.value === "English")?setLanguage('English'):setLanguage('Marathi')
+    i18n.changeLanguage(event.target.value);
   };
 
   async function handleLogInLogOut(action: String) {
