@@ -6,7 +6,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import { useSpring, animated } from 'react-spring';
 import 'react-toastify/dist/ReactToastify.css';
 import styled from 'styled-components';
-
+import { addCampAsync } from '../../store/camp/camp-reducer-actions';
+import {  useDispatch } from 'react-redux';
 
 
 // Validation Schema for Camp
@@ -19,8 +20,6 @@ const campValidationSchema = Yup.object({
   campImage: Yup.mixed().required('Camp Image is required'), // Update to accept file input
   campManagementName: Yup.string().required('Management Name is required'),
   Infrastructure: Yup.string().required('Infrastructure is required'),
-  supportingOrganizations: Yup.array().of(Yup.string().required('Organization name is required'))
-    .min(1, 'At least one organization is required'),
 
 });
 
@@ -33,13 +32,11 @@ const initialCampValues = {
   campCapacity: '',
   campLocation: '',
   campCurrentOccupancy: '',
-  campImage: null, // Updated to accept file input
+  campImage: '', // Updated to accept file input
   campManagementName: '',
-  campSecurityLevel: '',
   Infrastructure: '',
-  campFacilities: [],
-  supportingOrganizations: [],
-
+  supportingOrganizations: '',
+  personId:''
 };
 
 
@@ -60,8 +57,8 @@ const Overlay = styled.div`
 const CampAdditionPage = () => {
   const [showImage, setShowImage] = useState(false);
   const [imageName, setImageName] = useState('');
-
-
+  const [image, setImage] = useState<File>(); 
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -79,6 +76,9 @@ const CampAdditionPage = () => {
       console.log('Camp values:', values);
       actions.setSubmitting(false);
       console.log(JSON.stringify(values));
+      console.log("Image is - ", image);
+      values.personId = localStorage.getItem('personId');
+      const response = await dispatch(addCampAsync(values ,image));
 
       toast.success('Camp added successfully!');
     } catch (error) {
@@ -142,31 +142,8 @@ const CampAdditionPage = () => {
                           <ErrorMessage name="Infrastructure" render={msg => <div style={{ color: 'red' }}>{msg}</div>} />
                         </Grid>
                         <Grid item xs={12}>
-                          <Button
-                            variant="outlined"
-                            fullWidth
-                            onClick={() => setFieldValue("supportingOrganizations", [...values.supportingOrganizations, ""])}
-                            style={{ marginBottom: '10px' }}
-                          >
-                            Add Organization
-                          </Button>
-                          {values.supportingOrganizations.map((organization, index) => (
-                            <div key={index}>
-                              <Field
-                                as={TextField}
-                                name={`supportingOrganizations.${index}`}
-                                label="Organization"
-                                fullWidth
-                                variant="outlined"
-                                margin="dense"
-                                size="small"
-                              />
-                              <ErrorMessage name={`supportingOrganizations.${index}`} render={msg => <div style={{ color: 'red' }}>{msg}</div>} />
-                            </div>
-                          ))}
-                          {errors.supportingOrganizations && touched.supportingOrganizations ? (
-                            <div style={{ color: 'red' }}>{errors.supportingOrganizations}</div>
-                          ) : null}
+                           <Field as={TextField} name="supportingOrganizations" label="supportingOrganizations *" fullWidth />
+                          <ErrorMessage name="supportingOrganizations" render={msg => <div style={{ color: 'red' }}>{msg}</div>} />
                         </Grid>
                         <Grid item xs={12}>
                           <input
@@ -176,6 +153,7 @@ const CampAdditionPage = () => {
                             onChange={(event) => {
                                 if (event.currentTarget.files && event.currentTarget.files.length > 0) {
                                   const file = event.currentTarget.files[0];
+                                  setImage(file);
                                   setFieldValue("campImage", file);
                                   setImageName(file.name);
                                 }
