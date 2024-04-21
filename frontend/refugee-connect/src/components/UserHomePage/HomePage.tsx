@@ -1,6 +1,8 @@
 import React from 'react';
 import { Container, Grid, Typography, Button } from '@mui/material';
 import { useSpring, animated } from 'react-spring';
+import { Box, CardMedia, IconButton } from '@mui/material';
+import Footer from '../RefugeeHomePage/Footer';
 
 const UserHomePage = () => {
     // Define the animation properties using useSpring
@@ -10,11 +12,11 @@ const UserHomePage = () => {
         config: { duration: 2000 },
     });
 
-    return (
-        <Container style={{ height: '100vh', overflowY: 'auto', padding: '0px', maxWidth: '100vw', backgroundColor: 'lightgrey' }}>
+    return (<>
+       <Container style={{ overflowY: 'auto', padding: '0px', maxWidth: '100vw', backgroundColor: 'lightgrey'}}>
             <Grid container spacing={4} style={{ height: '100%' }}>
                 {/* Resource section */}
-                <Grid item xs={12} md={12}>
+                <Grid item xs={12} md={12} style={{ marginTop: '100px' }}> {/* Added marginTop */}
                     {/* Outer container with padding for the resource section */}
                     <Container style={{ padding: '20px', maxWidth: '90%', border: '1px solid #dcdcdc', borderRadius: '20px', backgroundColor: 'white' }}>
                         <Grid container spacing={4} style={{ alignItems: 'center' }}>
@@ -87,7 +89,7 @@ const UserHomePage = () => {
                 </Grid>
 
                 {/* Donation section */}
-                <Grid item xs={12} md={12} style={{ marginTop: '15px' }}>
+                <Grid item xs={12} md={12} style={{ marginTop: '20px' }}> {/* Added marginTop */}
                     {/* Outer container with padding for the donation section */}
                     <Container style={{ padding: '20px', maxWidth: '90%', border: '1px solid #dcdcdc', borderRadius: '20px', backgroundColor: 'white' }}>
                         <Grid container spacing={4} style={{ alignItems: 'center' }}>
@@ -116,6 +118,10 @@ const UserHomePage = () => {
                 </Grid>
             </Grid>
         </Container>
+         <Box sx={{ backgroundColor: 'white', minHeight: '100vh' }}>
+        <Footer/>
+        </Box>
+        </>
     );
 };
 

@@ -201,7 +201,7 @@ const ResourceDetailPage: React.FC = () => {
               <h2>See the location</h2>
             </MapHeader>
             <MapContent>
-             <MapComponent resource={resource}/>
+             <MapComponent location={resource.location}/>
             </MapContent>
           </MapContainer>
         </PageContent>
