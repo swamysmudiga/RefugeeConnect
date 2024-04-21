@@ -86,11 +86,12 @@ const ResourceAdditionPage = () => {
       toast.success('Resource added successfully!');
 
       const success  = await dispatch(addResourceAsync(values, selectedPhoto));
-
+      navigate('/refugee/viewAllResource');
     } catch (error) {
       console.error('Error creating resource:', error);
       actions.setSubmitting(false);
       toast.error('Error creating resource!');
+      alert("Error in creating resource. Please try again...")
     }
   };
 

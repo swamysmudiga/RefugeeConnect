@@ -8,7 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import styled from 'styled-components';
 import { addCampAsync } from '../../store/camp/camp-reducer-actions';
 import {  useDispatch } from 'react-redux';
-
+import { useNavigate } from 'react-router-dom';
 
 // Validation Schema for Camp
 
@@ -59,6 +59,7 @@ const CampAdditionPage = () => {
   const [imageName, setImageName] = useState('');
   const [image, setImage] = useState<File>(); 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -79,12 +80,13 @@ const CampAdditionPage = () => {
       console.log("Image is - ", image);
       values.personId = localStorage.getItem('personId');
       const response = await dispatch(addCampAsync(values ,image));
-
       toast.success('Camp added successfully!');
+      navigate('/refugee/viewNearByCamps');
     } catch (error) {
       console.error('Error creating camp:', error);
+      toast.error('Error creating camp!');
+      alert("Error in creating camp. Please try Again");
       actions.setSubmitting(false);
-      toast.error('Error creating camp!');
     }
   };
 

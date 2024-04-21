@@ -178,8 +178,7 @@ const ResourceDetailPage: React.FC = () => {
               <h2>See the location</h2>
             </MapHeader>
             <MapContent>
-              {/* Map component goes here */}
-              {/* Assuming there is a Map component to display */}
+
             </MapContent>
           </MapContainer>
         </PageContent>
