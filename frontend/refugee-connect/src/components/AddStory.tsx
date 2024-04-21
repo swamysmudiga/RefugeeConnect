@@ -36,9 +36,12 @@ const AddStoryForm = () => {
       refugeeId : localStorage.getItem("personId")
     }
     console.log("Story Object - ", writeStory);
-    const response  = await dispatch(addStoryAsync(writeStory , storyData.image));
-
-    navigate('/refugee/refugeeHomePage');
+    try{
+      const response  = await dispatch(addStoryAsync(writeStory , storyData.image));
+      navigate('/refugee/refugeeHomePage');
+    }catch(error){
+      alert("Error in adding story! please try again later");
+    }
 
   };
 
