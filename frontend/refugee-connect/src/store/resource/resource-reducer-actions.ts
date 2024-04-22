@@ -59,7 +59,7 @@ export const addResourceAsync = (data : Resource , image: File | null) => {
       const resourceHandler = async (resourceId : number) => {
        
         const response = await axios
-          .delete(`${resourceId}`) //Delete url for resources
+          .delete(`http://localhost:4000/resource/${resourceId}`) //Delete url for resources
           .then((res) => {
             return res.data;
           });
@@ -78,9 +78,11 @@ export const addResourceAsync = (data : Resource , image: File | null) => {
   export const updateResourceAsync = (data : Resource) => {
     return async (dispatch : Dispatch) => {
       const resourceHandler = async (data : Resource) => {
-       
+        
+        console.log("Inside call");
+
         const response = await axios
-          .put(``,{...data}) //update url for resources
+          .put(`http://localhost:4000/resource/${data.id}`,{...data}) //update url for resources
           .then((res) => {
             return res.data;
           });
@@ -89,6 +91,8 @@ export const addResourceAsync = (data : Resource , image: File | null) => {
   
       try {
         const offeringsData = await resourceHandler(data);
+        console.log("response from call .. ", offeringsData);
+
         dispatch(updateResource(data));
       } catch (err) {
         console.log(err);

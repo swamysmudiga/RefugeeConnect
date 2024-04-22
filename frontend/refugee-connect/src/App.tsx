@@ -63,10 +63,6 @@ const route = createBrowserRouter([
 
 function App() {
 
-  useEffect(()=>{
-    localStorage.clear();
-  },[]);
-
   console.log('App is rendering with RegistrationForm');
   return (<RouterProvider router={route} />);  
 
