@@ -11,6 +11,8 @@ import backgroundVideo from '../images/animationVideo.mp4';
 import backgroundImage from '../images/refugee.jpg';
 
 const userValidationSchema = Yup.object({
+  name: Yup.string().
+  required('Full Name is required'),
   username: Yup.string()
     .min(8, "Username should be of at least 8 characters.")
     .max(15, "Username cannot be more than 15 characters.")
@@ -63,6 +65,7 @@ const refugeeValidationSchema = Yup.object({
 });
 
 const initialUserValues = {
+  name: '',
   username: '',
   password: '',
   email: '',
@@ -162,26 +165,37 @@ const RegistrationForm = () => {
                   {/* User fields */}
                   <Grid item xs={12} md={6}>
                         <Field as={TextField} name="name" label="Full Name" fullWidth margin="normal" />
-                        <ErrorMessage name="name" component="div" className="field-error" />
+                        <div style={{ color: 'red' }}>
+                    <ErrorMessage name="name" component="div" className="field-error" />
+                    </div>
                     </Grid>
                   <Grid item xs={12} md={6}>
                     <Field as={TextField} name="username" label="Username" fullWidth margin="normal" />
+                    <div style={{ color: 'red' }}>
+                    <div style={{ color: 'red' }}>
                     <ErrorMessage name="username" component="div" className="field-error" />
+                    </div>
+                    </div>
                   </Grid>
                   <Grid item xs={12} md={6}>
                     <Field as={TextField} type="password" name="password" label="Password" fullWidth margin="normal" />
+                    <div style={{ color: 'red' }}>
                     <ErrorMessage name="password" component="div" className="field-error" />
+                    </div>
                   </Grid>
                   <Grid item xs={12} md={6}>
                     <Field as={TextField} name="email" label="Email" fullWidth margin="normal" />
+                    <div style={{ color: 'red' }}>
                     <ErrorMessage name="email" component="div" className="field-error" />
+                    </div>
                   </Grid>
                   <Grid item xs={12} md={6}>
                     <Field as={TextField} name="phone_no" label="Phone Number" fullWidth margin="normal" />
-                    <ErrorMessage name="phone_no" component="div" className="field-error" />
+                    <div style={{ color: 'red' }}><ErrorMessage name="phone_no" component="div" className="field-error" /></div>                  
                   </Grid>
                   {/* Image upload */}
-                  <Grid item xs={12} md={6} style={{ marginTop: '0.7rem' }}>
+                  <Grid item xs={12} md={6} style={{ marginTop: '1.2rem' }}>
+                    <label htmlFor="userImage">Upload Image: </label>
                     <input
                       id="userImage"
                       name="image"
@@ -196,13 +210,13 @@ const RegistrationForm = () => {
                       }}
                       style={{ /* display: 'none' */ }}
                     />
-                    <label htmlFor="userImage">
-                      <Button variant="outlined" component="span" fullWidth>
-                        Upload Image
-                      </Button>
-                    </label>
+                    {/* <label htmlFor="userImage"> */}
+                      {/* <Button variant="outlined" component="span" fullWidth> */}
+                        {/* Upload Image */}
+                      {/* </Button> */}
+                    {/* </label> */}
                     {/* {imageName && <Typography variant="caption" style={{ marginTop: '0.5rem' }}>{imageName}</Typography>} */}
-                    <ErrorMessage name="image" component="div" className="field-error" />
+                    <div style={{ color: 'red' }}><ErrorMessage name="image" component="div" className="field-error" /></div>
                   </Grid>
                   {/* Refugee specific fields */}
                   {accountType === 'refugee' && (
@@ -224,7 +238,7 @@ const RegistrationForm = () => {
                             <MenuItem value="Mixed Race">Mixed Race</MenuItem>
                           </Field>
                         </FormControl>
-                        <ErrorMessage name="ethnicity" component="div" className="field-error" />
+                        <div style={{ color: 'red' }}><ErrorMessage name="ethnicity" component="div" className="field-error" /></div>
                       </Grid>
 
                       <Grid item xs={12} md={6}>
@@ -240,7 +254,7 @@ const RegistrationForm = () => {
                             {/* Add more options as needed */}
                           </Field>
                         </FormControl>
-                        <ErrorMessage name="religion" component="div" className="field-error" />
+                        <div style={{ color: 'red' }}><ErrorMessage name="religion" component="div" className="field-error" /></div>
                       </Grid>
 
                       <Grid item xs={12} md={6}>
@@ -256,7 +270,7 @@ const RegistrationForm = () => {
                           {/* Add more options as needed */}
                         </Field>
                       </FormControl>
-                      <ErrorMessage name="language" component="div" className="field-error" />
+                      <div style={{ color: 'red' }}><ErrorMessage name="language" component="div" className="field-error" /></div>
                     </Grid>
 
                     <Grid item xs={12} md={6}>
@@ -273,7 +287,7 @@ const RegistrationForm = () => {
           {/* Add more options as needed */}
         </Field>
       </FormControl>
-      <ErrorMessage name="health" component="div" className="field-error" />
+      <div style={{ color: 'red' }}><ErrorMessage name="health" component="div" className="field-error" /></div>
     </Grid>
 
     <Grid item xs={12} md={6}>
@@ -293,7 +307,7 @@ const RegistrationForm = () => {
           {/* Add more options as needed */}
         </Field>
       </FormControl>
-      <ErrorMessage name="education" component="div" className="field-error" />
+      <div style={{ color: 'red' }}><ErrorMessage name="education" component="div" className="field-error" /></div>
     </Grid>
 
     <Grid item xs={12} md={6}>
@@ -311,7 +325,7 @@ const RegistrationForm = () => {
           {/* Add more options as needed */}
         </Field>
       </FormControl>
-      <ErrorMessage name="occupation" component="div" className="field-error" />
+      <div style={{ color: 'red' }}><ErrorMessage name="occupation" component="div" className="field-error" /></div>
     </Grid>
 
     <Grid item xs={12} md={6}>
@@ -329,16 +343,22 @@ const RegistrationForm = () => {
           {/* Add more options as needed */}
         </Field>
       </FormControl>
+      <div style={{ color: 'red' }}>
       <ErrorMessage name="family_status" component="div" className="field-error" />
+      </div>
     </Grid>
 
                     <Grid item xs={12} md={6}>
                       <Field as={TextField} name="previous_location" label="Previous Location" fullWidth margin="normal" />
-                      <ErrorMessage name="previous_location" component="div" className="field-error" />
+                      <div style={{ color: 'red' }}>
+      <ErrorMessage name="previous_location" component="div" className="field-error" />
+      </div>
                     </Grid>
                     <Grid item xs={12} md={6}>
                       <Field as={TextField} name="current_location" label="Current Location" fullWidth margin="normal" />
-                      <ErrorMessage name="current_location" component="div" className="field-error" />
+                      <div style={{ color: 'red' }}>
+      <ErrorMessage name="current_location" component="div" className="field-error" />
+      </div>
                     </Grid>
                     <Grid item xs={12} md={6}>
       <FormControl fullWidth margin="normal">
@@ -354,7 +374,9 @@ const RegistrationForm = () => {
           {/* Add more options as needed */}
         </Field>
       </FormControl>
+      <div style={{ color: 'red' }}>
       <ErrorMessage name="legal_status" component="div" className="field-error" />
+      </div>
     </Grid>
 
 
@@ -373,16 +395,20 @@ const RegistrationForm = () => {
       {/* Add more options as needed */}
     </Field>
   </FormControl>
-  <ErrorMessage name="assistance_needed" component="div" className="field-error" />
+  <div style={{ color: 'red' }}>
+      <ErrorMessage name="assistance_needed" component="div" className="field-error" />
+      </div>
 </Grid>
 
                     <Grid item xs={12} md={6}>
                       <Field as={TextField} name="age" label="Age" fullWidth margin="normal" />
-                      <ErrorMessage name="age" component="div" className="field-error" />
+                      <div style={{ color: 'red' }}>
+      <ErrorMessage name="age" component="div" className="field-error" />
+      </div>
                     </Grid>
                     <Grid item xs={12} md={6}>
                       <Field as={TextField} name="nationality" label="Nationality" fullWidth margin="normal" />
-                      <ErrorMessage name="nationality" component="div" className="field-error" />
+                      <div style={{ color: 'red' }}><ErrorMessage name="nationality" component="div" className="field-error" /></div>
                     </Grid>
                     <Grid item xs={12} md={6}>
                       <FormControl fullWidth margin="normal">
@@ -396,7 +422,7 @@ const RegistrationForm = () => {
                           <MenuItem value="Prefer not to say">Prefer not to say</MenuItem>
                         </Field>
                       </FormControl>
-                    <ErrorMessage name="gender" component="div" className="field-error" />
+                      <div style={{ color: 'red' }}><ErrorMessage name="gender" component="div" className="field-error" /></div>
                   </Grid>
 
                     <Grid item xs={12} md={6}>
@@ -411,11 +437,11 @@ const RegistrationForm = () => {
                           shrink: true,
                         }}
                       />
-                      <ErrorMessage name="dob" component="div" className="field-error" />
+                      <div style={{ color: 'red' }}><ErrorMessage name="dob" component="div" className="field-error" /></div>
                     </Grid>
                     <Grid item xs={12} md={6}>
                       <Field as={TextField} name="address" label="Address" fullWidth margin="normal" />
-                      <ErrorMessage name="address" component="div" className="field-error" />
+                      <div style={{ color: 'red' }}><ErrorMessage name="address" component="div" className="field-error" /></div>
                     </Grid>
                     <Grid item xs={12} md={6}>
   <FormControl fullWidth margin="normal">
@@ -435,16 +461,16 @@ const RegistrationForm = () => {
       {/* Add more options as needed */}
     </Field>
   </FormControl>
-  <ErrorMessage name="blood_type" component="div" className="field-error" />
+  <div style={{ color: 'red' }}><ErrorMessage name="blood_type" component="div" className="field-error" /></div>
 </Grid>
 
 <Grid item xs={12} md={6}>
   <Field as={TextField} name="height" label="Height (inches)" fullWidth margin="normal" />
-  <ErrorMessage name="height" component="div" className="field-error" />
+  <div style={{ color: 'red' }}><ErrorMessage name="height" component="div" className="field-error" /></div>
 </Grid>
                     <Grid item xs={12} md={6}>
                       <Field as={TextField} name="weight" label="Weight (lbs)" fullWidth margin="normal" />
-                      <ErrorMessage name="weight" component="div" className="field-error" />
+                      <div style={{ color: 'red' }}><ErrorMessage name="weight" component="div" className="field-error" /></div>
                     </Grid>
                       
 
