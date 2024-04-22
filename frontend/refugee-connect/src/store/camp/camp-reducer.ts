@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 export interface Camp {
   campId: string;
   campName: string;
-  campCapacity: string;
+  campCapacity: String;
   campLocation: string;
   campCurrentOccupancy: Number;
   campImage:string;
