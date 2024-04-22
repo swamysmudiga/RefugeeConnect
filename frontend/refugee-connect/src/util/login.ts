@@ -14,7 +14,8 @@ export const login= async(username : String , password : String) =>{
     localStorage.setItem('token', resData.token);
     localStorage.setItem('role', resData.user.role);
     localStorage.setItem('personId', resData.user.personid);
-   
+    localStorage.setItem('username', resData.user.username);
+    localStorage.setItem('image', resData.user.image);
     return 'success';
 
    }catch(error){
@@ -34,10 +35,7 @@ export const loginOut= async() =>{
      //console.log(resData);
  
      localStorage.clear();
-     alert("log out successful!!!!!!");
-    
-    // return resData;
- 
+   
     }catch(error){
      console.log(error);
     }
