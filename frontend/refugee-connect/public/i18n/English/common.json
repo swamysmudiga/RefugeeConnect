@@ -22,9 +22,9 @@
   "footerSubscribe" : "SUBSCRIBE",
   "footerPrivacy" : "Privacy policy | Terms and conditions of use | Copyright",
   "NavBarCompany" : "Refugee Connect",
-  "NavBarHome" : "HOME",
-  "NavBarContact" : "CONTACT",
-  "NavBarDonate" : "DONATE",
-  "NavBarLogin" : "LOG IN",
-  "NavBarSignup" : "SIGN UP"
+  "NavBarHome" : "Home",
+  "NavBarContact" : "Contact Us",
+  "NavBarDonate" : "Donate",
+  "NavBarLogin" : "Log In",
+  "NavBarSignup" : "Sign Up"
 }

@@ -4,102 +4,155 @@ import logo from '../../images/logo.png'
 import { Link, useNavigate } from "react-router-dom";
 import Modal from '../Model/model';
 import { loginOut } from '../../util/login';
+import i18n from '../../i18n';
+import { Select, MenuItem, SelectChangeEvent } from '@mui/material';
+import { useTranslation } from 'react-i18next';
+
 const NavBar = () => {
 
-    const token = localStorage.getItem('token');
-    const role = localStorage.getItem('role');
-    const imagePath = localStorage.getItem('image');
-    const username = localStorage.getItem('username');
-    const [language, setLanguage] = useState('English');
+  const token = localStorage.getItem('token');
+  const role = localStorage.getItem('role');
+  const imagePath = localStorage.getItem('image');
+  const username = localStorage.getItem('username');
+  const [language, setLanguage] = useState('English');
 
-    const navigate = useNavigate();
-    const [showModal, setShowModal] = React.useState(false);
+  const navigate = useNavigate();
+  const [showModal, setShowModal] = React.useState(false);
 
-    async function handleLogInLogOut() {
-        navigate('/refugee/login');
+  async function handleLogInLogOut() {
+    navigate('/refugee/login');
+  }
+
+  const handleLogout = async () => {
+    // Perform your log-out logic here, e.g., clear user session, redirect, etc.
+    console.log('Logged out!');
+    await loginOut();
+    navigate('/refugee');
+
+    setShowModal(false); // Hide the modal after confirming
+  };
+
+  async function handleHome() {
+
+    console.log('Inside homne...');
+
+    switch (role) {
+      case 'refugee': navigate('/refugee/refugeeHomePage'); break;
+      case 'user': navigate('/user/userHomePage'); break;
+      default: navigate('/refugee'); break;
     }
 
-    const handleLogout = async() => {
-        // Perform your log-out logic here, e.g., clear user session, redirect, etc.
-        console.log('Logged out!');
-        await loginOut();
-        navigate('/refugee');
-    
-        setShowModal(false); // Hide the modal after confirming
-      };
-    
-    async function handleHome() {
+  }
 
-        console.log('Inside homne...');
 
-        switch(role){
-            case 'refugee' :navigate('/refugee/refugeeHomePage'); break;
-            case 'user' :navigate('/user/userHomePage');break;
-            default : navigate('/refugee');break;
-        }
-        
+  const handleDonateClick = (resource: string) => {
+    console.log(" inside donate....");
+
+    switch (resource) {
+      case 'Donate':
+        window.location.href = 'https://donate.stripe.com/test_7sIcOV4mm0hEc9O000'
+        break;
+      default:
+        break;
     }
+  };
+
+  const openModal = () => {
+    console.log("open Model....");
+    setShowModal(true); // Show the modal when clicking "Log Out"
+  };
 
 
-    const handleDonateClick = (resource: string) => {
-        console.log(" inside donate....");
-        
-      switch (resource) {
-        case 'Donate':
-          window.location.href = 'https://donate.stripe.com/test_7sIcOV4mm0hEc9O000'
-          break;
-        default:
-          break;
-      }
-    };
-
-    const openModal = () => {
-        console.log("open Model....");
-        setShowModal(true); // Show the modal when clicking "Log Out"
-      };
-    
-    
   const closeModal = () => {
     setShowModal(false); // Hide the modal when clicking "No"
   };
+
+  const handleLanguageChange = (event: SelectChangeEvent) => {
+    //console.log(event.target.value);
+    //console.log(language);
+    (event.target.value === "English") ? setLanguage('English') : setLanguage('Marathi')
+    i18n.changeLanguage(event.target.value);
+  };
+
+  const {t} = useTranslation('common');
 
   return (<>
     <nav className="nav">
       <div className="nav-left">
         <a href="#" className="nav-brand">
-          <img src={logo}alt="UIVerse Logo" />
+          <img src={logo} alt="UIVerse Logo" />
         </a>
         <ul className="nav-menu">
-        <li>
-            <a className="nav-link" onClick={handleHome}>Home</a>
-        </li>
-        <li>
-            <a href="#" className="nav-link">Contact Us</a>
-        </li>
           <li>
-            <div className="dropdown-container">
+            <a className="nav-link" onClick={handleHome}>{t('NavBarHome')}</a>
+          </li>
+          <li>
+            <a href="#" className="nav-link">{t('NavBarContact')}</a>
+          </li>
+          <li>
+            {/* <div className="dropdown-container">
               <a href="#" className="nav-link">
-                English
+                {language}
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                   <path fill="#F2F2F2" d="M12 13.172l4.95-4.95 1.414 1.414L12 16 5.636 9.636 7.05 8.222z"></path>
                 </svg>
-              </a>
-
-              <div className="dropdown-menu grid">
-                <a href="#"><span>Marathi</span></a>
-                <a href="#"><span>Hindi</span></a>
-              </div>
+              </a> */}
+            {/* Dropdown menu */}
+            {/* <div className="dropdown-menu grid">
+                <a href="#" onClick={() => handleLanguageChange('Marathi')}><span>Marathi</span></a>
+                <a href="#" onClick={() => handleLanguageChange('Hindi')}><span>Hindi</span></a>
+              </div> */}
+            <div style={{backgroundColor: '#212121'}}>
+              <Select
+                value={language}
+                onChange={handleLanguageChange}
+                sx={{
+                  width: 100,
+                  margin: '0px',
+                  //marginRight: 2,
+                  backgroundColor: '#212121', // Background color
+                  color: '#5966f3', // Text color
+                  //borderRadius: '0.5rem',
+                }}
+                size="small"
+              >
+                <MenuItem
+                  value="English"
+                  style={{
+                    marginTop: '-8px',
+                    backgroundColor: '#292929', // Background color
+                    color: '#5966f3', // Text color
+                    //padding: '1rem',
+                    //borderRadius: '0.5rem',
+                  }}
+                >
+                  English
+                </MenuItem>
+                <MenuItem
+                  value="Marathi"
+                  style={{
+                    marginBottom: '-8px',
+                    backgroundColor: '#292929', // Background color
+                    color: '#5966f3', // Text color
+                    //padding: '1rem',
+                   // borderRadius: '0.5rem',
+                  }}
+                >
+                  Marathi
+                </MenuItem>
+              </Select>
             </div>
+
           </li>
         </ul>
       </div>
 
       <div className="nav-right">
-        <a className="nav-link btn-primary" onClick={ () => handleDonateClick('Donate')}>
+        <a className="nav-link btn-primary" onClick={() => handleDonateClick('Donate')}>
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
             <path d="M12 19v-7m0 0V5m0 7H5m7 0h7" stroke="#F2F2F2" fill="none"></path>
           </svg>
-          Donate
+          {t('NavBarDonate')}
         </a>
 
         <button className="nav-link btn-icon">
@@ -109,23 +162,23 @@ const NavBar = () => {
         </button>
 
         <ul className="nav-menu">
-        <li>
-           { !token && !role && <a className="nav-link" onClick={ handleLogInLogOut}>Log In</a> }
-        </li>
-        {!token && !role && <li> <a onClick ={ () => navigate('/refugee/signup') } className="nav-link">Sign Up</a> </li> }
+          <li>
+            {!token && !role && <a className="nav-link" onClick={handleLogInLogOut}>{t('NavBarLogin')}</a>}
+          </li>
+          {!token && !role && <li> <a onClick={() => navigate('/refugee/signup')} className="nav-link">{t('NavBarSignup')}</a> </li>}
         </ul>
-        
-        { token && role &&  <div className="dropdown-container">
+
+        {token && role && <div className="dropdown-container">
           <a href="#" className="nav-link btn-profile">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
               <path fill="#F2F2F2" d="M12 13.172l4.95-4.95 1.414 1.414L12 16 5.636 9.636 7.05 8.222z"></path>
             </svg>
-            <span>{ role && token && username}</span>
+            <span>{role && token && username}</span>
             <div className="profile-pic">
-              {role && token && <img src={`http://localhost:4000/${imagePath}`} alt="Profile Pic" /> }
+              {role && token && <img src={`http://localhost:4000/${imagePath}`} alt="Profile Pic" />}
             </div>
           </a>
-            <div className="dropdown-menu profile-dropdown">
+          <div className="dropdown-menu profile-dropdown">
             <a href="#">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20">
                 <path fill="#D1D5DB" d="M20 22h-2v-2a3 3 0 0 0-3-3H9a3 3 0 0 0-3 3v2H4v-2a5 5 0 0 1 5-5h6a5 5 0 0 1 5 5v2zm-8-9a6 6 0 1 1 0-12 6 6 0 0 1 0 12zm0-2a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"></path>
@@ -144,7 +197,7 @@ const NavBar = () => {
               </svg>
               <span>Need Help?</span>
             </a>
-            <a  onClick={openModal} ><span>Log Out</span></a>
+            <a onClick={openModal} ><span>Log Out</span></a>
           </div>
         </div>}
 
@@ -152,12 +205,12 @@ const NavBar = () => {
       </div>
     </nav>
     <Modal
-  show={showModal}
-  onConfirm={handleLogout}
-  onCancel={closeModal}
-  message="Are you sure you want to log out?"
-/>
-    </>
+      show={showModal}
+      onConfirm={handleLogout}
+      onCancel={closeModal}
+      message="Are you sure you want to log out?"
+    />
+  </>
   );
 };
 
