@@ -18,6 +18,7 @@ import ResourceAdditionPage from './components/UserHomePage/AddResource.tsx';
 import CampAdditionPage from './components/AdminHomePage/AddCamp.tsx';
 import MapComponentView from './components/Map/Mapdirections.tsx';
 import UserHomePage from './components/UserHomePage/HomePage.tsx';
+import NavBar from './components/NavBar/NavBar.tsx';
 
 
 const route = createBrowserRouter([
@@ -53,7 +54,8 @@ const route = createBrowserRouter([
       { path:'viewAllResource', element:<ViewAllResources/>},
       { path:'addResource', element:<ResourceAdditionPage/>},
     ]
-  }
+  },
+  { path:'/navbar', element:<NavBar/>},
     
 ]);
 
