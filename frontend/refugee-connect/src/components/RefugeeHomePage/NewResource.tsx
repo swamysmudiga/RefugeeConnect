@@ -1,31 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Typography, Button, Grid, Box, CardMedia, IconButton } from '@mui/material';
+import { Container, Typography, Button, Grid, Box, CardMedia } from '@mui/material';
 import Footer from './Footer';
 import { useNavigate } from 'react-router-dom';
 
-
 const ViewAllResourceAndNearbyCamps = () => {
- 
   const [resourceInView, setResourceInView] = useState(false);
   const [campsInView, setCampsInView] = useState(false);
-
   const navigate = useNavigate();
 
-
-    const handleResourceClick = (resource: string) => {
-        // Navigate to the respective page based on the clicked resource
-        switch (resource) {
-          case 'link-for-image1':
-            navigate('/refugee/viewAllResource');
-            break;
-          case 'link-for-image2':
-            navigate('/refugee/viewNearByCamps');
-            break;
-          default:
-            break;
-        }
-      };
-  
+  const handleResourceClick = (resource: string) => {
+    switch (resource) {
+      case 'link-for-image1':
+        navigate('/refugee/viewAllResource');
+        break;
+      case 'link-for-image2':
+        navigate('/refugee/viewNearByCamps');
+        break;
+      default:
+        break;
+    }
+  };
 
   useEffect(() => {
     const resourceSection = document.getElementById('resourceSection');
@@ -54,13 +48,13 @@ const ViewAllResourceAndNearbyCamps = () => {
   return (
     <Box sx={{ backgroundColor: 'white', minHeight: '100vh' }}>
       <Container maxWidth="lg" sx={{ py: 4 }}>
-        {/* Top Row: Image Left, Text Right with animation */}
-        <Grid container spacing={2} alignItems="center" justifyContent="center" id="resourceSection">
-          <Grid item xs={12} md={6}>
+        <Grid container spacing={2} sx={{ mt: 4 }}>
+          {/* Resources section */}
+          <Grid item xs={12} md={6} id="resourceSection">
             <Box sx={{
               display: 'flex',
+              height: '100%', // Set height to 100%
               alignItems: 'center',
-              height: 300,
               animation: resourceInView ? 'slideInFromLeft 1s forwards' : '',
               '@keyframes slideInFromLeft': {
                 '0%': { transform: 'translateX(-100%)', opacity: 0 },
@@ -91,15 +85,48 @@ const ViewAllResourceAndNearbyCamps = () => {
               </Box>
             </Box>
           </Grid>
-        </Grid>
 
-        {/* Bottom Row: Text Left, Image Right with animation */}
-        <Grid container spacing={2} alignItems="center" justifyContent="center" sx={{ mt: 4 }} id="campsSection">
+          {/* Container for resource statistics */}
+          <Grid item xs={12} md={6}>
+            <Box sx={{ p: 2, textAlign: 'center', height: '100%' }}>
+              <Typography variant="h5" component="div" sx={{ fontWeight: 'bold', fontStyle: 'italic' }}>
+                Resource Statistics
+              </Typography>
+              <Typography variant="body1" sx={{ mt: 1.5 }}>
+                Our platform serves as a lifeline for individuals and families by offering a diverse range of resources, including shelter, food, and medical assistance. With our robust network and efficient distribution channels, we ensure that no one is left behind in times of need. Together, we're making a meaningful difference in the lives of refugees, providing them with the support and resources necessary for a brighter future. <br />
+                <br /> 
+                <Typography sx={{ fontWeight: 'bold' }}>
+                  Total resources provided: 572 <br />
+                  Total refugees benefitted: 3518
+                </Typography>
+              </Typography>
+            </Box>
+          </Grid>
+
+          {/* Container for camp statistics */}
+          <Grid item xs={12} md={6}>
+            <Box sx={{ p: 2, textAlign: 'center', height: '100%' }}> 
+              <Typography variant="h5" component="div" sx={{ fontWeight: 'bold', fontStyle: 'italic' }}>
+              <br />Camp Statistics
+              </Typography>
+              <Typography variant="body1" sx={{ mt: 1.5 }}>
+                Our platform has facilitated the establishment of numerous camps, providing refuge to thousands of displaced individuals. We ensure that these camps are equipped with essential facilities and resources to meet the needs of refugees, offering a safe haven during challenging times.
+                <br /><br />
+                <Typography sx={{ fontWeight: 'bold' }}>
+                  Total camps established: 247 <br />
+                  Total refugees housed: 4518
+                </Typography>
+              </Typography>
+            </Box>
+          </Grid>
+          
+
+          {/* Nearby Camps section */}
           <Grid item xs={12} md={6}>
             <Box sx={{
               display: 'flex',
+              height: '100%', // Set height to 100%
               alignItems: 'center',
-              height: 300,
               animation: campsInView ? 'slideInFromRight 1s forwards' : '',
               '@keyframes slideInFromRight': {
                 '0%': { transform: 'translateX(100%)', opacity: 0 },
@@ -133,8 +160,7 @@ const ViewAllResourceAndNearbyCamps = () => {
         </Grid>
       </Container>
       <Footer/>
-      {/* Footer */}
-      </Box>
+    </Box>
   );
 };
 
