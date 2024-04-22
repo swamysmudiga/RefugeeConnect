@@ -7,7 +7,6 @@ import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import MapComponentView from './Mapdirections';
 
-
 interface Coordinates {
   latitude: number;
   longitude: number;
@@ -24,7 +23,6 @@ const MapComponent = ({ location }: { location: string }) => {
 
   async function handleDirection() {
     if (startingCoordinates && endingCoordinates) {
-
       console.log(" lat & log  ", startingCoordinates.latitude,startingCoordinates.longitude,endingCoordinates.latitude,endingCoordinates.longitude)
       navigate(`/refugee/resource/mapView/${startingCoordinates.latitude}/${startingCoordinates.longitude}/${endingCoordinates.latitude}/${endingCoordinates.longitude}`);
     }
@@ -32,20 +30,20 @@ const MapComponent = ({ location }: { location: string }) => {
 
   const getCurrentLocation = (): Promise<GeolocationPosition> => {
     return new Promise((resolve, reject) => {
-        if (!navigator.geolocation) {
-            reject(new Error('Geolocation is not supported by this browser'));
-        } else {
-            navigator.geolocation.getCurrentPosition(
-                (position: GeolocationPosition) => {
-                    resolve(position);
-                },
-                (error: GeolocationPositionError) => {
-                    reject(error);
-                }
-            );
-        }
+      if (!navigator.geolocation) {
+        reject(new Error('Geolocation is not supported by this browser'));
+      } else {
+        navigator.geolocation.getCurrentPosition(
+          (position: GeolocationPosition) => {
+            resolve(position);
+          },
+          (error: GeolocationPositionError) => {
+            reject(error);
+          }
+        );
+      }
     });
-};
+  };
 
   useEffect(() => {
     mapboxgl.accessToken = 'pk.eyJ1IjoiaWFtYWtzaGF5ZGF0aXIxOCIsImEiOiJjbHY2dDN3dzAwMnNxMmtuMDY5anlpaG8yIn0.6EKD6UsjSCuY4YkN1tYWjw';
@@ -87,10 +85,10 @@ const MapComponent = ({ location }: { location: string }) => {
         setEndCoordinates({ latitude: latitude, longitude: longitude }); 
         console.log('Latitude:', latitude);
         console.log('Longitude:', longitude);
-    })
-    .catch(error => {
+      })
+      .catch(error => {
         console.error('Error getting current location:', error.message);
-    });
+      });
 
     };
 
@@ -104,10 +102,10 @@ const MapComponent = ({ location }: { location: string }) => {
   }, [map, location]);
 
   return (
-    <>
-      <Button variant="contained" onClick={handleDirection}>Open Directions</Button>
-      <div id="map-container" style={{ width: '100%', height: '400px' }} />
-    </>
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+      <div id="map-container" style={{ width: '100%', height: '500px' }} />
+      <Button variant="contained" onClick={handleDirection} style={{ marginTop: '20px' }}>Open Directions</Button>
+    </div>
   );
 };
 
