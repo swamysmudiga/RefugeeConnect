@@ -27,10 +27,13 @@ const UserHomePage = () => {
     }
 
     return (<>
-       <Container style={{ overflowY: 'auto', padding: '0px', maxWidth: '100vw', backgroundColor: 'lightgrey'}}>
+       <Container style={{ overflowY: 'auto', overflowX: 'hidden', padding: '0px', maxWidth: '100vw', backgroundColor: 'lightgrey'}}>
+            <div style={{marginTop:'100px', marginLeft:'70px', width: '90%'}}>
+                <UserStories/>
+            </div>
             <Grid container spacing={4} style={{ height: '100%' }}>
                 {/* Resource section */}
-                <Grid item xs={12} md={12} style={{ marginTop: '100px' }}> {/* Added marginTop */}
+                <Grid item xs={12} md={12} style={{ marginTop: '100px' }}>
                     {/* Outer container with padding for the resource section */}
                     <Container style={{ padding: '20px', maxWidth: '90%', border: '1px solid #dcdcdc', borderRadius: '20px', backgroundColor: 'white' }}>
                         <Grid container spacing={4} style={{ alignItems: 'center' }}>
@@ -102,12 +105,10 @@ const UserHomePage = () => {
                     </Container>
                 </Grid>
 
-                <UserStories/>
-
                 {/* Donation section */}
                 <Grid item xs={12} md={12} style={{ marginTop: '20px' }}> {/* Added marginTop */}
                     {/* Outer container with padding for the donation section */}
-                    <Container style={{ padding: '20px', maxWidth: '90%', border: '1px solid #dcdcdc', borderRadius: '20px', backgroundColor: 'white' }}>
+                    <Container style={{ padding: '20px', maxWidth: '90%', border: '1px solid #dcdcdc', borderRadius: '20px', backgroundColor: 'white', marginBottom: '55px' }}>
                         <Grid container spacing={4} style={{ alignItems: 'center' }}>
                             {/* Donation text */}
                             <Grid item xs={12} md={6} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
@@ -135,9 +136,9 @@ const UserHomePage = () => {
                 </Grid>
             </Grid>
         </Container>
-         <Box sx={{ backgroundColor: 'white', minHeight: '100vh' }}>
-        <Footer/>
-        </Box>
+         <div style={{marginTop: '-40px'}}>
+            <Footer/>
+        </div>
         </>
     );
 };
