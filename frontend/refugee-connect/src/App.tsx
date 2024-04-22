@@ -20,6 +20,7 @@ import MapComponentView from './components/Map/Mapdirections.tsx';
 import UserHomePage from './components/UserHomePage/HomePage.tsx';
 import NavBar from './components/NavBar/NavBar.tsx';
 import { useEffect } from 'react';
+import ProfilePage from './components/Profile.tsx';
 
 
 
@@ -55,6 +56,7 @@ const route = createBrowserRouter([
       { path:'userHomePage', element:<UserHomePage/>},
       { path:'viewAllResource', element:<ViewAllResources/>},
       { path:'addResource', element:<ResourceAdditionPage/>},
+      { path:'MyProfile', element:<ProfilePage/>},
     ]
   },
   

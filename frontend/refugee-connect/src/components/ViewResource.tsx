@@ -261,6 +261,7 @@ const ResourceDetailPage: React.FC = () => {
                 </Attribute>
                 <Attribute disabled={!editMode}>
                   <label>Availability:</label>
+
                   <input
                     type="text"
                     name="isAvailable"

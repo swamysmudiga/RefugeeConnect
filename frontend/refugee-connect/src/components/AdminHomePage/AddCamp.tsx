@@ -36,7 +36,6 @@ const initialCampValues = {
   campManagementName: '',
   Infrastructure: '',
   supportingOrganizations: '',
-  personId:''
 };
 
 
