@@ -18,6 +18,9 @@ import ResourceAdditionPage from './components/UserHomePage/AddResource.tsx';
 import CampAdditionPage from './components/AdminHomePage/AddCamp.tsx';
 import MapComponentView from './components/Map/Mapdirections.tsx';
 import UserHomePage from './components/UserHomePage/HomePage.tsx';
+import NavBar from './components/NavBar/NavBar.tsx';
+import { useEffect } from 'react';
+
 
 
 const route = createBrowserRouter([
@@ -53,11 +56,13 @@ const route = createBrowserRouter([
       { path:'viewAllResource', element:<ViewAllResources/>},
       { path:'addResource', element:<ResourceAdditionPage/>},
     ]
-  }
+  },
+  
     
 ]);
 
 function App() {
+
   console.log('App is rendering with RegistrationForm');
   return (<RouterProvider router={route} />);  
 

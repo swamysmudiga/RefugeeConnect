@@ -34,8 +34,9 @@ const LoginPage = () => {
               case 'user': 
                   navigate('/user/userHomePage'); 
                   break;
+              case 'admin': navigate('/user/userHomePage'); break;
               default:
-                  // Handle other cases or unexpected scenarios
+                navigate('/refugee');
                   break;
           }
       }, 3000); // 3 seconds delay
