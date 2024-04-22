@@ -6,7 +6,14 @@ import 'slick-carousel/slick/slick-theme.css';
 import { Facebook, Twitter, LinkedIn, YouTube } from '@mui/icons-material';
 import { ArrowBackIos, ArrowForwardIos } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
+import { Pie } from 'react-chartjs-2';
+import { Chart as ChartJS, ArcElement,Tooltip,Legend } from 'chart.js';
  
+ChartJS.register(
+  ArcElement,
+  Tooltip,
+  Legend
+)
 const ContentSection = () => {
   const sliderRef = useRef<Slider>(null);
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -15,15 +22,52 @@ const ContentSection = () => {
     dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: 1,
+    slidesToShow: 3,
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 3000,
     nextArrow: <ArrowForwardIos />,
     prevArrow: <ArrowBackIos />,
-    afterChange: (current: number) => setCurrentSlide(current)
+    afterChange: (current) => setCurrentSlide(current)
   };
 
+  // Sample pie chart data
+  const pieChartData = {
+    labels: ['Refugees in Camps', 'Refugees in Urban Areas', 'Refugees in Rural Areas', 'Refugees in Transit Centers', 'Refugees in Host Communities'],
+    datasets: [{
+      data: [3000000, 2000000, 1000000, 1500000, 2500000],
+      backgroundColor: ['#ff6384', '#36a2eb', '#ffce56', '#ff8a65', '#8e24aa'],
+      hoverBackgroundColor: ['#ff6384', '#36a2eb', '#ffce56', '#ff8a65', '#8e24aa']
+    }]
+  };
+  
+const options = {
+  responsive: true,
+  maintainAspectRatio: false,
+  legend: {
+    display: true,
+    position: 'right'
+  },
+  title: {
+    display: true,
+    text: 'Distribution of Refugees by Location',
+    fontSize: 16,
+    fontColor: '#333'
+  },
+  tooltips: {
+    enabled: true,
+    mode: 'single',
+    callbacks: {
+      label: function(tooltipItem, data) {
+        const dataset = data.datasets[tooltipItem.datasetIndex];
+        const total = dataset.data.reduce((accumulator, currentValue) => accumulator + currentValue);
+        const currentValue = dataset.data[tooltipItem.index];
+        const percentage = Math.round((currentValue / total) * 100);
+        return `${data.labels[tooltipItem.index]}: ${currentValue} (${percentage}%)`;
+      }
+    }
+  }
+};
   const {t} = useTranslation('common');
  
   const cultures = [
@@ -88,30 +132,49 @@ const ContentSection = () => {
     <Container maxWidth="lg" style={{ padding: '40px 0' }}>
       <Grid container spacing={4} alignItems="center" justifyContent="center">
       
-        {/* First Set of Culture Cards */}
-              <Grid item xs={12} md={6}>
-        <Typography variant="h4" gutterBottom style={{ borderRadius: '15px', backgroundColor: '#f0f0f0', padding: '10px', marginBottom: '20px' }}>
-          {t('culturesHeader')}
-        </Typography>
-        <div style={{ maxWidth: '100%', overflowX: 'auto' }}>
-          <Slider {...sliderSettings} ref={sliderRef}>
-            {cultures.map((culture, index) => (
-              <div key={index}>
-                <Card style={{ boxShadow: 'none', border: '1px solid #ddd', borderRadius: '4px', backgroundColor: '#fff' }}>
-                  <CardContent>
-                    <Typography variant="h5" style={{ color: '#333' }}>{culture.title}</Typography>
-                    <Typography variant="body2">{culture.description}</Typography>
-                  </CardContent>
-                </Card>
-              </div>
-            ))}
-          </Slider>
-          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <IconButton onClick={goToPrevSlide}><ArrowBackIos /></IconButton>
-            <IconButton onClick={goToNextSlide}><ArrowForwardIos /></IconButton>
+       {/* First Set of Culture Cards */}
+       <Grid container spacing={3}>
+  <Grid item xs={12} md={6}>
+    <Typography variant="h4" gutterBottom style={{ borderRadius: '15px', backgroundColor: '#f0f0f0', padding: '10px', marginBottom: '20px' }}>
+      {t('culturesHeader')}
+    </Typography>
+    <div style={{ maxWidth: '100%', overflowX: 'auto' }}>
+      <Slider {...sliderSettings} ref={sliderRef}>
+        {cultures.map((culture, index) => (
+          <div key={index} style={{ minWidth: '300px', maxWidth: '400px', marginRight: '10px' }}>
+            <Card style={{ boxShadow: 'none', border: '1px solid #ddd', borderRadius: '4px', backgroundColor: '#fff', height: '100%' }}>
+              <CardContent>
+                <Typography variant="h5" style={{ color: '#333' }}>{culture.title}</Typography>
+                <Typography variant="body2">{culture.description}</Typography>
+              </CardContent>
+            </Card>
           </div>
-        </div>
-      </Grid>
+        ))}
+      </Slider>
+      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <IconButton onClick={goToPrevSlide}><ArrowBackIos /></IconButton>
+        <IconButton onClick={goToNextSlide}><ArrowForwardIos /></IconButton>
+      </div>
+    </div>
+  </Grid>
+  <Grid item xs={12} md={6}>
+    <div style={{
+      padding: '20px',
+      width: '100%',
+      background: '#f0f0f0',
+      height: '100%'
+    }}>
+      <Pie
+        data={pieChartData}
+        options={options}
+      ></Pie>
+    </div>
+  </Grid>
+</Grid>
+
+
+
+
         
       </Grid>
     </Container>
