@@ -23,11 +23,11 @@ ul {
 }
 
 .nav {
-  position: fixed; /* Fixed position */
-  top: 0; /* Align to the top */
-  left: 0; /* Align to the left */
-  width: 100%; /* Full width */
-  z-index: 1000; /* High z-index to stay on top */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
   padding: 0.8rem 1.5rem;
   display: flex;
   justify-content: space-between;
