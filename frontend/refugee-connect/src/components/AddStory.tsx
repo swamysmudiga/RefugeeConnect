@@ -13,6 +13,7 @@ const AddStoryForm = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [fileError, setFileError] = useState('');
+  const [ file, setFile] = useState<File | null>();
  
   const validationSchema = Yup.object({
     title: Yup.string().required('Title is required'),
@@ -30,23 +31,24 @@ const AddStoryForm = () => {
     },
     validationSchema,
     onSubmit: async (values, { resetForm }) => {
-      const formData = new FormData();
-      formData.append('title', values.title);
-      formData.append('description', values.description);
-      formData.append('image', values.image);
- 
+      const formData = {
+        title : values.title,
+        description: values.description,
+        refugeeId: localStorage.getItem('personId')
+      }
+
       try {
-        const response = await dispatch(addStoryAsync(formData));
-        if (response.error) {
-          toast.error('Failed to add story');
-        } else {
-          toast.success('Story added successfully');
+        const response = await dispatch(addStoryAsync(formData,file));
+        
+        toast.success('Story added successfully');
+        setTimeout(() => {
           navigate('/refugee/refugeeHomePage');
-          resetForm(); // Reset the form after successful submission
-        }
+          resetForm();
+        }, 4000);
+  
       } catch (error) {
+        toast.error('Failed to add story');
         console.error('Error adding story:', error);
-        toast.error('An error occurred while adding story');
       }
     },
   });
@@ -54,7 +56,7 @@ const AddStoryForm = () => {
   const handleImageChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
     const files = event.target.files;
     const file = files && files.length > 0 ? files[0] : null;
-  
+    setFile(file);
     if (file) {
       formik.setFieldValue('image', file);
       setFileError('');
