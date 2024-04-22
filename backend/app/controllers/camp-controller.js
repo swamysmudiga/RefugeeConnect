@@ -75,8 +75,8 @@ export const deleteCampByCampId = async(request,response)=>{
 export const updateCampController = async(request,response) => {
 
     try{
-        // console.log("id is ", request.params.meetingId);
-   
+        
+        console.log("id is ", request.params.campId," and Body is ",request.body);
         const updatedCamp = await updateCampById(request.params.campId, {...request.body });
         setResponse(updatedCamp,response);
     }catch(error){
