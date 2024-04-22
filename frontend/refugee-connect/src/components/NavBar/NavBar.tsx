@@ -39,6 +39,7 @@ const NavBar = () => {
     switch (role) {
       case 'refugee': navigate('/refugee/refugeeHomePage'); break;
       case 'user': navigate('/user/userHomePage'); break;
+      case 'admin': navigate('/user/userHomePage'); break;
       default: navigate('/refugee'); break;
     }
 
