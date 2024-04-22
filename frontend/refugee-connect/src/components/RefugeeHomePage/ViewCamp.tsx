@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link , useNavigate } from 'react-router-dom';
 import MapComponent from '../Map/Map';
-import { Camp } from '../../store/camp/camp-reducer';
+import { useDispatch } from 'react-redux';
+import { updateCampAsync , removeCampAsync } from '../../store/camp/camp-reducer-actions';
 
 
 const PageContainer = styled.div`
@@ -142,6 +143,10 @@ const CampDetailPage: React.FC = () => {
   const [camp, setCampDetail] = useState<any | null>(null);
   const [editMode, setEditMode] = useState(false);
   const { id } = useParams(); // Assuming id is a string
+  const role = localStorage.getItem('role');
+  const personId = localStorage.getItem('personId');
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCampDetail = async () => {
@@ -156,17 +161,23 @@ const CampDetailPage: React.FC = () => {
     fetchCampDetail();
   }, [id]);
 
-  const handleBack = () => {
-    // Navigation logic to go back
+
+  const handleEdit = async(value: string) => {
+
+    if(value === 'Save'){
+      console.log("Inside camp store...", JSON.stringify(camp));
+       await dispatch(updateCampAsync(camp));
+      navigate('/refugee/viewNearByCamps');
+    }
+    setEditMode(prevMode => !prevMode);
   };
 
-  const handleEdit = () => {
-    setEditMode(prevMode => {
-      const newMode = !prevMode;
-      console.log("Toggling edit mode to:", newMode); // Check new state after toggle
-      return newMode;
-    });
-  };
+  const deleteCamp = async() =>{
+
+      console.log("Inside camp store...", JSON.stringify(camp));
+       await dispatch(removeCampAsync(camp.campId));
+      navigate('/refugee/viewNearByCamps');
+  }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -196,8 +207,8 @@ const CampDetailPage: React.FC = () => {
                   <label>Name:</label>
                   <input
                     type="text"
-                    name="name"
-                    value={camp.campName || ''}
+                    name="campName"
+                    defaultValue={camp.campName || ''}
                     disabled={!editMode}
                     onChange={handleInputChange}
                   />
@@ -206,8 +217,8 @@ const CampDetailPage: React.FC = () => {
                   <label>Capacity:</label>
                   <input
                     type="number"
-                    name="capacity"
-                    value={camp.campCapacity || ''}
+                    name="campCapacity"
+                    defaultValue={camp.campCapacity || ''}
                     disabled={!editMode}
                     onChange={handleInputChange}
                   />
@@ -216,8 +227,8 @@ const CampDetailPage: React.FC = () => {
                   <label>Location:</label>
                   <input
                     type="text"
-                    name="location"
-                    value={camp.campLocation || ''}
+                    name="campLocation"
+                    defaultValue={camp.campLocation || ''}
                     disabled={!editMode}
                     onChange={handleInputChange}
                   />
@@ -226,8 +237,8 @@ const CampDetailPage: React.FC = () => {
                   <label>Current Occupancy:</label>
                   <input
                     type="number"
-                    name="currentOccupancy"
-                    value={camp.campCurrentOccupancy}
+                    name="campCurrentOccupancy"
+                    defaultValue={camp.campCurrentOccupancy}
                     disabled={!editMode}
                     onChange={handleInputChange}
                   />
@@ -236,8 +247,8 @@ const CampDetailPage: React.FC = () => {
                   <label>Management Name:</label>
                   <input
                     type="text"
-                    name="managementName"
-                    value={camp.campManagementName || ''}
+                    name="campManagementName"
+                    defaultValue={camp.campManagementName || ''}
                     disabled={!editMode}
                     onChange={handleInputChange}
                   />
@@ -246,8 +257,8 @@ const CampDetailPage: React.FC = () => {
                   <label>Infrastructure:</label>
                   <input
                     type="text"
-                    name="infrastructure"
-                    value={camp.Infrastructure || ''}
+                    name="Infrastructure"
+                    defaultValue={camp.Infrastructure || ''}
                     disabled={!editMode}
                     onChange={handleInputChange}
                   />
@@ -255,9 +266,9 @@ const CampDetailPage: React.FC = () => {
               </AttributeContainer>
             </CardBody>
             <CardFooter>
-              <button onClick={handleBack}>Back</button>
-              <button onClick={handleEdit}>{editMode ? 'Save' : 'Edit'}</button>
-              {editMode && <button>Delete</button>} {/* Conditionally rendered based on editMode */}
+              <Link to="../viewNearByCamps"><button>Back</button></Link>
+              { (role === 'admin' || personId === camp.personId ) && <button onClick={() => handleEdit(editMode ? 'Save' : 'Edit')}>{editMode ? 'Save' : 'Edit'}</button>}
+              {(role === 'admin' || personId === camp.personId )  && <button onClick={deleteCamp}>Delete</button>} {/* Conditionally rendered based on editMode */}
             </CardFooter>
           </CardContainer>
           <MapContainer>
@@ -265,7 +276,7 @@ const CampDetailPage: React.FC = () => {
               <h2>See the location</h2>
             </MapHeader>
             <MapContent>
-              <MapComponent location={camp.campLocation} />
+              { !editMode && <MapComponent location={camp.campLocation} />}
             </MapContent>
           </MapContainer>
         </PageContent>
