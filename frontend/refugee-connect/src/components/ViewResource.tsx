@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
-import { useParams , Link } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import MapComponent from './Map/Map';
-
 
 interface Resource {
   id: string;
   name: string;
   description: string;
   contentType: string;
-  creationDate: string;
+  createdDate: string;
   location: string;
   isAvailable: boolean;
   image: string;
@@ -31,7 +30,6 @@ const PageContainer = styled.div`
 `;
 
 const Overlay = styled.div`
-  background: linear-gradient(rgba(255,255,255,0.6), rgba(224,224,224,0.6), rgba(51,51,51,0.6)); /* Overlay to enhance readability */
   position: absolute;
   top: 0;
   left: 0;
@@ -51,11 +49,12 @@ const PageContent = styled.div`
 `;
 
 const CardContainer = styled.div`
+  margin-top: 50px; /* Add top margin */
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  width: 45%;
+  width: 48%; /* Adjusted width for better alignment */
 `;
 
 const CardHeader = styled.div`
@@ -66,6 +65,7 @@ const CardHeader = styled.div`
     margin: 0;
     font-size: 24px;
     font-weight: 600;
+    text-align: center; 
   }
 `;
 
@@ -73,7 +73,13 @@ const CardBody = styled.div`
   padding: 32px;
 `;
 
-const Attribute = styled.div`
+const AttributeContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+`;
+
+const Attribute = styled.div<{ disabled?: boolean }>`
+  width: 50%; /* Displaying attributes side by side */
   margin-bottom: 20px;
   label {
     font-weight: 600;
@@ -86,6 +92,16 @@ const Attribute = styled.div`
     white-space: pre-wrap;
     overflow-wrap: break-word;
   }
+  input {
+    border: 1px solid #ccc;
+    padding: 8px;
+    border-radius: 4px;
+    width: calc(100% - 16px); /* Adjusted width for input */
+    ${props => props.disabled && `
+      background-color: #f5f5f5;
+      cursor: not-allowed;
+    `}
+  }
 `;
 
 const CardFooter = styled.div`
@@ -97,11 +113,13 @@ const CardFooter = styled.div`
 `;
 
 const MapContainer = styled.div`
-  background-color: #8b4513; /* Changed background color to reddish brown */
+  margin-top: 50px; /* Add top margin */
+  background-color: #fff; /* Set background color to white */
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  width: 45%;
+  width: 48%; /* Adjusted width for better alignment */
+  height: 675px;
 `;
 
 const MapHeader = styled.div`
@@ -112,6 +130,7 @@ const MapHeader = styled.div`
     margin: 0;
     font-size: 24px;
     font-weight: 600;
+    text-align: center; 
   }
 `;
 
@@ -119,18 +138,27 @@ const MapContent = styled.div`
   padding: 20px;
 `;
 
+const Image = styled.img`
+  max-width: 100%; /* Ensures image is not wider than its container */
+  max-height: 200px; /* Set a maximum height for the image */
+  object-fit: cover; /* Ensures the aspect ratio is preserved */
+  width: auto; /* Ensures image maintains original width unless it exceeds max-width */
+  height: auto; /* Ensures image maintains original height unless it exceeds max-height */
+  border-radius: 4px; /* Optional: Rounds the corners of the image */
+  display: block; /* Ensures the image is treated as a block element */
+  margin: 0 auto; /* Centers the image horizontally */
+`;
+
 const ResourceDetailPage: React.FC = () => {
   const [resource, setResource] = useState<Resource | null>(null);
+  const [editMode, setEditMode] = useState(false); // State variable for edit mode
   const { id } = useParams();
 
   useEffect(() => {
     const fetchResource = async () => {
       try {
-        console.log(`http://localhost:4000/resource/${id}`);
-
         const response = await axios.get(`http://localhost:4000/resource/${id}`);
         setResource(response.data[0]);
-        console.log(response.data);
       } catch (error) {
         console.error('Error fetching resource:', error);
       }
@@ -139,11 +167,23 @@ const ResourceDetailPage: React.FC = () => {
     fetchResource();
   }, [id]);
 
-
-  console.log("from resource view ",resource);
   // Function to handle back button click
   const handleBack = () => {
     // Add your navigation logic here to go back to the previous page
+  };
+
+  // Function to handle edit mode toggle
+  const handleEdit = () => {
+    setEditMode(prevMode => !prevMode);
+  };
+
+  // Function to handle input change for attributes
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setResource(prevResource => ({
+      ...prevResource!,
+      [name]: value,
+    }));
   };
 
   return (
@@ -153,44 +193,72 @@ const ResourceDetailPage: React.FC = () => {
         <PageContent>
           <CardContainer>
             <CardHeader>
-              <h2>Resource Detail</h2>
+              <h2>RESOURCE DETAILS</h2>
             </CardHeader>
             <CardBody>
-              <Attribute>
-                <label>Name:</label>
-                <span>{resource.name}</span>
-              </Attribute>
-              <Attribute>
-                <label>Description:</label>
-                <span>{resource.description}</span>
-              </Attribute>
-              <Attribute>
-                <label>Content Type:</label>
-                <span>{resource.contentType}</span>
-              </Attribute>
-              <Attribute>
-                <label>Creation Date:</label>
-                <span>{resource.creationDate}</span>
-              </Attribute>
-              <Attribute>
-                <label>Location:</label>
-                <span>{resource.location}</span>
-              </Attribute>
-              <Attribute>
+              <Image src={`http://localhost:4000/${resource.image}`} alt="Resource" />
+              <AttributeContainer>
+                <Attribute disabled={!editMode}>
+                  <label>Name:</label>
+                  <input
+                    type="text"
+                    name="name"
+                    value={resource.name}
+                    onChange={handleInputChange}
+                  />
+                </Attribute>
+                <Attribute disabled={!editMode}>
+                  <label>Description:</label>
+                  <input
+                    type="text"
+                    name="description"
+                    value={resource.description}
+                    onChange={handleInputChange}
+                  />
+                </Attribute>
+                <Attribute disabled={!editMode}>
+                  <label>Content Type:</label>
+                  <input
+                    type="text"
+                    name="contentType"
+                    value={resource.contentType}
+                    onChange={handleInputChange}
+                  />
+                </Attribute>
+                <Attribute disabled={!editMode}>
+                  <label>Creation Date:</label>
+                  <span>{resource.createdDate}</span>
+                </Attribute>
+                <Attribute disabled={!editMode}>
+                  <label>Location:</label>
+                  <input
+                    type="text"
+                    name="location"
+                    value={resource.location}
+                    onChange={handleInputChange}
+                  />
+                </Attribute>
+                <Attribute disabled={!editMode}>
                 <label>Availability:</label>
-                <span>{resource.isAvailable ? 'Yes' : 'No'}</span>
-              </Attribute>
-              <Attribute>
-                <label>Image:</label>
-                <img src={`http://localhost:4000/${resource.image}`} alt="Resource" />
-              </Attribute>
+                <input 
+                    type ="text"
+                    name="isAvailable"
+                    value={resource.isAvailable ? 'true' : 'false'}
+                    onChange={handleInputChange}
+                  />
+                </Attribute>
+              </AttributeContainer>
             </CardBody>
             <CardFooter>
+              {editMode ? (
+                <button onClick={handleEdit}>Save</button>
+              ) : (
+                <button onClick={handleEdit}>Edit</button>
+              )}
               {/* Back button */}
               <Link to="../viewAllResource"><button onClick={handleBack}>Back</button></Link>
               {/* Edit and delete buttons */}
               <div>
-                <button>Edit</button>
                 <span style={{ marginRight: '10px' }}></span>
                 <button>Delete</button>
               </div>
@@ -198,10 +266,10 @@ const ResourceDetailPage: React.FC = () => {
           </CardContainer>
           <MapContainer>
             <MapHeader>
-              <h2>See the location</h2>
+              <h2>EXPLORE THE LOCATION</h2>
             </MapHeader>
             <MapContent>
-             <MapComponent location={resource.location}/>
+              <MapComponent location={resource.location} />
             </MapContent>
           </MapContainer>
         </PageContent>
