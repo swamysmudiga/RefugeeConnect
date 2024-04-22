@@ -10,7 +10,7 @@ export const save = async (user) => {
     const newUser = new users(user);
    const ans =  await newUser.save();
    console.log("New user- ",ans);
-    const newObject = {personid: newUser.userId ,username: newUser.username, password: newUser.password, role: newUser.role};
+    const newObject = {personid: newUser.userId ,username: newUser.username, password: newUser.password, role: newUser.role, image:newUser.image};
     const success = await addLogIn(newObject);
     console.log("stored log In is...",success);
     return ans;

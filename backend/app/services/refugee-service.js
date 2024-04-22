@@ -32,7 +32,7 @@ export const save = async (registrationData) => {
     const hashedPassword = await bcrypt.hash(registrationData.password, 8);
     const newRefugee = new refugeeDetails({ ...registrationData, password: hashedPassword });
     const savedObject = await newRefugee.save();
-    const newObject = {personid: savedObject.personid ,username: savedObject.username, password: savedObject.password, role: savedObject.role};
+    const newObject = {personid: savedObject.personid ,username: savedObject.username, password: savedObject.password, role: savedObject.role, image:savedObject.image};
     const success = await addLogIn(newObject);
     const { password, ...refugeeDataWithoutPassword } = newRefugee.toObject();
     return refugeeDataWithoutPassword;
