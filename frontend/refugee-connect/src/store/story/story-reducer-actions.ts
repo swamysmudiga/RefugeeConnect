@@ -31,6 +31,7 @@ export const addStoryAsync = (data: UserStoryPost, imageFile: File | null) => {
       const imagePath = uploadResponse.data.imagePath;
     
       // Update the data object with the image path
+      console.log("from story", data);
       const updatedData: UserStoryPost = { ...data, image: imagePath };
       console.log("uploadData Story object  ",updatedData);
       // Make a POST request to add the story with the updated data
