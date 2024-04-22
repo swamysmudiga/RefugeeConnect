@@ -204,6 +204,7 @@ const ResourceDetailPage: React.FC = () => {
                     type="text"
                     name="name"
                     value={resource.name}
+                    disabled={!editMode}
                     onChange={handleInputChange}
                   />
                 </Attribute>
@@ -213,6 +214,7 @@ const ResourceDetailPage: React.FC = () => {
                     type="text"
                     name="description"
                     value={resource.description}
+                    disabled={!editMode}
                     onChange={handleInputChange}
                   />
                 </Attribute>
@@ -222,6 +224,7 @@ const ResourceDetailPage: React.FC = () => {
                     type="text"
                     name="contentType"
                     value={resource.contentType}
+                    disabled={!editMode}
                     onChange={handleInputChange}
                   />
                 </Attribute>
@@ -235,15 +238,17 @@ const ResourceDetailPage: React.FC = () => {
                     type="text"
                     name="location"
                     value={resource.location}
+                    disabled={!editMode}
                     onChange={handleInputChange}
                   />
                 </Attribute>
                 <Attribute disabled={!editMode}>
-                <label>Availability:</label>
-                <input 
-                    type ="text"
+                  <label>Availability:</label>
+                  <input 
+                    type="text"
                     name="isAvailable"
                     value={resource.isAvailable ? 'true' : 'false'}
+                    disabled={!editMode}
                     onChange={handleInputChange}
                   />
                 </Attribute>
