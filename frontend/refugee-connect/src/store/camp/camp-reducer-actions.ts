@@ -46,7 +46,7 @@ export const addCampAsync = (data : Camp , image : File | undefined ) => {
       const resourceHandler = async (campId : number) => {
        
         const response = await axios
-          .delete(`${campId}`) //Delete url for resources
+          .delete(`http://localhost:4000/camp/${campId}`) //Delete url for resources
           .then((res) => {
             return res.data;
           });
@@ -66,16 +66,18 @@ export const addCampAsync = (data : Camp , image : File | undefined ) => {
     return async (dispatch : Dispatch) => {
       const resourceHandler = async (data : Camp) => {
        
-        const response = await axios
-          .put(``,{...data}) //update url for resources
+        console.log("camp Id is ", data.campId," And data is",data);
+        const response = await axios.put(`http://localhost:4000/camp/${data.campId}`,{...data})
           .then((res) => {
             return res.data;
           });
+          console.log("response from axios is- ",response);
         return response;
       };
   
       try {
         const offeringsData = await resourceHandler(data);
+        console.log("Inside camp store call from axios response is - ",offeringsData);
         dispatch(updateCamp(data));
       } catch (err) {
         console.log(err);

@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container, Grid, Typography, Button } from '@mui/material';
 import { useSpring, animated } from 'react-spring';
 import { Box, CardMedia, IconButton } from '@mui/material';
 import Footer from '../RefugeeHomePage/Footer';
 import { useNavigate } from 'react-router-dom';
 import UserStories from '../UserStories';
+import ViewAllResourceAndNearbyCamps from '../RefugeeHomePage/NewResource';
 
 const UserHomePage = () => {
     // Define the animation properties using useSpring
@@ -14,6 +15,27 @@ const UserHomePage = () => {
         config: { duration: 2000 },
     });
     const navigate = useNavigate();
+    const role = localStorage.getItem('role');
+    const [campsInView, setCampsInView] = useState(false);
+
+
+    useEffect(() => {
+     
+        const campsSection = document.getElementById('campsSection');
+    
+        const handleScroll = () => {
+    
+          if (campsSection) {
+            const { top } = campsSection.getBoundingClientRect();
+            if (top < window.innerHeight * 0.75) {
+              setCampsInView(true);
+            }
+          }
+        };
+    
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+      }, []);
 
 
     function handleClick(value : string){
@@ -104,7 +126,41 @@ const UserHomePage = () => {
                         </Grid>
                     </Container>
                 </Grid>
-
+                { role === 'admin' &&  <Grid item xs={12} md={6}>
+            <Box sx={{
+              display: 'flex',
+              height: '100%', // Set height to 100%
+              alignItems: 'center',
+              animation: campsInView ? 'slideInFromRight 1s forwards' : '',
+              '@keyframes slideInFromRight': {
+                '0%': { transform: 'translateX(100%)', opacity: 0 },
+                '100%': { transform: 'translateX(0)', opacity: 1 },
+              },
+            }}>
+              <Box sx={{ width: '50%', p: 2, order: { xs: 2, md: 1 } }}>
+                <Typography variant="h5" component="div" sx={{ fontWeight: 'bold', fontStyle: 'italic' }}>
+                  Nearby Camps
+                </Typography>
+                <Typography variant="body1" sx={{ mt: 1.5 }}>
+                  Easily find nearby camps through our platform. Click for detailed information on locations and amenities.
+                </Typography>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  sx={{ mt: 1.5 }}
+                  onClick={() => navigate('/refugee/viewNearByCamps')}
+                >
+                  View Nearby Camps
+                </Button>
+              </Box>
+              <CardMedia
+                component="img"
+                sx={{ width: '50%', objectFit: 'contain', order: { xs: 1, md: 2 } }}
+                image="../src/images/UserHomeResource.png"
+                alt="Descriptive Alt Text for Image 2"
+              />
+            </Box>
+          </Grid>}
                 {/* Donation section */}
                 <Grid item xs={12} md={12} style={{ marginTop: '20px' }}> {/* Added marginTop */}
                     {/* Outer container with padding for the donation section */}
