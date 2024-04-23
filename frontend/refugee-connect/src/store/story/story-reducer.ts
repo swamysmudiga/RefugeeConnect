@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export interface UserStory {
-  storyId: number;
-  refugeeId: number;
+  storyId: string;
+  refugeeId: string;
   title: string;
   description: string;
   image: string;

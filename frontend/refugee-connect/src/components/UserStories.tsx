@@ -11,8 +11,8 @@ import { ArrowBackIos, ArrowForwardIos, Padding } from '@mui/icons-material';
 
 // Define the Story interface
 export interface Story {
-    storyId: number;
-    refugeeId: number;
+    storyId: string;
+    refugeeId: string;
     title: string;
     description: string;
     image: string;
@@ -21,6 +21,8 @@ export interface Story {
 const UserStories: React.FC = () => {
     const [selectedStory, setSelectedStory] = useState<Story | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const role = localStorage.getItem('role');
+    const personId = localStorage.getItem('personId');
 
     const story = useSelector((state: RootState) => state.story.userStories); 
     console.log("story is ",story);
@@ -35,7 +37,7 @@ const UserStories: React.FC = () => {
         fetchAllStory();
     }, [dispatch]);
 
-    const handleModalDelete = (storyId : number) => {
+    const handleModalDelete = (storyId : string) => {
         const fetchAllStory = async () => {
             await dispatch(removeStoryAsync(storyId));
             setSelectedStory(null);
@@ -200,9 +202,9 @@ const UserStories: React.FC = () => {
                             </Grid>
                         </DialogContent>
                         <DialogActions>
-                        <Button onClick={() => handleModalDelete(selectedStory.storyId)} color="primary">
+                        { (role === 'admin' || personId === selectedStory.refugeeId ) &&  <Button onClick={() => handleModalDelete(selectedStory.storyId)} color="primary">
                                 Delete
-                            </Button>
+                            </Button> }
                             <Button onClick={handleModalClose} color="primary">
                                 Close
                             </Button>
