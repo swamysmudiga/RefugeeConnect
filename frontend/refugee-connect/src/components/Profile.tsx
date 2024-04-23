@@ -30,7 +30,7 @@ interface UserProfileData {
     legal_status?: string;
     assistance_needed?: string;
 }
- 
+
 const ProfilePage = () => {
     const [userData, setUserData] = useState<UserProfileData | null>(null);
     const [editMode, setEditMode] = useState(false);
@@ -38,7 +38,7 @@ const ProfilePage = () => {
     const [editedData, setEditedData] = useState<UserProfileData | null>(null); // Store edited data separately
     const role = localStorage.getItem('role');
     const personId = localStorage.getItem('personId');
- 
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -52,14 +52,21 @@ const ProfilePage = () => {
                         break;
                 }
                 const response = userProfile;
+<<<<<<< HEAD
                 setUserData(response?.data[0]);
                 setEditedData(response?.data[0]); // Initialize editedData with fetched user data
+=======
+                console.log("Response data:", response?.data);
+                setUserData(response?.data[0]);
+                console.log('User Data:', userData);
+>>>>>>> 45dc7db935ffa1ceaaf02e32cfebd6a25efb9880
             } catch (error) {
                 console.error('Error fetching user profile:', error);
             }
         };
- 
+
         fetchData();
+<<<<<<< HEAD
     }, []);
  
     console.log("Data is ",editedData);
@@ -218,3 +225,94 @@ const ProfilePage = () => {
  
 export default ProfilePage;
  
+=======
+    }, [role]);
+
+    return (
+        <div style={{ width: '100vw', height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '110px' }}>
+            <div style={{ width: '80%', display: 'flex', alignItems: 'center', marginTop: '50px' }}>
+                {userData && (
+                    <div style={{ width: '40%', display: 'flex', flexDirection: 'column', alignItems: 'center', marginRight: '50px' }}>
+                        <img src={`http://localhost:4000/${userData.image}`} alt="Profile" style={{ width: '100%', height: '100%', borderRadius: '8px', marginBottom: '20px' }} />
+                        <button style={{ width: '20%', padding: '10px', backgroundColor: '#007bff', color: '#ffffff', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>Edit</button>
+                    </div>
+
+                )}
+                {userData && (
+                    <div style={{ width: '60%' }}>
+                        <h1 style={{marginBottom: '40px'}}>Profile Information</h1>
+                        <ul style={{ listStyleType: 'none', paddingLeft: '0' }}>
+                            <li style={{ marginBottom: '10px' }}>
+                                <strong>Username:</strong> {userData.username}
+                            </li>
+                            <li style={{ marginBottom: '10px' }}>
+                                <strong>Name:</strong> {userData.name}
+                            </li>
+                            <li style={{ marginBottom: '10px' }}>
+                                <strong>Email:</strong> {userData.email}
+                            </li>
+                            <li style={{ marginBottom: '10px' }}>
+                                <strong>Phone Number:</strong> {userData.phone_no}
+                            </li>
+                            {role === 'refugee' && (
+                                <>
+                                    <li style={{ marginBottom: '10px' }}>
+                                        <strong>Age:</strong> {userData.age}
+                                    </li>
+                                    <li style={{ marginBottom: '10px' }}>
+                                        <strong>Nationality:</strong> {userData.nationality}
+                                    </li>
+                                    <li style={{ marginBottom: '10px' }}>
+                                        <strong>Gender:</strong> {userData.gender}
+                                    </li>
+                                    <li style={{ marginBottom: '10px' }}>
+                                        <strong>Date of Birth:</strong> {userData.dob}
+                                    </li>
+                                    <li style={{ marginBottom: '10px' }}>
+                                        <strong>Address:</strong> {userData.address}
+                                    </li>
+                                    <li style={{ marginBottom: '10px' }}>
+                                        <strong>Blood Type:</strong> {userData.blood_type}
+                                    </li>
+                                    <li style={{ marginBottom: '10px' }}>
+                                        <strong>Height:</strong> {userData.height}
+                                    </li>
+                                    <li style={{ marginBottom: '10px' }}>
+                                        <strong>Weight:</strong> {userData.weight}
+                                    </li>
+                                    <li style={{ marginBottom: '10px' }}>
+                                        <strong>Current Location:</strong> {userData.current_location}
+                                    </li>
+                                    <li style={{ marginBottom: '10px' }}>
+                                        <strong>Ethnicity:</strong> {userData.ethnicity}
+                                    </li>
+                                    <li style={{ marginBottom: '10px' }}>
+                                        <strong>Religion:</strong> {userData.religion}
+                                    </li>
+                                    <li style={{ marginBottom: '10px' }}>
+                                        <strong>Language:</strong> {userData.language}
+                                    </li>
+                                    <li style={{ marginBottom: '10px' }}>
+                                        <strong>Health:</strong> {userData.health}
+                                    </li>
+                                    <li style={{ marginBottom: '10px' }}>
+                                        <strong>Education:</strong> {userData.education}
+                                    </li>
+                                    <li style={{ marginBottom: '10px' }}>
+                                        <strong>Legal Status:</strong> {userData.legal_status}
+                                    </li>
+                                    <li style={{ marginBottom: '10px' }}>
+                                        <strong>Assistance Needed:</strong> {userData.assistance_needed}
+                                    </li>
+                                </>
+                            )}
+                        </ul>
+                    </div>
+                )}
+            </div>
+        </div>
+    );
+};
+
+export default ProfilePage;
+>>>>>>> 45dc7db935ffa1ceaaf02e32cfebd6a25efb9880
