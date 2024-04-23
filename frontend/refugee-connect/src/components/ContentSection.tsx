@@ -1,187 +1,260 @@
-import React from 'react';
-import { Container, Typography, Link, IconButton, TextField, Button, Grid } from '@mui/material';
+import React, { useRef, useState } from 'react';
+import { Container, Typography, Button, Grid, Card, CardContent, IconButton, CardMedia } from '@mui/material';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import { Facebook, Twitter, LinkedIn } from '@mui/icons-material';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardActionArea from '@mui/material/CardActionArea';
-
+import { Facebook, Twitter, LinkedIn, YouTube } from '@mui/icons-material';
+import { ArrowBackIos, ArrowForwardIos } from '@mui/icons-material';
+import { useTranslation } from 'react-i18next';
+import { Pie } from 'react-chartjs-2';
+import { Chart as ChartJS, ArcElement,Tooltip,Legend } from 'chart.js';
+ 
+ChartJS.register(
+  ArcElement,
+  Tooltip,
+  Legend
+)
 const ContentSection = () => {
+  const sliderRef = useRef<Slider>(null);
+  const [currentSlide, setCurrentSlide] = useState(0);
+ 
   const sliderSettings = {
     dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: 2,
-    slidesToScroll: 2,
+    slidesToShow: 3,
+    slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 3000
+    autoplaySpeed: 3000,
+    nextArrow: <ArrowForwardIos />,
+    prevArrow: <ArrowBackIos />,
+    afterChange: (current) => setCurrentSlide(current)
   };
 
-  const countries = [
+  // Sample pie chart data
+  const pieChartData = {
+    labels: ['Refugees in Camps', 'Refugees in Urban Areas', 'Refugees in Rural Areas', 'Refugees in Transit Centers', 'Refugees in Host Communities'],
+    datasets: [{
+      data: [3000000, 2000000, 1000000, 1500000, 2500000],
+      backgroundColor: ['#ff6384', '#36a2eb', '#ffce56', '#ff8a65', '#8e24aa'],
+      hoverBackgroundColor: ['#ff6384', '#36a2eb', '#ffce56', '#ff8a65', '#8e24aa']
+    }]
+  };
+  
+const options = {
+  responsive: true,
+  maintainAspectRatio: false,
+  legend: {
+    display: true,
+    position: 'right'
+  },
+  title: {
+    display: true,
+    text: 'Distribution of Refugees by Location',
+    fontSize: 16,
+    fontColor: '#333'
+  },
+  tooltips: {
+    enabled: true,
+    mode: 'single',
+    callbacks: {
+      label: function(tooltipItem, data) {
+        const dataset = data.datasets[tooltipItem.datasetIndex];
+        const total = dataset.data.reduce((accumulator, currentValue) => accumulator + currentValue);
+        const currentValue = dataset.data[tooltipItem.index];
+        const percentage = Math.round((currentValue / total) * 100);
+        return `${data.labels[tooltipItem.index]}: ${currentValue} (${percentage}%)`;
+      }
+    }
+  }
+};
+  const {t} = useTranslation('common');
+ 
+  const cultures = [
     {
-      name: 'Switzerland',
-      continent: 'Europe',
-      image: 'path/to/image1.jpg',
-      description:
-        'Nam exercitationem commodi et ducimus quia in dotore animi sit mollitia amet id quod eligendi. Et labore harum non nobis ipsum eum molestias mollitia et corporis praesentium a laudantium internos.',
-      price: '1,000',
-      going: '25 People Going',
+      title: t('culturesTitle1'),
+      description: t('culturesDescription1')
     },
     {
-      name: 'Amazon',
-      continent: 'Brazil',
-      image: 'path/to/image2.jpg',
-      description:
-        'Nam exercitationem commodi et ducimus quia in dolore animi sit mollitia amet id quod eligendi. Et labore harum non nobis ipsum eum molestias mollitia et corporis praesentium a laudantium internos.',
-      price: '1,223',
-      going: '830 People Going',
+      title: t('culturesTitle2'),
+      description: t('culturesDescription2')
     },
     {
-      name: 'Giza',
-      continent: 'Egypt',
-      image: 'path/to/image3.jpg',
-      description:
-        'Nam exercitationem commodi et ducimus quia in dolore animi sit mollitia amet id quod eligendi. Et labore harum non nobis ipsum eum molestias mollitia et corporis praesentium a laudantium internos.',
-      price: '1,200',
-      going: '155 People Going',
+      title: t('culturesTitle3'),
+      description: t('culturesDescription3')
+    },
+    {
+      title: t('culturesTitle4'),
+      description: t('culturesDescription4')
+    }
+  ];
+ 
+  const alternatingSections = [
+    {
+      title: t('alternatingSectionstitle1'),
+      description: t('alternatingSectionsdescription1'),
+      imageUrl: '../src/images/refugee_home1.jpg',
+      imageFirst: true,
+    },
+    {
+      title: t('alternatingSectionstitle2'),
+      description: t('alternatingSectionsdescription2'),
+      imageUrl: '../src/images/refugee_home2.jpg',
+      imageFirst: false,
     },
   ];
-
+ 
+  const goToNextSlide = () => {
+    if (sliderRef.current) {
+      sliderRef.current.slickNext?.();
+    }
+  };
+ 
+  const goToPrevSlide = () => {
+    if (sliderRef.current) {
+      sliderRef.current.slickPrev?.();
+    }
+  };
+ 
   return (
-    <div>
-      <section style={{ backgroundColor: '#808080', padding: '40px 0' }}>
-        <Container maxWidth="md">
-          <Typography variant="h4" gutterBottom>
-            About
-          </Typography>
-          <Typography variant="body1" gutterBottom>
-            Our project aims to revolutionize the way people interact with technology by providing innovative solutions that enhance user experiences. Through cutting-edge technologies and a focus on user-centric design, we strive to create products that are intuitive, efficient, and impactful. With a dedicated team of experts, we're committed to pushing the boundaries of what's possible and delivering solutions that make a difference in people's lives.
-          </Typography>
-        </Container>
-      </section>
-
-      <section style={{ backgroundColor: '#808080', padding: '40px 0', marginTop: '40px' }}>
-        <Container maxWidth="md">
-          <Typography variant="h4" gutterBottom>
-             Section 1
-          </Typography>
-          <Slider {...sliderSettings}>
-            <div>
-              <img src="image1.jpg" alt="Image 1" />
-              <div>
-                <Typography variant="h5">Story 1</Typography>
-                <Typography variant="body1">
-                  Short description of the story 1. <a href="#">Read More</a>
-                </Typography>
-              </div>
-            </div>
-            <div>
-              <img src="image2.jpg" alt="Image 2" />
-              <div>
-                <Typography variant="h5">Story 2</Typography>
-                <Typography variant="body1">
-                  Short description of the story 2. <a href="#">Read More</a>
-                </Typography>
-              </div>
-            </div>
-            {/* Add more slides as needed */}
-          </Slider>
-        </Container>
-      </section>
-
-      <section className="container mx-auto px-4 py-16" style={{ backgroundColor: '#808080', padding: '40px 0', marginTop: '40px' }}>
-      <div>
-      <Grid container spacing={4}>
-        {countries.map((country) => (
-          <Grid item key={country.name} xs={12} sm={6} md={4}>
-            <Card>
-              <CardActionArea>
-                <img
-                  className="w-full h-40 object-cover"
-                  src={country.image}
-                  alt={country.name}
-                />
-                <CardContent>
-                  <Typography gutterBottom variant="h5" component="div">
-                    {country.name}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    {country.continent}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary" mt={2}>
-                    {country.description}
-                  </Typography>
-                  <div className="flex justify-between mt-4">
-                    <Typography variant="body1" component="div">
-                      From ${country.price}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      {country.going}
-                    </Typography>
-                  </div>
-                </CardContent>
-              </CardActionArea>
-            </Card>
-          </Grid>
-        ))}
-      </Grid>
+    <div style={{ overflowY: 'auto', maxHeight: '100vh', position: 'relative' }}>
+    <section style={{ position: 'relative', width: '100%', overflow: 'hidden' }}>
+      <div style={{ position: 'relative', width: '100%', height: '100%', filter: 'blur(1.5px)' }}>
+        <img src="../src/images/refugee_main.jpg" alt="Refugee Thoughts" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+      </div>
+      <div style={{ position: 'absolute', top: '70%', left: '50%', transform: 'translate(-50%, -50%)', zIndex: 1 }}>
+        <Typography variant="h5" style={{ fontWeight: 'bold', fontStyle: 'italic', fontFamily: 'Verdana, sans-serif', color: 'white', textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)', fontSize: '48px', lineHeight: '1.2' }}>
+          {t('MainHeader')}
+        </Typography>
       </div>
     </section>
+ 
+    <Container maxWidth="lg" style={{ padding: '40px 0' }}>
+      <Grid container spacing={4} alignItems="center" justifyContent="center">
+      
+       {/* First Set of Culture Cards */}
+       <Grid container spacing={3}>
+  <Grid item xs={12} md={6}>
+    <Typography variant="h4" gutterBottom style={{ borderRadius: '15px', backgroundColor: '#f0f0f0', padding: '10px', marginBottom: '20px' }}>
+      {t('culturesHeader')}
+    </Typography>
+    <div style={{ maxWidth: '100%', overflowX: 'auto' }}>
+      <Slider {...sliderSettings} ref={sliderRef}>
+        {cultures.map((culture, index) => (
+          <div key={index} style={{ minWidth: '300px', maxWidth: '400px', marginRight: '10px' }}>
+            <Card style={{ boxShadow: 'none', border: '1px solid #ddd', borderRadius: '4px', backgroundColor: '#fff', height: '100%' }}>
+              <CardContent>
+                <Typography variant="h5" style={{ color: '#333' }}>{culture.title}</Typography>
+                <Typography variant="body2">{culture.description}</Typography>
+              </CardContent>
+            </Card>
+          </div>
+        ))}
+      </Slider>
+      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <IconButton onClick={goToPrevSlide}><ArrowBackIos /></IconButton>
+        <IconButton onClick={goToNextSlide}><ArrowForwardIos /></IconButton>
+      </div>
+    </div>
+  </Grid>
+  <Grid item xs={12} md={6}>
+    <div style={{
+      padding: '20px',
+      width: '100%',
+      background: '#f0f0f0',
+      height: '100%'
+    }}>
+      <Pie
+        data={pieChartData}
+        options={options}
+      ></Pie>
+    </div>
+  </Grid>
+</Grid>
 
-      {/* Footer Section */}
-      <footer style={{ backgroundColor: '#808080', color: '#fff', padding: '40px 0', marginTop: '40px' }}>
-        <Container maxWidth="md">
-          <Grid container spacing={2} alignItems="center" justifyContent="space-between">
-            {/* Logo */}
-            <Grid item>
-              <img src="logo.png" alt="Logo" style={{ height: '50px' }} />
+
+
+
+        
+      </Grid>
+    </Container>
+          {alternatingSections.map((section, index) => (
+        <Container key={index} maxWidth="lg" style={{ padding: '40px 0' }}>
+          <Grid container spacing={4} alignItems="center" direction={section.imageFirst ? 'row' : 'row-reverse'}>
+            <Grid item xs={12} md={6}>
+              <CardMedia
+                component="img"
+                image={section.imageUrl}
+                alt={section.title}
+                style={{ width: '100%', height: 'auto' }}
+              />
             </Grid>
-            {/* Footer Links */}
-            <Grid item>
+            <Grid item xs={12} md={6} style={{ color: '#000', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+              <Typography variant="h4" gutterBottom>
+                {section.title}
+              </Typography>
               <Typography variant="body1">
-                <Link href="/privacy-policy">Privacy Policy</Link> | <Link href="/sitemap">Sitemap</Link>
+                {section.description}
               </Typography>
             </Grid>
-            {/* Social Media Icons */}
-            <Grid item>
-              <IconButton color="inherit">
-                <Facebook />
-              </IconButton>
-              <IconButton color="inherit">
-                <Twitter />
-              </IconButton>
-              <IconButton color="inherit">
-                <LinkedIn />
-              </IconButton>
-            </Grid>
           </Grid>
-          {/* Contact Information */}
-          <Typography variant="body1" style={{ marginTop: '20px' }}>
-            Contact us: example@example.com | Phone: 123-456-7890
-          </Typography>
-          {/* Email Sign-up Form */}
-          <form style={{ marginTop: '20px' }}>
-            <Grid container spacing={1} alignItems="center">
-              <Grid item xs={8}>
-                <TextField fullWidth label="Enter your email" variant="outlined" />
-              </Grid>
-              <Grid item xs={4}>
-                <Button variant="contained" color="primary" fullWidth>
-                  Sign Up
-                </Button>
-              </Grid>
+        </Container>
+      ))}
+ 
+      <footer style={{ backgroundColor: '#000', color: '#fff', padding: '40px 0', width: '100%' }}>
+        <Container maxWidth="lg">
+          <Grid container spacing={5} justifyContent="space-between" alignItems="center">
+            
+            {/* Support our work section */}
+            <Grid item xs={12} sm={6} md={3}>
+              <Typography variant="h6" gutterBottom>
+                {t('footerSupport')}
+              </Typography>
+              <Typography variant="body2" gutterBottom>
+                {t('footerHelp')}
+              </Typography>
+              <Button variant="outlined" color="inherit">
+                {t('footerDonate')}
+              </Button>
             </Grid>
-          </form>
-          {/* Copyright Notice */}
-          <Typography variant="body2" style={{ marginTop: '20px' }}>
-            © 2024 Your Company. All rights reserved.
+            
+            {/* Global Voices for Refugee section */}
+            <Grid item xs={12} sm={6} md={3}>
+              <Typography variant="h6" gutterBottom>
+                {t('footerVoices')}
+              </Typography>
+              <IconButton color="inherit"><Facebook /></IconButton>
+              <IconButton color="inherit"><Twitter /></IconButton>
+              <IconButton color="inherit"><LinkedIn/></IconButton>
+              <IconButton color="inherit"><YouTube/></IconButton>
+            </Grid>
+            
+            {/* Stay informed section */}
+            <Grid item xs={12} sm={6} md={3}>
+              <Typography variant="h6" gutterBottom>
+                {t('footerStay')}
+              </Typography>
+              <Typography variant="body2" gutterBottom>
+                {t('footerSignUp')}
+              </Typography>
+              <Button variant="outlined" color="inherit">
+                {t('footerSubscribe')}
+              </Button>
+            </Grid>
+            
+          </Grid>
+          <Typography variant="caption" align="center" display="block" gutterBottom style={{ marginTop: '20px', borderTop: '1px solid #fff', paddingTop: '20px' }}>
+            {t('footerPrivacy')}
+            <br />
+            © RefugeeConnect 2024
           </Typography>
+          <div style={{ textAlign: 'center', marginTop: '20px' }}>
+            <img src="../src/images/logo.png" alt="Your Logo" style={{ height: '50px', width: 'auto' }} />
+          </div>
         </Container>
       </footer>
     </div>
   );
 };
-
+ 
 export default ContentSection;

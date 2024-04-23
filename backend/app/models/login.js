@@ -2,6 +2,10 @@ import mongoose from "mongoose";
 
 
 const login = new mongoose.Schema({
+    personid :{
+        type : String,
+        required: true
+    },
     username:{
         type : String,
         required : true
@@ -11,6 +15,10 @@ const login = new mongoose.Schema({
         required : true
     },
     role: {
+        type : String,
+        required : true
+    },
+    image: {
         type : String,
         required : true
     }

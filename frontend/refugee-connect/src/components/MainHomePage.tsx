@@ -1,14 +1,13 @@
 import React from 'react';
 import ContentSection from './ContentSection';
-// import NavBar from './NavBar';
-// import SideBar from './SideBar';
+import ButtonAppBar from './NavBar';
+import ChatBot from './ChatBot';
 
 const MainHomePage = () => {
   return (
     <div>
-      {/* <NavBar />
-      <SideBar /> */}
       <ContentSection />
+      <ChatBot/ >
     </div>
   );
 };

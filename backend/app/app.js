@@ -3,15 +3,16 @@ import  express  from "express";
 import  cors from "cors";
 import mongoose from "mongoose";
 
-export const initialise = (app) =>{
 
-     //using cors
+
+export const initialise = (app) => {
+    // Using cors
     app.use(cors());
+    // Parsing request bodies
     app.use(express.json());
-    app.use(express.urlencoded());
-
-    //connection with mongoose
+    app.use(express.urlencoded({ extended: true }));
+    // Connection with mongoose
     mongoose.connect(process.env.MONGO_CONNECTION);
-    //initilising the routes
+    // Initializing the routes
     initializeRouter(app);
 }
