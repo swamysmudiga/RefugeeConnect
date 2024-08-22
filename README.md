@@ -61,7 +61,7 @@ npm install
 #### Frontend
 Navigate to the frontend directory and install the required packages:
 ```bash
-cd frontend
+cd frontend/refugee-connect
 npm install
 ```
 
