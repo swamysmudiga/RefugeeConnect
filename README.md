@@ -77,6 +77,8 @@ In a new terminal, navigate to the frontend directory and run the application:
 cd frontend/refugee-connect
 npm run dev
 ```
+### Start the Application using the below url
+http://localhost:5173/refugee
 ---
 ## Contact
 
