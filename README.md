@@ -74,7 +74,7 @@ node server.js
 ### Start the Frontend Application
 In a new terminal, navigate to the frontend directory and run the application:
 ```bash
-cd frontend
+cd frontend/refugee-connect
 npm run dev
 ```
 ---
